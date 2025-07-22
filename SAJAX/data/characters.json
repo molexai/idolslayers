@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Bobby",
+    "character_id": "bobby",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/bobby.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Huntrix",
+    "description": "He’s the #1 Huntrix idol slayer, and he knows it. Has a black belt in sass and a PhD in dramatic hair flips.",
+    "rarity": ""
+  },
+  {
+    "name": "Mira",
+    "character_id": "mira",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/mira.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Huntrix",
+    "description": "A brilliant healer with zero patience for nonsense. Once healed a teammate and insulted their haircut in the same breath.",
+    "rarity": ""
+  },
+  {
+    "name": "Zoey",
+    "character_id": "zoey",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/zoey.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Huntrix",
+    "description": "She dances like a dream and fights like a hurricane. Every demon she defeats gets a sarcastic clap and a hair flip.",
+    "rarity": ""
+  },
+  {
+    "name": "Celine",
+    "character_id": "celine",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/celine.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Huntrix",
+    "description": "Mysterious, composed, and probably has a backup plan for the backup plan. Her glare has a 90% demon banishing success rate.",
+    "rarity": ""
+  },
+  {
+    "name": "Rumi's Mom (Eun-hee)",
+    "character_id": "rumis_mom",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/rumis_mom.png",
+    "top_rarity": "R",
+    "lowest_rarity": "B",
+    "group": "Supporters",
+    "description": "Looks like she bakes cookies. Actually drop-kicked a demon through a shrine once. Don’t test her or her kimchi.",
+    "rarity": ""
+  },
+  {
+    "name": "Gwi-ma",
+    "character_id": "gwi_ma",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/gwi_ma.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Villains",
+    "description": "He feeds on fear, negativity, and low-quality soundcloud rap. Rumored to be allergic to rhythm and joy.",
+    "rarity": ""
+  },
+  {
+    "name": "Bird (Six-eyed Magpie)",
+    "character_id": "six_eyed_magpie",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/bird.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Familiars",
+    "description": "A six-eyed gremlin who steals hats, snacks, and the spotlight. Might be smarter than half the team. Definitely knows it.",
+    "rarity": ""
+  },
+  {
+    "name": "Tiger (Idiot Tiger)",
+    "character_id": "idiot_tiger",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/tiger.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Familiars",
+    "description": "Massive, loyal, and kind of useless. He tries his best. Once got stuck in a revolving door. Still deserves love.",
+    "rarity": ""
+  },
+  {
+    "name": "Crying Demon",
+    "character_id": "crying_demon",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/crying_demon.png",
+    "top_rarity": "R",
+    "lowest_rarity": "B",
+    "group": "Demons",
+    "description": "Just here to cry and vibe. Didn’t even want to join the demon war, he was just looking for emotional support.",
+    "rarity": ""
+  },
+  {
+    "name": "Jinu",
+    "character_id": "jinu",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/jinu.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Saja Boys",
+    "description": "The leader, the legend, the guy who never texts back. Always calm under pressure unless his eyeliner gets smudged.",
+    "rarity": ""
+  },
+  {
+    "name": "Abby",
+    "character_id": "abs",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/abs.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Saja Boys",
+    "description": "Built like a Greek statue and about as emotionally available. Once flexed mid-fight and stunned a demon into surrender.",
+    "rarity": ""
+  },
+  {
+    "name": "Mystery",
+    "character_id": "mystery",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/mystery.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Saja Boys",
+    "description": "Nobody knows what he’s thinking. He probably doesn’t either. Shows up, looks amazing, vanishes into fog.",
+    "rarity": ""
+  },
+  {
+    "name": "Romance",
+    "character_id": "romance",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/romance.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Saja Boys",
+    "description": "Flirts with danger, flirts with fans, flirts with himself in the mirror. Every attack ends with a wink.",
+    "rarity": ""
+  },
+  {
+    "name": "Baby",
+    "character_id": "baby",
+    "thumbnail_url": "https://yourcdn.com/thumbnails/baby.png",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Saja Boys",
+    "description": "The youngest member. Cries in group photos and obliterates enemies in the same hour. Has no chill. Everyone’s scared of him.",
+    "rarity": ""
+  }
+]

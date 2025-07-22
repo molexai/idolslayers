@@ -1,0 +1,32 @@
+{
+  "rarities": [
+    {
+      "tier": "B",
+      "name": "Balanced",
+      "drop_rate": 45.0,
+      "description": "Common but reliable cards.",
+      "worth": 50
+    },
+    {
+      "tier": "A",
+      "name": "Amazing",
+      "drop_rate": 30.0,
+      "description": "Impressive and sought after.",
+      "worth": 100
+    },
+    {
+      "tier": "R",
+      "name": "Rare",
+      "drop_rate": 20.0,
+      "description": "Hard to find, strong cards.",
+      "worth": 200
+    },
+    {
+      "tier": "UR",
+      "name": "Ultra Rare",
+      "drop_rate": 5.5,
+      "description": "Extremely rare and powerful.",
+      "worth": 350
+    }
+  ]
+}
