@@ -63,6 +63,14 @@ class Database:
                 upsert=True
             )
 
+    def remove_all_characters(self, user_id: str):
+        user_id = str(user_id)
+        self.users.update_one(
+            {"user_id": user_id},
+            {"$set": {"characters": [], "cards": []}},
+            upsert=True
+        )
+
     def update_user(self, user_id: str, update_data):
         user_id = str(user_id)
         self.users.update_one(

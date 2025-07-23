@@ -1,0 +1,137 @@
+{
+  "characters": [
+    {
+      "name": "Bobby",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Rumi",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676970787209336/Untitled90_20250723151950.png?ex=6882979d&is=6881461d&hm=1e450f1c445c3579b2cea080fe4837db8c315a376264a84fbfd54e21f9f3dd88&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676971273752656/Untitled90_20250723152039.png?ex=6882979d&is=6881461d&hm=f9fd92996c93fb3a0ee4d341707ee10bed9e7cc9c23122f07e35857421d081da&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676971785195571/Untitled90_20250723152117.png?ex=6882979d&is=6881461d&hm=9bfc69d7f44c5fc30daab19cea107034100d6b12122626bad3d1313589c260bc&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676972213276854/Untitled90_20250723152202.png?ex=6882979d&is=6881461d&hm=3b2e3884cb45044931919415b7697e0ede4d999deab054fc4d9d699b82c301a7&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676972620120225/Untitled90_20250723152324.png?ex=6882979d&is=6881461d&hm=583713b0f22563cf00ebdda7ebdb4461f87d8c0cb539ae16989fdd0d5d55351e&"},
+        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676916496011465/Untitled90_20250723150900.png?ex=68829790&is=68814610&hm=3ffd36a96788610c6805e00f3a08475d45295470c6cacce72c4f72eb3a4d86db&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676916986613841/Untitled90_20250723150941.png?ex=68829790&is=68814610&hm=37c9494f99c9d65c6f0bc319826fad1acaed7f1c5cde82b684d33b89a7e4a622&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676917351649290/Untitled90_20250723151021.png?ex=68829790&is=68814610&hm=1bb5374ca002d47b210d5605415608274829ed16df5a0fbf7581cc03009ff909&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676917817085952/Untitled90_20250723151058.png?ex=68829790&is=68814610&hm=e619e580fdabacba9c1f8062c4f7c8f0a9c51fc33428db10dc903d2dcf4493ce&"},
+        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667593694875708/Untitled90_20250723145123.png?ex=68828ee1&is=68813d61&hm=37f81d7838e42fbd13fb76afc32f5a7edcb813bc9cb57618d2b24f387e93eaa5&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667595867390003/Untitled90_20250723143907.png?ex=68828ee2&is=68813d62&hm=6b6f8b1a1d2885cbc34c78956cec357ff0b0871ddcd0a6aa5c19c02afccba44e&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667598543618131/Untitled90_20250723144004.png?ex=68828ee2&is=68813d62&hm=8e57661349f3d566455450e962f96e87607d6a654655b0dc560cf33acb51bee7&"},
+        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667594558898247/Untitled90_20250721164800.png?ex=68828ee1&is=68813d61&hm=0fc4787034955d0468bc8a049fe6ce8bb627af58048e0046859e40da5307d798&"}
+      ]
+    },
+    {
+      "name": "Mira",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676973190549546/Untitled90_20250723152547.png?ex=6882979d&is=6881461d&hm=95954fcda7dd908167b757ba3f2414011b441a9b30668ad050ac889633bd1af6&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676973568032850/Untitled90_20250723152630.png?ex=6882979e&is=6881461e&hm=75fd8ebb16e523a1c850f7288acce1aec61b5694ef9a264bd930a44b1bf5e3ec&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676973949452358/Untitled90_20250723152702.png?ex=6882979e&is=6881461e&hm=580d5f827d4799e67870c8907432fcfb594a711b61d10fabe61645a94283a469&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676974343848157/Untitled90_20250723152735.png?ex=6882979e&is=6881461e&hm=cae14bb93acf096abe51bd08a96e5855edfcc473079c59e568e91d748c8d4022&"},
+        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676884770295828/Untitled90_20250723150050.png?ex=68829788&is=68814608&hm=109672465a7d372c0485e1f77e2b5ca85c17af69339527c0b632a073f2441fd6&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676885126680666/Untitled90_20250723150425.png?ex=68829788&is=68814608&hm=ba2efef0bb1550f46c5e20e141cb992ba621afa5852c987396eb5361fca6d787&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676885437054976/Untitled90_20250723150457.png?ex=68829789&is=68814609&hm=f1bcdd13682df06f726795b9b155d69b5516e99dd8d0f23c30015739bab93999&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676885806416072/Untitled90_20250723150536.png?ex=68829789&is=68814609&hm=a032c2904b12efb23e12e65e7581aea16c69cbc16203cfa65274cbbf46a69996&"},
+        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667645972680884/Untitled90_20250723144821.png?ex=68828eee&is=68813d6e&hm=272953f1654c0b34a0696b6b02e8b731c1027d0ffbc9044b0255378ff6b4d155&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667646589239369/Untitled90_20250723144918.png?ex=68828eee&is=68813d6e&hm=4984e919b1ec31b25f485887e40d058903ef6d40244c5ea2f35944b21ab6860b&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667647331504198/Untitled90_20250723144716.png?ex=68828eee&is=68813d6e&hm=2eafdda46e6daccbcf897a34d6ec97df153fbcd4be0c84d2b36d3876d93bd318&"},
+        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667597998100520/Untitled90_20250723143222.png?ex=68828ee2&is=68813d62&hm=24412929ca8fdf6ad11596867fb09f27a1dc31d94628a5b617ec14925c352bcb&"}
+      ]
+    },
+    {
+      "name": "Zoey",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676918169669832/Untitled90_20250723151300.png?ex=68829790&is=68814610&hm=b325fe18ca1fac7312b9449953142e2294a83b30a3cbd5953200b88b7611418f&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676918484107334/Untitled90_20250723151334.png?ex=68829790&is=68814610&hm=a363b649f09b38c96ca1599abe1e5e012afd5f3024f0206ec0a31f55da0621aa&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676919033696266/Untitled90_20250723151523.png?ex=68829791&is=68814611&hm=adb9e0977ab8dbdda76ff906cc7864a354eca1cd421742314a46173e8138f1f2&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676919478157352/Untitled90_20250723151602.png?ex=68829791&is=68814611&hm=202b4042be9c2ee3c1be0605bed5876733b6047eeeae558d4ccc2d7ba569bf0f&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676920052650074/Untitled90_20250723151651.png?ex=68829791&is=68814611&hm=d94eb32ced583bd2646620ee2ea43e594109a8a022b99d39113d5a86d5b4eb50&"},
+        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676877937770567/Untitled90_20250723145744.png?ex=68829787&is=68814607&hm=c5911e5bc0cb925515603d8518450accb4bb44c1fd44c8e6ac999d4865eeb3c2&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676883231113296/Untitled90_20250723145818.png?ex=68829788&is=68814608&hm=e5bad204d7b147fc604bd8ff397bbd0bbd5adc94ac2492fb5275869de4ae1b0e&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676883738497044/Untitled90_20250723145938.png?ex=68829788&is=68814608&hm=8308f491d189583ebde9bab89f7ced43b5ec09fa408ec2395ae9e3e661e4ec86&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676884317438063/Untitled90_20250723150016.png?ex=68829788&is=68814608&hm=fb990002742408d551758ee97e25f2abeb5e3cd8283f04796b4165027ca4822a&"},
+        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667593317384192/Untitled90_20250723143740.png?ex=68828ee1&is=68813d61&hm=59db3ddd387dc9632fb0c7b0d95eac8cae65a409a9931b6508b1cbd4fe633af5&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667595230117958/Untitled90_20250723144224.png?ex=68828ee2&is=68813d62&hm=f0b545d22586e0ec213ec7949fb264d6ab9fc3fae9fee479b798a4d1e1d984d2&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667596605849640/Untitled90_20250723144213.png?ex=68828ee2&is=68813d62&hm=e79994c6869102fe61d5dd86e631bcc028925796b6b7341d06c35ae45387ffd0&"},
+        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667597075615765/Untitled90_20250723143132.png?ex=68828ee2&is=68813d62&hm=48a076c2d2ca453073c1145dc786d2d9f4585fed9d9e601bdaeef2e9fd13ceae&"}
+      ]
+    },
+    {
+      "name": "Celine",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Rumi's Mom (Eun-hee)",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Gwi-ma",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Bird (Six-eyed Magpie)",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Tiger (Idiot Tiger)",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Crying Demon",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Jinu",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Abby",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Mystery",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Romance",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    },
+    {
+      "name": "Baby",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+      ]
+    }
+  ]
+}
