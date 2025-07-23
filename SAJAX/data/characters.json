@@ -101,6 +101,16 @@
     "rarity": ""
   },
   {
+    "name": "Old Traditional Demon Slayer",
+    "character_id": "old_traditional_demon_slayer",
+    "thumbnail_url": "",
+    "top_rarity": "UR",
+    "lowest_rarity": "B",
+    "group": "Huntrix",
+    "description": "A master of ancient arts, she moves with the grace of traditional dance and the strength of a seasoned warrior. Clad in classic attire, she fends off demons with precision and honor, bridging old traditions with fierce modern power.",
+    "rarity": ""
+  },
+  {
     "name": "Jinu",
     "character_id": "jinu",
     "thumbnail_url": "",

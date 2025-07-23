@@ -46,6 +46,15 @@
       ]
     },
     {
+      "name": "Old Traditional Demon Slayer",
+      "rarities": [
+        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667597612355615/Untitled90_20250721164507.png?ex=68828ee2&is=68813d62&hm=48821ae9cd90a483b1adb9de0d48a12cbdf9bf77a6d1064b2357d60402afee28&"}
+      ]
+    },
+    {
       "name": "Rumi's Mom (Eun-hee)",
       "rarities": [
         { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },

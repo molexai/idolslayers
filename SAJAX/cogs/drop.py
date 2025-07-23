@@ -6,6 +6,9 @@ from nextcord import SlashOption, Interaction, ButtonStyle
 from nextcord.ui import View, button
 import asyncio
 import time
+import random
+import json
+import os
 
 from SAJAX.database import Database
 from SAJAX.templates import Templates
@@ -32,7 +35,7 @@ class CardPageView(View):
         rarity = card.get('rarity', card.get('top_rarity', 'Unknown'))
         description = card.get('description', 'No description available.').replace('â€™', "")
         group = card.get('group', 'Unknown')
-        embed = self.templates.card_details(name, rarity, description, group)
+        embed = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
         embed.set_footer(text=f"Card {self.index + 1} of {len(self.cards)}")
         return embed
 
@@ -50,6 +53,7 @@ class CardPageView(View):
             self.update_buttons()
             await interaction.response.edit_message(embed=self.generate_embed(), view=self)
 
+
 class Drop(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -62,9 +66,27 @@ class Drop(commands.Cog):
         self.processing = False
         self.process_queue.start()
         self.db = Database()
+        self.json_path = os.path.join(os.path.dirname(__file__), "characters_card_images.json")
 
     def cog_unload(self):
         self.process_queue.cancel()
+
+    def assign_thumbnail(self, character_name: str, rarity: str) -> str:
+        with open(self.json_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        for character in data["characters"]:
+            if character["name"].lower() == character_name.lower():
+                for rarity_block in character["rarities"]:
+                    if rarity_block["rarity"].upper() == rarity.upper():
+                        urls = [
+                            url for key, url in rarity_block.items()
+                            if key.startswith("image_url_") and url.strip() != ""
+                        ]
+                        if not urls:
+                            return ""
+                        return random.choice(urls)
+        return ""
 
     @nextcord.slash_command(
         name="mycards",
@@ -143,7 +165,7 @@ class Drop(commands.Cog):
             amount: int = SlashOption(
                 description="Number of cards to summon",
                 required=False,
-                default=3
+                default=10
             )
     ):
         user = interaction.user
@@ -162,10 +184,13 @@ class Drop(commands.Cog):
             dm = await user.create_dm()
             for i in range(amount):
                 character, rarity = await self.generate_drop_return_card(user)
+                thumbnail_url = self.assign_thumbnail(character["name"], character["rarity"])
 
                 embed = Templates.drop_summon()
                 embed.title = f"SAJAX Admin Drop #{i + 1}"
                 embed.description = f"You pulled a {rarity} character: {character['name']}"
+                if thumbnail_url:
+                    embed.set_thumbnail(url=thumbnail_url)
                 await dm.send(embed=embed)
 
                 await asyncio.sleep(1)
@@ -184,17 +209,27 @@ class Drop(commands.Cog):
         formatted_drop = select_random_character()
         formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
         character = formatted_drop["character"]
-        rarity = formatted_rarity[formatted_drop["rarity"]]
+        rarity_key = formatted_drop["rarity"]
+        rarity = formatted_rarity[rarity_key]
 
         print(f"{user}, You pulled a {rarity} character: {character['name']}")
 
+        thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
         character_with_rarity = character.copy()
-        character_with_rarity["rarity"] = formatted_drop["rarity"]
+        character_with_rarity["rarity"] = rarity_key
+        if thumbnail_url:
+            character_with_rarity["thumbnail_url"] = thumbnail_url
 
         self.db.add_character(user_id_str, character_with_rarity)
         self.db.add_card(user_id_str, character["character_id"])
 
-        return f"You pulled a {rarity} character: {character['name']}"
+        embed = Templates.drop_summon()
+        embed.title = f"You pulled a {rarity} character!"
+        embed.description = f"{character['name']}"
+        if thumbnail_url:
+            embed.set_thumbnail(url=thumbnail_url)
+
+        return embed
 
     async def generate_drop_return_card(self, user):
         from SAJAX.selection import select_random_character
@@ -207,10 +242,14 @@ class Drop(commands.Cog):
         formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
 
         character = formatted_drop["character"]
-        rarity = formatted_rarity[formatted_drop["rarity"]]
+        rarity_key = formatted_drop["rarity"]
+        rarity = formatted_rarity[rarity_key]
 
+        thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
         character_with_rarity = character.copy()
-        character_with_rarity["rarity"] = formatted_drop["rarity"]
+        character_with_rarity["rarity"] = rarity_key
+        if thumbnail_url:
+            character_with_rarity["thumbnail_url"] = thumbnail_url
 
         self.db.add_character(user_id_str, character_with_rarity)
         self.db.add_card(user_id_str, character["character_id"])
@@ -228,10 +267,8 @@ class Drop(commands.Cog):
         try:
             drops = []
             for i in range(amount):
-                desc = await self.generate_drop(user)
-                embed = Templates.drop_summon()
+                embed = await self.generate_drop(user)
                 embed.title = f"SAJAX Drop Summon #{i + 1}"
-                embed.description = desc
                 drops.append(embed)
 
             self.queued_users.discard(user.id)
