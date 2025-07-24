@@ -62,6 +62,16 @@ class Templates:
         return embed
 
     @staticmethod
+    def drop_success():
+        embed = Embed(
+            title="`⋆｡ﾟ☁︎｡𖦹 Drop Successful! ｡☁︎ﾟ｡⋆`",
+            description=f"> {Templates.pastel_emojis[0]} Your SAJAX drop was a success! Check your cards with `/mycards`.",
+            color=Color.from_rgb(173, 216, 230)
+        )
+        embed.set_footer(text="Thanks for playing with SAJAX! ♡")
+        return embed
+
+    @staticmethod
     def sell_cooldown():
         embed = Embed(
             title="`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Cooldown! ｡☁︎ﾟ｡⋆`",
