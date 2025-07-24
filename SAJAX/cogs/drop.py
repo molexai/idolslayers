@@ -1,9 +1,7 @@
-# Entire file with modifications
-
 import nextcord
 from nextcord.ext import commands, tasks
 from nextcord import SlashOption, Interaction, ButtonStyle
-from nextcord.ui import View, button, Select
+from nextcord.ui import View, button, Select, Button
 import asyncio
 import time
 import random
@@ -13,20 +11,24 @@ import os
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = [1387525150752378940, 1389313345986756708]
+GUILD_ID = [1387525150752378940, 1389313345986756708, 1369853145827770368]
 
 class CardPageView(View):
-    def __init__(self, user_cards, templates, timeout=180):
+    def __init__(self, user_cards, templates, owner_id, timeout=180):
         super().__init__(timeout=timeout)
         self.cards = user_cards
         self.index = 0
         self.templates = templates
-
+        self.owner_id = owner_id
+        self.displayed_cards = set()
         self.update_buttons()
 
     def update_buttons(self):
         self.children[0].disabled = self.index == 0
         self.children[1].disabled = self.index == len(self.cards) - 1
+        for child in self.children:
+            if isinstance(child, Button) and child.custom_id == "display_card":
+                child.disabled = self.index in self.displayed_cards
 
     def generate_embed(self):
         card = self.cards[self.index]
@@ -52,19 +54,36 @@ class CardPageView(View):
             self.update_buttons()
             await interaction.response.edit_message(embed=self.generate_embed(), view=self)
 
+    @button(label="Display", style=ButtonStyle.green, custom_id="display_card")
+    async def display(self, button: Button, interaction: Interaction):
+        card = self.cards[self.index]
+        self.displayed_cards.add(self.index)
+        button.disabled = True
+        self.update_buttons()
+        await interaction.response.edit_message(view=self)
+        name = card.get('name', 'Unknown')
+        rarity = card.get('rarity', card.get('top_rarity', 'Unknown'))
+        description = card.get('description', 'No description available.').replace('â€™', "")
+        group = card.get('group', 'Unknown')
+        embed = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
+        embed.set_footer(text=f"Card {self.index + 1} of {len(self.cards)}")
+        owner_mention = f"<@{self.owner_id}>"
+        await interaction.channel.send(f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**", embed=embed)
+
 class CardSelect(Select):
-    def __init__(self, cards, templates):
+    def __init__(self, cards, templates, owner_id):
         options = [
             nextcord.SelectOption(
                 label=card.get('name', 'Unknown'),
                 description=f"Rarity: {card.get('rarity', card.get('top_rarity', 'Unknown'))}",
                 value=str(i)
             )
-            for i, card in enumerate(cards[:25])  # Limit to 25
+            for i, card in enumerate(cards[:25])
         ]
         super().__init__(placeholder="Select a card to view details...", min_values=1, max_values=1, options=options)
         self.cards = cards
         self.templates = templates
+        self.owner_id = owner_id
         self.current_embed = None
 
     async def callback(self, interaction: Interaction):
@@ -76,14 +95,30 @@ class CardSelect(Select):
         group = card.get('group', 'Unknown')
         embed = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
         embed.set_footer(text=f"Card details for {name}")
-        self.current_embed = embed
+        view = View(timeout=180)
+        view.displayed_cards = set()
+        view.add_item(self)
+        display_button = Button(label="Display", style=ButtonStyle.green, custom_id="display_card")
 
-        await interaction.response.edit_message(embed=embed, view=self.view)
+        async def display_callback(button_interaction: Interaction):
+            display_button.disabled = True
+            view.displayed_cards.add(index)
+            await button_interaction.response.edit_message(view=view)
+            owner_mention = f"<@{self.owner_id}>"
+            embed_display = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
+            embed_display.set_footer(text=f"Card details for {name}")
+            await button_interaction.channel.send(f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**", embed=embed_display)
+
+        display_button.callback = display_callback
+        if index in view.displayed_cards:
+            display_button.disabled = True
+        view.add_item(display_button)
+        await interaction.response.edit_message(embed=embed, view=view)
 
 class CardMenuView(View):
-    def __init__(self, cards, templates, timeout=180):
+    def __init__(self, cards, templates, owner_id, timeout=180):
         super().__init__(timeout=timeout)
-        self.select = CardSelect(cards, templates)
+        self.select = CardSelect(cards, templates, owner_id)
         self.add_item(self.select)
         self.message = None
 
@@ -105,10 +140,13 @@ class Drop(commands.Cog):
         self.COOLDOWN_SECONDS = 3600
         self.mycards_cooldowns = {}
         self.MYCARDS_COOLDOWN = 10
+        self.myshards_cooldowns = {}
+        self.MYSHARDS_COOLDOWN = 5
         self.processing = False
         self.process_queue.start()
         self.db = Database()
         self.json_path = os.path.join(os.path.dirname(__file__), "characters_card_images.json")
+        self.characters_json_path = os.path.join(os.path.dirname(__file__), "characters.json")
 
     def cog_unload(self):
         self.process_queue.cancel()
@@ -116,7 +154,6 @@ class Drop(commands.Cog):
     def assign_thumbnail(self, character_name: str, rarity: str) -> str:
         with open(self.json_path, "r", encoding="utf-8") as file:
             data = json.load(file)
-
         for character in data["characters"]:
             if character["name"].lower() == character_name.lower():
                 for rarity_block in character["rarities"]:
@@ -131,11 +168,7 @@ class Drop(commands.Cog):
                         return random.choice(urls)
         return ""
 
-    @nextcord.slash_command(
-        name="mycards",
-        description="View your SAJAX cards!",
-        guild_ids=GUILD_ID
-    )
+    @nextcord.slash_command(name="mycards", description="View your SAJAX cards!", guild_ids=GUILD_ID)
     async def mycards(
             self,
             ctx: Interaction,
@@ -147,8 +180,17 @@ class Drop(commands.Cog):
             )
     ):
         user = ctx.user
+
+        if self.db.is_card_muted(str(user.id)):
+            embed = Templates.card_muted()
+            embed.description = f"> You are card muted and cannot view your cards."
+            await ctx.send(embed=embed, ephemeral=True)
+            return
+
         now = time.time()
         last_used = self.mycards_cooldowns.get(user.id, 0)
+        if ctx.guild and ctx.guild.get_member(user.id).guild_permissions.administrator:
+            last_used = 0
 
         if now - last_used < self.MYCARDS_COOLDOWN:
             remaining = round(self.MYCARDS_COOLDOWN - (now - last_used), 1)
@@ -156,20 +198,16 @@ class Drop(commands.Cog):
             embed.description = f"> You're on cooldown! Try again in {remaining}s."
             await ctx.send(embed=embed, ephemeral=True)
             return
-
         self.mycards_cooldowns[user.id] = now
-
         user_data = self.db.get_user(str(user.id))
         cards = user_data.get("characters", [])
-
         if not cards:
             embed = Templates.drop_error()
             embed.description = "> You have no cards yet! Try using `/drop` to summon some."
             await ctx.send(embed=embed, ephemeral=True)
             return
-
         if mode == "menu":
-            view = CardMenuView(cards, Templates)
+            view = CardMenuView(cards, Templates, user.id)
             message = await ctx.send(embed=Templates.card_details(
                 cards[0].get('name', 'Unknown'),
                 cards[0].get('rarity', cards[0].get('top_rarity', 'Unknown')),
@@ -181,28 +219,56 @@ class Drop(commands.Cog):
             )
             view.message = message
         else:
-            view = CardPageView(cards, Templates)
+            view = CardPageView(cards, Templates, user.id)
             await ctx.send(embed=view.generate_embed(), view=view, ephemeral=True)
 
-    @nextcord.slash_command(
-        name="drop",
-        description="Summon your next SAJAX cards with this command!",
-        guild_ids=GUILD_ID,
-    )
-    async def drop(self, interaction: nextcord.Interaction):
-        user = interaction.user
-        now = time.time()
-        last_used = self.cooldowns.get(user.id, 0)
+    @nextcord.slash_command(name="myshards", description="View your current shard count", guild_ids=GUILD_ID)
+    async def myshards(self, ctx: Interaction):
+        user = ctx.user
 
-        if interaction.guild and interaction.guild.get_member(user.id).guild_permissions.administrator:
+        if self.db.is_card_muted(str(user.id)):
+            embed = Templates.card_muted()
+            embed.description = f"> You are card muted and cannot view your shards."
+            await ctx.send(embed=embed, ephemeral=True)
+            return
+
+        now = time.time()
+        last_used = self.myshards_cooldowns.get(user.id, 0)
+        if ctx.guild and ctx.guild.get_member(user.id).guild_permissions.administrator:
             last_used = 0
 
+        if now - last_used < self.MYSHARDS_COOLDOWN:
+            remaining = round(self.MYSHARDS_COOLDOWN - (now - last_used), 1)
+            embed = Templates.drop_error()
+            embed.description = f"> You're on cooldown! Try again in {remaining}s."
+            await ctx.send(embed=embed, ephemeral=True)
+            return
+        self.myshards_cooldowns[user.id] = now
+        shards = self.db.get_shards(str(user.id))
+        embed = Templates.drop_success()
+        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Your Shards ｡☁︎ﾟ｡⋆`"
+        embed.description = f"> You currently have **{shards}** shards."
+        await ctx.send(embed=embed, ephemeral=True)
+
+    @nextcord.slash_command(name="drop", description="Summon your next SAJAX cards with this command!", guild_ids=GUILD_ID)
+    async def drop(self, interaction: nextcord.Interaction):
+        user = interaction.user
+
+        if self.db.is_card_muted(str(user.id)):
+            embed = Templates.card_muted()
+            embed.description = f"> You are card muted and cannot view your cards."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        now = time.time()
+        last_used = self.cooldowns.get(user.id, 0)
+        if interaction.guild and interaction.guild.get_member(user.id).guild_permissions.administrator:
+            last_used = 0
         if user.id in self.queued_users:
             embed = Templates.drop_error()
             embed.description = "> You are already in the drop queue! Please wait for your turn."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
-
         if now - last_used < self.COOLDOWN_SECONDS:
             remaining = int(self.COOLDOWN_SECONDS - (now - last_used))
             mins, secs = divmod(remaining, 60)
@@ -210,7 +276,6 @@ class Drop(commands.Cog):
             embed.description = f"> You're on cooldown! Try again in {mins}m {secs}s."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
-
         self.cooldowns[user.id] = now
         embed = Templates.drop_summon()
         await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -219,123 +284,163 @@ class Drop(commands.Cog):
         return
 
     @nextcord.slash_command(
-        name="admin_drop",
-        description="Admin-only version of drop that allows setting drop amount.",
+        name="addcard",
+        description="Add a specific card to a user’s collection (Admin only)",
         guild_ids=GUILD_ID,
         default_member_permissions=nextcord.Permissions(administrator=True)
     )
-    async def admin_drop(
+    async def addcard(
             self,
             interaction: nextcord.Interaction,
-            amount: int = SlashOption(
-                description="Number of cards to summon",
-                required=False,
-                default=10
-            )
+            character_name: str = SlashOption(description="Character name to add", required=True),
+            rarity: str = SlashOption(
+                description="Rarity of the character (B, A, R, UR)",
+                required=True,
+                choices={"B": "B", "A": "A", "R": "R", "UR": "UR"}
+            ),
+            target: nextcord.User = SlashOption(description="User to give the card to", required=False, default=None)
     ):
-        user = interaction.user
+        user = target or interaction.user
+        user_id_str = str(user.id)
 
+        try:
+            with open(self.characters_json_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            embed = Templates.drop_error()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Error Loading Characters ｡☁︎ﾟ｡⋆`"
+            embed.description = "> Could not load characters data file."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        character = next((char for char in data if char.get("name", "").lower() == character_name.lower()), None)
+
+        if not character:
+            embed = Templates.drop_error()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Invalid Character ｡☁︎ﾟ｡⋆`"
+            embed.description = f"> Could not find character with name `{character_name}`."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        thumbnail_url = self.assign_thumbnail(character.get("name", ""), rarity)
+
+        character_data = character.copy()
+        character_data["rarity"] = rarity
+        if thumbnail_url:
+            character_data["thumbnail_url"] = thumbnail_url
+
+        if not self.db.get_user(user_id_str):
+            self.db.insert_user(user_id_str)
+
+        if self.db.is_card_muted(user_id_str):
+            embed = Templates.card_muted()
+            embed.description = f"> {user.mention} is card muted and cannot receive cards."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        self.db.add_character(user_id_str, character_data)
+        self.db.add_card(user_id_str, character.get("character_id"))
+
+        embed = Templates.drop_success()
+        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Added! ｡☁︎ﾟ｡⋆`"
+        if user == interaction.user:
+            embed.description = f"> Successfully added **{character.get('name', 'Unknown')}** ({rarity}) to your collection."
+        else:
+            embed.description = f"> Successfully added **{character.get('name', 'Unknown')}** ({rarity}) to {user.mention}'s collection."
+        if thumbnail_url:
+            embed.set_image(url=thumbnail_url)
+
+        if target and target != interaction.user:
+            try:
+                dm = await target.create_dm()
+                dm_embed = Templates.drop_success()
+                dm_embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Added! ｡☁︎ﾟ｡⋆`"
+                dm_embed.description = f"> You have received **{character.get('name', 'Unknown')}** ({rarity}) from {interaction.user.mention}."
+                if thumbnail_url:
+                    dm_embed.set_image(url=thumbnail_url)
+                await dm.send(embed=dm_embed)
+            except nextcord.Forbidden:
+                print(f"Could not DM {target}.")
+
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @nextcord.slash_command(name="admin_drop", description="Admin-only version of drop that allows setting drop amount.", guild_ids=GUILD_ID, default_member_permissions=nextcord.Permissions(administrator=True))
+    async def admin_drop(self, interaction: nextcord.Interaction, amount: int = SlashOption(description="Number of cards to summon", required=False, default=10)):
+        user = interaction.user
         if user.id in self.queued_users:
             embed = Templates.drop_error()
             embed.description = "You are already processing a drop! Please wait."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
-
         self.queued_users.add(user.id)
         embed = Templates.drop_summon()
         await interaction.response.send_message(embed=embed, ephemeral=True)
-
         try:
             for _ in range(amount):
                 await self.generate_drop_return_card(user)
-
             embed_success = Templates.drop_success()
-            embed_success.description = (
-                f"> You have received **{amount}** admin dropped cards!\n"
-                "Use `/mycards` to view them."
-            )
-
+            embed_success.description = f"> You have received **{amount}** admin dropped cards!\nUse `/mycards` to view them."
             dm = await user.create_dm()
             await dm.send(embed=embed_success)
-
         except nextcord.Forbidden:
             print(f"Could not DM {user}.")
-
         finally:
             self.queued_users.discard(user.id)
 
     async def generate_drop(self, user):
         from SAJAX.selection import select_random_character
-
         user_id_str = str(user.id)
         if not self.db.get_user(user_id_str):
             self.db.insert_user(user_id_str)
-
         formatted_drop = select_random_character()
         formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
         character = formatted_drop["character"]
         rarity_key = formatted_drop["rarity"]
         rarity = formatted_rarity[rarity_key]
-
-        print(f"{user}, You pulled a {rarity} character: {character['name']}")
-
         thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
         character_with_rarity = character.copy()
         character_with_rarity["rarity"] = rarity_key
         if thumbnail_url:
             character_with_rarity["thumbnail_url"] = thumbnail_url
-
         self.db.add_character(user_id_str, character_with_rarity)
         self.db.add_card(user_id_str, character["character_id"])
-
         embed = Templates.drop_summon()
         embed.title = f"You pulled a {rarity} character!"
         embed.description = f"{character['name']}"
         if thumbnail_url:
             embed.set_thumbnail(url=thumbnail_url)
-
         return embed
 
     async def generate_drop_return_card(self, user):
         from SAJAX.selection import select_random_character
-
         user_id_str = str(user.id)
         if not self.db.get_user(user_id_str):
             self.db.insert_user(user_id_str)
-
         formatted_drop = select_random_character()
         formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
-
         character = formatted_drop["character"]
         rarity_key = formatted_drop["rarity"]
         rarity = formatted_rarity[rarity_key]
-
         thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
         character_with_rarity = character.copy()
         character_with_rarity["rarity"] = rarity_key
         if thumbnail_url:
             character_with_rarity["thumbnail_url"] = thumbnail_url
-
         self.db.add_character(user_id_str, character_with_rarity)
         self.db.add_card(user_id_str, character["character_id"])
-
         return character_with_rarity, rarity
 
     @tasks.loop(seconds=0.5)
     async def process_queue(self):
         if self.queue.empty() or self.processing:
             return
-
         self.processing = True
         user, amount = await self.queue.get()
-
         try:
             for _ in range(amount):
                 await self.generate_drop(user)
-
             self.db.add_shards(str(user.id), 20)
             self.queued_users.discard(user.id)
-
             async def notify_user_drop_complete(user):
                 try:
                     dm = await user.create_dm()
@@ -343,9 +448,7 @@ class Drop(commands.Cog):
                     await dm.send(embed=embed)
                 except nextcord.Forbidden:
                     print(f"Could not DM {user}.")
-
             asyncio.create_task(notify_user_drop_complete(user))
-
         finally:
             self.processing = False
             await asyncio.sleep(1)

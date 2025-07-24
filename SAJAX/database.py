@@ -26,7 +26,7 @@ class Database:
     def insert_user(self, user_id: str):
         user_id = str(user_id)
         # Removed cache check here
-        user = {"user_id": user_id, "cards": [], "shards": 0, "characters": []}
+        user = {"user_id": user_id, "cards": [], "shards": 0, "characters": [], "card_mute": False}
         self.users.insert_one(user)
         return user
 
@@ -34,9 +34,14 @@ class Database:
         user_id = str(user_id)
         user = self.users.find_one({"user_id": user_id})
         if not user:
-            user = {"user_id": user_id, "cards": [], "shards": 0, "characters": []}
+            user = {"user_id": user_id, "cards": [], "shards": 0, "characters": [], "card_mute": False}
             self.users.insert_one(user)
         return user
+
+    def get_shards(self, user_id: str):
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+        return user.get("shards", 0)
 
     def remove_character_and_card(self, user_id: str, character_data):
         user_id = str(user_id)
@@ -70,6 +75,32 @@ class Database:
             {"$set": {"characters": [], "cards": []}},
             upsert=True
         )
+
+    def card_mute(self, user_id: str):
+        user_id = str(user_id)
+        self.users.update_one(
+            {"user_id": user_id},
+            {"$set": {"card_mute": True}},
+            upsert=True
+        )
+
+    def card_unmute(self, user_id: str):
+        user_id = str(user_id)
+        self.users.update_one(
+            {"user_id": user_id},
+            {"$set": {"card_mute": False}},
+            upsert=True
+        )
+
+    def card_mute_status(self, user_id: str):
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+        return user.get("card_mute", False)
+
+    def is_card_muted(self, user_id: str):
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+        return user.get("card_mute", False)
 
     def update_user(self, user_id: str, update_data):
         user_id = str(user_id)

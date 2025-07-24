@@ -42,7 +42,7 @@ class Templates:
             color=nextcord.Color.from_rgb(221, 160, 221)  # Light lavender tone
         )
         embed.set_image(
-            url="https://cdn.discordapp.com/attachments/1389302090303803433/1397020148719812728/Pc_Wallpaper_Gif_Anime_Aesthetic.gif"
+            url="https://cdn.discordapp.com/attachments/1382048543061315674/1395253225619324959/tumblr_3d4d8e88060f1f0bd5fb426f80663ba7_9dd63a95_540-ezgif.com-crop.gif?ex=6883a993&is=68825813&hm=5626e1cbf6c69f4a3a920578031896603ec6c1e4daaa71f0d4af90866f5f10af&"
         )
         embed.set_footer(text="Hang tight, your drop is materializing ✧")
         return embed
@@ -94,7 +94,7 @@ class Templates:
     @staticmethod
     def sell_prompt(matching: list):
         desc = "\n".join(
-            f"**{i + 1}.** ✦ `{c['name']}` — {convert_rarity(c.get('rarity', c.get('top_rarity', '?')))}"
+            f"**{i + 1}.** ✦ `{c['name']}` — {convert_huntrix_ur(group=c.get('group', 'Unknown'), rarity=c.get('rarity', 'Unknown'))} "
             for i, c in enumerate(matching)
         )
 
@@ -111,7 +111,7 @@ class Templates:
         embed = Embed(
             title=f"`⋆｡ﾟ☁︎｡𖦹 Sell Confirmation ｡☁︎ﾟ｡⋆`",
             description=(
-                f"**Name:** {convert_fire(char.get('rarity'))}  **{char['name']}**\n"
+                f"**Name:** **{char['name']}**\n"
                 f"**Rarity:** {convert_huntrix_ur(group=char.get('group'), rarity=char.get('rarity'))}\n"
                 f"**Group:** {char.get('group', 'Unknown')}\n\n"
                 "Click ✅ to confirm or ❌ to cancel."
@@ -170,19 +170,29 @@ class Templates:
             description=f"> {desc.replace('â€™', '')}",
             color=Color.from_rgb(255, 228, 225)
         )
-        embed.add_field(name=f"Rarity: {rarity}", value=convert_huntrix_ur(group=group, rarity=rarity), inline=True)
+        embed.add_field(name=f"{convert_huntrix_ur(group=group, rarity=rarity)} Rarity: {rarity}", value="", inline=True)
         if thumbnail_url:
             embed.set_image(url=thumbnail_url)
         embed.set_footer(text=f"Explore the world of SAJAX!  🍥")
         return embed
 
+    @staticmethod
+    def card_muted():
+        embed = Embed(
+            title="`⋆｡ﾟ☁︎｡𖦹 Card Muted ｡☁︎ﾟ｡⋆`",
+            description="> 🍥 **Card Muted!** You won't be able to use, gift, or pay with cards.\n",
+            color=Color.from_rgb(255, 153, 102)
+        )
+        embed.set_footer(text="If you have any questions, please contact the SAJAX team! ♡")
+        return embed
+
 def convert_rarity(rarity):
     convert_rarity = {"B": Templates.rarity_emojis[0],
-                      "A": Templates.rarity_emojis[1] * 2,
-                      "R": Templates.rarity_emojis[2] * 3,
-                      "UR": Templates.rarity_emojis[3] * 4}
+                      "A": Templates.rarity_emojis[1],
+                      "R": Templates.rarity_emojis[2],
+                      "UR": Templates.rarity_emojis[3]}
     if rarity == "UR+":
-        return Templates.rarity_emojis[4] * 4
+        return Templates.rarity_emojis[4]
     return convert_rarity.get(rarity)
 
 def convert_fire(rarity):

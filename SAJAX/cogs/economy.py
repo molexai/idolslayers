@@ -1,0 +1,241 @@
+import time
+import nextcord
+from Tools.demo.mcast import sender
+from nextcord import SlashOption, Interaction, ButtonStyle, SelectOption
+from nextcord.ext import commands
+from nextcord.ui import View, button, Button, Select
+
+from SAJAX.database import Database
+from SAJAX.templates import Templates
+
+GUILD_ID = [1387525150752378940, 1389313345986756708, 1369853145827770368]
+
+class EconomyCog(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.db = Database()
+        self.cooldowns = {}
+        self.PAY_COOLDOWN = 10
+        self.GIFT_COOLDOWN = 15
+
+    @nextcord.slash_command(
+        name="pay",
+        description="Pay shards to another user.",
+        guild_ids=GUILD_ID
+    )
+    async def pay(self, interaction: Interaction,
+                  target: nextcord.Member = SlashOption(description="User to pay"),
+                  amount: int = SlashOption(description="Amount of shards to pay", min_value=1)):
+        payer = interaction.user
+        payer_id = str(payer.id)
+        target_id = str(target.id)
+
+        if self.db.is_card_muted(str(payer.id)):
+            embed = Templates.card_muted()
+            embed.description = f"> You are card muted and cannot view your cards."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        if payer.id == target.id:
+            embed = Templates.drop_error()
+            embed.description = "> You cannot pay shards to yourself."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        now = time.time()
+        last_used = self.cooldowns.get(payer.id, 0)
+        if interaction.guild and interaction.guild.get_member(payer.id).guild_permissions.administrator:
+            last_used = 0
+
+        if now - last_used < self.PAY_COOLDOWN:
+            remaining = round(self.PAY_COOLDOWN - (now - last_used), 1)
+            embed = Templates.drop_error()
+            embed.description = f"> You're on cooldown! Try again in {remaining}s."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        self.cooldowns[payer.id] = now
+
+        payer_data = self.db.get_user(payer_id)
+        payer_shards = payer_data.get("shards", 0)
+
+        if payer_shards < amount:
+            embed = Templates.drop_error()
+            embed.description = f"> You don't have enough shards to pay {amount}."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        class PayConfirmView(View):
+            def __init__(self, db, payer_id, target_id, amount):
+                super().__init__(timeout=60)
+                self.db = db
+                self.payer_id = payer_id
+                self.target_id = target_id
+                self.amount = amount
+                self.bot = interaction.client
+
+            @button(label="✅ Confirm", style=ButtonStyle.success)
+            async def confirm(self, button: Button, i: Interaction):
+                payer_latest = self.db.get_user(self.payer_id)
+                if payer_latest.get("shards", 0) < self.amount:
+                    embed = Templates.drop_error()
+                    embed.description = "> You no longer have enough shards to complete this payment."
+                    await i.response.edit_message(embed=embed, view=None)
+                    self.stop()
+                    return
+
+                self.db.add_shards(self.payer_id, -self.amount)
+                self.db.add_shards(self.target_id, self.amount)
+                embed = Templates.drop_success()
+                embed.description = f"> Successfully paid {self.amount} shards to {target.display_name}."
+                embed.set_footer(text=f"Payment made by {payer.display_name}.")
+                target_user = self.bot.get_user(int(self.target_id))
+                if target_user:
+                    dm_embed = Templates.drop_success()
+                    dm_embed.description = f"> You received **{self.amount} shards** from **{payer.display_name}**."
+                    await target_user.send(embed=dm_embed)
+                await i.response.edit_message(embed=embed, view=None)
+                self.stop()
+
+            @button(label="❌ Cancel", style=ButtonStyle.danger)
+            async def cancel(self, button: Button, i: Interaction):
+                embed = Templates.drop_error()
+                embed.description = "> Payment cancelled."
+                await i.response.edit_message(embed=embed, view=None)
+                self.stop()
+
+        embed = Templates.drop_summon()
+        embed.title = "Payment Confirmation"
+        embed.description = f"Do you want to pay **{amount} shards** to **{target.display_name}**?"
+        await interaction.response.send_message(embed=embed, view=PayConfirmView(self.db, payer_id, target_id, amount), ephemeral=True)
+
+    @nextcord.slash_command(
+        name="gift",
+        description="Gift a card to another user.",
+        guild_ids=GUILD_ID
+    )
+    async def gift(self, interaction: Interaction,
+                   target: nextcord.Member = SlashOption(description="User to gift"),
+                   character: str = SlashOption(description="Name of the character to gift")):
+        sender = interaction.user
+        sender_id = str(sender.id)
+        target_id = str(target.id)
+
+        if self.db.is_card_muted(str(sender.id)):
+            embed = Templates.card_muted()
+            embed.description = f"> You are card muted and cannot view your cards."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        if sender.id == target.id:
+            embed = Templates.drop_error()
+            embed.description = "> You cannot gift cards to yourself."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        now = time.time()
+        last_used = self.cooldowns.get(sender.id, 0)
+        if interaction.guild and interaction.guild.get_member(sender.id).guild_permissions.administrator:
+            last_used = 0
+
+        if now - last_used < self.GIFT_COOLDOWN:
+            remaining = round(self.GIFT_COOLDOWN - (now - last_used), 1)
+            embed = Templates.drop_error()
+            embed.description = f"> You're on cooldown! Try again in {remaining}s."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        self.cooldowns[sender.id] = now
+
+        sender_data = self.db.get_user(sender_id)
+        characters = sender_data.get("characters", [])
+
+        character_name = character.strip().lower()
+        matching = [c for c in characters if c.get("name", "").strip().lower() == character_name]
+
+        if not matching:
+            embed = Templates.drop_error()
+            embed.description = f"> You don't have any cards named **{character}**."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        options = [
+            SelectOption(
+                label=f"{i+1}. {c['name']}",
+                description=f"Rarity: {c.get('rarity', c.get('top_rarity','?'))}",
+                value=str(i)
+            ) for i, c in enumerate(matching)
+        ]
+
+        class CharacterSelect(Select):
+            def __init__(self, db, sender_id, target_id, matching):
+                super().__init__(
+                    placeholder="Select which character to gift…",
+                    min_values=1,
+                    max_values=1,
+                    options=options
+                )
+                self.db = db
+                self.sender_id = sender_id
+                self.target_id = target_id
+                self.matching = matching
+
+            async def callback(self, ctx: Interaction):
+                idx = int(self.values[0])
+                selected_card = self.matching[idx]
+
+                current_chars = self.db.get_characters(self.sender_id)
+                if selected_card not in current_chars:
+                    embed = Templates.drop_error()
+                    embed.description = "> You no longer own that card."
+                    return await ctx.response.edit_message(embed=embed, view=None)
+
+                class GiftConfirmView(View):
+                    def __init__(self, target_id, sender_id):
+                        self.db = Database()
+                        self.target_id = target_id
+                        self.sender_id = sender_id
+                        self.bot = ctx.client
+                        super().__init__()
+
+                    @button(label="✅ Yes, gift this card", style=ButtonStyle.success)
+                    async def confirm(self, button: Button, i: Interaction):
+                        current_chars = self.db.get_characters(self.sender_id)
+                        if selected_card not in current_chars:
+                            embed = Templates.drop_error()
+                            embed.description = "> You no longer own that card."
+                            return await i.response.edit_message(embed=embed, view=None)
+
+                        self.db.remove_character_and_card(self.sender_id, selected_card)
+                        self.db.add_character(self.target_id, selected_card)
+                        self.db.add_card(self.target_id, selected_card.get("character_id"))
+
+                        embed = Templates.drop_success()
+                        embed.description = f"> Successfully gifted **{selected_card.get('name')}** to {target.display_name}!"
+                        embed.set_image(url=selected_card.get("thumbnail_url", None))
+
+                        target_user = self.bot.get_user(int(self.target_id))
+                        if target_user:
+                            dm_embed = Templates.drop_success()
+                            dm_embed.set_image(url=selected_card.get("thumbnail_url", None))
+                            dm_embed.description = f"> You received a gift from **{sender.display_name}**: **{selected_card.get('name')}**!"
+                            await target_user.send(embed=dm_embed)
+                        await i.response.edit_message(embed=embed, view=None)
+
+                    @button(label="❌ Cancel", style=ButtonStyle.danger)
+                    async def cancel(self, button: Button, i: Interaction):
+                        embed = Templates.drop_error()
+                        embed.description = "> Gift cancelled."
+                        await i.response.edit_message(embed=embed, view=None)
+
+                embed = Templates.card_details(
+                    selected_card.get("name", "Unknown"),
+                    selected_card.get("rarity", selected_card.get("top_rarity", "Unknown")),
+                    selected_card.get("description", "No description."),
+                    selected_card.get("group", "Unknown"),
+                    selected_card.get("thumbnail_url", None)
+                )
+                embed.set_footer(text=f"Do you want to gift this card to {target.display_name}?")
+                await ctx.response.edit_message(embed=embed, view=GiftConfirmView(target_id=self.target_id, sender_id=self.sender_id))
+
+        view = View(timeout=60)
+        view.add_item(CharacterSelect(self.db, sender_id, target_id, matching))
+
+        embed = Templates.drop_summon()
+        embed.title = f"Select which '{character}' to gift to {target.display_name}"
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+
+def setup(bot):
+    bot.add_cog(EconomyCog(bot))

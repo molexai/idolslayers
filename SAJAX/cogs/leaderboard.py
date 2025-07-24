@@ -8,7 +8,7 @@ from nextcord.ext import commands
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = [1387525150752378940, 1389313345986756708]
+GUILD_ID = [1387525150752378940, 1389313345986756708, 1369853145827770368]
 
 class LeaderboardCog(commands.Cog):
     def __init__(self, bot):
@@ -40,6 +40,8 @@ class LeaderboardCog(commands.Cog):
         user = interaction.user
         now = time.time()
         last_used = self.leaderboard_cooldowns.get(user.id, 0)
+        if interaction.guild and interaction.guild.get_member(user.id).guild_permissions.administrator:
+            last_used = 0
 
         if now - last_used < self.LEADERBOARD_COOLDOWN:
             remaining = round(self.LEADERBOARD_COOLDOWN - (now - last_used), 1)
