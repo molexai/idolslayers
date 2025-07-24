@@ -51,10 +51,10 @@
     "rarity": ""
   },
   {
-    "name": "Rumi's Mom (Eun-hee)",
+    "name": "Rumi's Mom",
     "character_id": "rumis_mom",
     "thumbnail_url": "",
-    "top_rarity": "R",
+    "top_rarity": "A",
     "lowest_rarity": "B",
     "group": "Huntrix",
     "description": "Looks like she bakes cookies. Actually drop-kicked a demon through a shrine once. Don’t test her or her kimchi.",
@@ -94,7 +94,7 @@
     "name": "Crying Demon",
     "character_id": "crying_demon",
     "thumbnail_url": "",
-    "top_rarity": "R",
+    "top_rarity": "A",
     "lowest_rarity": "B",
     "group": "Demons",
     "description": "Just here to cry and vibe. Didn’t even want to join the demon war, he was just looking for emotional support.",

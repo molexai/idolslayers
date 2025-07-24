@@ -55,10 +55,10 @@
       ]
     },
     {
-      "name": "Rumi's Mom (Eun-hee)",
+      "name": "Rumi's Mom",
       "rarities": [
-        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796629851017376/Untitled90_20250723232424.png?ex=6883070e&is=6881b58e&hm=5af9b61226d65a607ac818fb4883f472ca3ddf0b92a05423024dbb9a1543f640&"},
+        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796630773628928/Untitled90_20250723231404.png?ex=6883070e&is=6881b58e&hm=e7f964ba4a6d5617b2f302a68c43d8fd5f69510dc9d4cdf014d2b6bbe423b5b2&"},
         { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
       ]
     },
@@ -92,8 +92,8 @@
     {
       "name": "Crying Demon",
       "rarities": [
-        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
+        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796630362591363/Untitled90_20250723232317.png?ex=6883070e&is=6881b58e&hm=89880550644684ee55a6f1f5f3a74c1f1ce03e18ab3ba2bff4cb1ffc63c462e9&"},
+        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796629515603979/Untitled90_20250723231641.png?ex=6883070e&is=6881b58e&hm=2b312b8e01cc10b14826c558e0d8cf63cb77faf4cc39fd5ed2dfb7ecc915303e&"},
         { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
       ]
     },
