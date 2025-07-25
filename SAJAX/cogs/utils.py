@@ -31,15 +31,13 @@ class Utils(commands.Cog):
                 embed = Templates.drop_error()
                 embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
                 embed.description = "> You do not have permission to use this command."
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-                return
+                return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         if self.db.is_card_muted(str(user.id)):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Something went wrong...｡☁︎ﾟ｡⋆`"
             embed.description = f"{user.mention} is already card muted."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         self.db.card_mute(str(user.id))
 
@@ -68,15 +66,13 @@ class Utils(commands.Cog):
                 embed = Templates.drop_error()
                 embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
                 embed.description = "> You do not have permission to use this command."
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-                return
+                return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         if not self.db.is_card_muted(str(user.id)):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Something went wrong...｡☁︎ﾟ｡⋆`"
             embed.description = f"{user.mention} is not card muted."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         self.db.card_unmute(str(user.id))
 
@@ -103,14 +99,12 @@ class Utils(commands.Cog):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
         if user.id == self.bot.user.id:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Something went wrong...｡☁︎ﾟ｡⋆`"
             embed.description = "You cannot reset the bot's data."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
         db = Database()
         self.db.remove_all_characters(str(user.id))
         self.db.update_user(str(user.id), {

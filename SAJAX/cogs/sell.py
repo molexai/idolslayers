@@ -180,7 +180,5 @@ class SellCog(commands.Cog):
 
         await interaction.response.send_message(embed=confirm_embed, view=ConfirmSellAll(), ephemeral=True)
 
-
-
 def setup(bot):
     bot.add_cog(SellCog(bot))
