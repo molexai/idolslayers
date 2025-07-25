@@ -25,8 +25,8 @@ class Database:
 
     def insert_user(self, user_id: str):
         user_id = str(user_id)
-        # Removed cache check here
-        user = {"user_id": user_id, "cards": [], "shards": 0, "characters": [], "card_mute": False}
+        user = {"user_id": user_id, "cards": [], "shards": 0, "characters": [], "card_mute": False,
+                "quests": []}
         self.users.insert_one(user)
         return user
 
@@ -34,7 +34,8 @@ class Database:
         user_id = str(user_id)
         user = self.users.find_one({"user_id": user_id})
         if not user:
-            user = {"user_id": user_id, "cards": [], "shards": 0, "characters": [], "card_mute": False}
+            user = {"user_id": user_id, "cards": [], "shards": 0, "characters": [], "card_mute": False,
+                    "quests": []}
             self.users.insert_one(user)
         return user
 
@@ -42,6 +43,17 @@ class Database:
         user_id = str(user_id)
         user = self.get_user(user_id)
         return user.get("shards", 0)
+
+    def get_enabled_items(self, user_id: str):
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+        return user.get("enabled_items", [])
+
+    def is_enabled(self, user_id: str, item_key: str):
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+        enabled_items = user.get("enabled_items", [])
+        return item_key in enabled_items
 
     def remove_character_and_card(self, user_id: str, character_data):
         user_id = str(user_id)
@@ -125,6 +137,22 @@ class Database:
             {"$push": {"cards": card}},
             upsert=True
         )
+
+    def update_existing_character(self, user_id: str, original_data: dict, new_data: dict) -> bool:
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+        characters = user.get("characters", [])
+
+        for i, char in enumerate(characters):
+            if char == original_data:
+                characters[i].update(new_data)
+                self.users.update_one(
+                    {"user_id": user_id},
+                    {"$set": {"characters": characters}},
+                    upsert=True
+                )
+                return True
+        return False
 
     def add_character(self, user_id: str, character):
         user_id = str(user_id)

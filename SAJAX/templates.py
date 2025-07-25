@@ -1,11 +1,22 @@
 import json
-from datetime import datetime
+import os
 
 import nextcord
 from nextcord import Embed, Color
 
-from SAJAX.database import Database
 
+def get_emoji(emoji_name: str):
+    """
+    Fetches an emoji from the emojis.json file.
+    """
+    with open(Templates.emojis_path, 'r') as f:
+        data = json.load(f)
+
+    for emoji in data.get("emojis", []):
+        if emoji.get("name") == emoji_name:
+            return emoji.get("emoji_id")
+
+    return f":{emoji_name}:"
 
 class Templates:
     pastel_emojis = [
@@ -31,6 +42,8 @@ class Templates:
         "<a:z_sajaboysfirepink_DNS:1397628076086657194>",
         "<a:z_sajaboysfirepurple_DNS:1397628093258272838>"
     ]
+
+    emojis_path = os.path.join(os.path.dirname(__file__), "data/emojis.json")
 
     @staticmethod
     def drop_summon():
@@ -185,6 +198,67 @@ class Templates:
         )
         embed.set_footer(text="If you have any questions, please contact the SAJAX team! ♡")
         return embed
+
+    @staticmethod
+    def shop_display():
+        embed = Embed(
+            title="`⋆｡ﾟ☁︎｡𖦹 SAJAX Shop ｡☁︎ﾟ｡⋆`",
+            description=(
+                f"> {Templates.pastel_emojis[5]} Welcome to the SAJAX Shop! "
+                "Browse our powerful items designed to help you become the ultimate K-pop demon hunter.\n"
+                "Select an item below and press `Buy` to add it to your arsenal.\n\n"
+            ),
+            color=Color.from_rgb(255, 255, 224)
+        )
+        shard = get_emoji('shard_non_pink')
+
+        embed.add_field(
+            name="Items for Sale",
+            value=(
+                f"{get_emoji('giftbox')} **Drop Booster**           — (100 shards) {shard}\n\n"
+                f"{get_emoji('chest')} **Card Reroll (1 use)**             — (250 shards) {shard}\n\n"
+                f"{get_emoji('clock')} **Drop Cooldown Reducer**   — (350 shards) {shard}\n\n"
+                f"{shard} **Shard Multiplier**             — (400 shards) {shard}\n\n"
+                f"{get_emoji('spinning_heart')} **Double Drop Chance**    — (550 shards) {shard}\n\n"
+                f"{get_emoji('up')} **Drop Queue Priority**      — (600 shards) {shard}\n\n"
+                f"{get_emoji('verified')} **Auto Drop (Soon)**              — (1200 shards) {shard}"
+            ),
+            inline=False
+        )
+
+        embed.set_footer(text="Happy hunting! ♡")
+        return embed
+
+    @staticmethod
+    def shop_item_details(item_name, price, description):
+        embed = Embed(
+            title=f"`⋆｡ﾟ☁︎｡𖦹 {item_name} Details ｡☁︎ﾟ｡⋆`",
+            description=f"> {description}",
+            color=Color.from_rgb(255, 228, 225)
+        )
+        embed.add_field(name="Price", value=f"{price} shards {get_emoji('shard_non_pink')}", inline=True)
+        embed.set_footer(text="Thanks for shopping with SAJAX! ♡")
+        return embed
+
+    @staticmethod
+    def item_details(item_name, worth, description):
+        embed = Embed(
+            title=f"`⋆｡ﾟ☁︎｡𖦹 {item_name} ｡☁︎ﾟ｡⋆`",
+            description=f"> {description}",
+            color=Color.from_rgb(255, 228, 225)
+        )
+        embed.add_field(name="Worth", value=f"{worth}{get_emoji('shard_non_pink')}", inline=True)
+        embed.set_footer(text="Thanks for shopping with SAJAX! ♡")
+        return embed
+
+    @staticmethod
+    def item_used(item_name: str):
+        return Embed(
+            title="`⋆｡ﾟ☁︎｡𖦹 Item Used ｡☁︎ﾟ｡⋆`",
+            description=f"> You successfully used `{item_name.replace('_', ' ').title()}`.",
+            color=Color.from_rgb(173, 216, 230)
+        )
+
 
 def convert_rarity(rarity):
     convert_rarity = {"B": Templates.rarity_emojis[0],

@@ -1,0 +1,56 @@
+{
+  "emojis": [
+    {
+      "name": "shard_non_pink",
+      "emoji_id": "<:shardDeveloper:1398342916799332543>"
+    },
+    {
+      "name": "arrow_pink",
+      "emoji_id": "<:z_arrowpink:1397021931454205963>"
+    },
+    {
+      "name": "box_dot",
+      "emoji_id": "<:z_whitedot:1397637373399138324>"
+    },
+    {
+      "name": "giftbox",
+        "emoji_id": "<:giftbox:1398342283362963588>"
+    },
+    {
+      "name": "money",
+      "emoji_id": "<:money:1398343118092501062>"
+    },
+    {
+      "name": "money_bag",
+      "emoji_id": "<:money_bag:1398343236644372590>"
+    },
+    {
+      "name": "makane_zoey",
+      "emoji_id": "<:003_maknaezoey:1398348030608019566>"
+    },
+    {
+      "name": "star",
+      "emoji_id": "<:star:1398343259495071826>"
+    },
+    {
+      "name": "chest",
+      "emoji_id": "<:h_locker:1398342636141805739>"
+    },
+    {
+      "name": "clock",
+      "emoji_id": "<:clockmc:1398342772338983002>"
+    },
+    {
+      "name": "spinning_heart",
+      "emoji_id": "<a:red_spinning_heart:1398342417882546277>"
+    },
+    {
+      "name": "up",
+      "emoji_id": "<:up:1398343163055177908>"
+    },
+    {
+      "name": "verified",
+      "emoji_id": "<a:verified:1398353017924747274>"
+    }
+  ]
+}

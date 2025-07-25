@@ -1,0 +1,86 @@
+{
+  "quests": [
+    {
+      "id": "quest_1",
+      "name": "The Kindness of Strangers",
+      "description": "Kindness is a powerful force, even in the face of darkness. Help Rumi and her friends spread kindness to those in need.",
+      "requirements": [
+        "Gift 10 Huntrix based characters to random users",
+        "Pay 3 random users 100 shards each"
+      ],
+      "rewards": [
+        {
+          "type": "character",
+          "character_id": "old_traditional_demon_slayer",
+          "rarity": "UR"
+        },
+        {
+          "type": "item",
+          "item_id": "demon_slayer_sword",
+          "rarity": "R"
+        }
+      ]
+    },
+    {
+      "id": "quest_2",
+      "name": "The Power of Friendship",
+      "description": "Friendship can overcome any obstacle. Help Rumi and her friends strengthen their bonds.",
+      "requirements": [
+        "Gift 5 UR characters to your friends",
+        "Pay 2 friends 150 shards each"
+      ],
+      "rewards": [
+        {
+          "type": "character",
+          "character_id": "rumi",
+          "rarity": "UR"
+        },
+        {
+          "type": "item",
+          "item_id": "friendship_bracelet",
+          "rarity": "R"
+        }
+      ]
+    },
+    {
+      "id": "quest_3",
+      "name": "The Resilient Spender",
+      "description": "Sometimes, spending shards wisely can lead to great rewards. But there's nothing wrong with a little splurge now and then.",
+      "requirements": [
+        "Spend 500 shards in the shop"
+      ],
+      "rewards": [
+        {
+          "type": "character",
+          "character_id": "mira",
+          "rarity": "UR"
+        },
+        {
+          "type": "item",
+          "item_id": "demon_slayer_healing_staff",
+          "rarity": "R"
+        }
+      ]
+    },
+    {
+      "id": "quest_4",
+      "name": "The Dance of Victory",
+      "description": "Victory is sweeter when celebrated with friends. Help Rumi and her friends dance their way to victory.",
+      "requirements": [
+        "Win 3 battles with Huntrix characters in your team"
+      ],
+      "rewards": [
+        {
+          "type": "character",
+          "character_id": "zoey",
+          "rarity": "UR"
+        },
+        {
+          "type": "item",
+          "item_id": "victory_dance_shoes",
+          "rarity": "R"
+        }
+      ]
+    }
+  ]
+}

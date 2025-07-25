@@ -6,7 +6,7 @@ import nextcord
 from nextcord import SlashOption, Interaction, Embed, Color
 from nextcord.ext import commands
 from SAJAX.database import Database
-from SAJAX.templates import Templates
+from SAJAX.templates import Templates, get_emoji
 
 GUILD_ID = 1369853145827770368
 
@@ -76,7 +76,7 @@ class LeaderboardCog(commands.Cog):
                 shards = doc.get('shards', 0)
                 embed.add_field(
                     name=f"{idx}. {username}",
-                    value=f"💎 **{shards}** shards",
+                    value=f"{get_emoji('shard_non_pink')} **{shards}** shards",
                     inline=False
                 )
         else:
@@ -110,7 +110,7 @@ class LeaderboardCog(commands.Cog):
                 username = member.display_name if member else f"User {uid}"
                 embed.add_field(
                     name=f"{idx}. {username}",
-                    value=f"🗡️ **{stat['count']}** characters — 💰 **{stat['net']}** shards net worth",
+                    value=f"{get_emoji('makane_zoey')} **{stat['count']}** characters — {get_emoji('money_bag')} **{stat['net']}** shards net worth",
                     inline=False
                 )
 

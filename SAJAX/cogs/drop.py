@@ -1,7 +1,7 @@
+from nextcord.ext import commands
 import nextcord
-from nextcord.ext import commands, tasks
 from nextcord import SlashOption, Interaction, ButtonStyle
-from nextcord.ui import View, button, Select, Button
+from nextcord.ui import View, button, Button, Select
 import asyncio
 import time
 import random
@@ -14,21 +14,33 @@ from SAJAX.templates import Templates
 GUILD_ID = 1369853145827770368
 
 class CardPageView(View):
-    def __init__(self, user_cards, templates, owner_id, timeout=180):
+    def __init__(self, user_cards, templates, owner_id, db: Database, timeout=180):
         super().__init__(timeout=timeout)
         self.cards = user_cards
         self.index = 0
         self.templates = templates
         self.owner_id = owner_id
+        self.db = db
         self.displayed_cards = set()
         self.update_buttons()
 
+        self.user_enabled_items = self.db.get_enabled_items(str(owner_id)) or []
+        self.has_reroll = "card_reroll" in self.user_enabled_items
+
+        if self.has_reroll:
+            reroll_button = Button(label="Reroll", style=ButtonStyle.red)
+            reroll_button.callback = self.reroll_callback
+            self.add_item(reroll_button)
+
     def update_buttons(self):
-        self.children[0].disabled = self.index == 0
-        self.children[1].disabled = self.index == len(self.cards) - 1
         for child in self.children:
-            if isinstance(child, Button) and child.custom_id == "display_card":
-                child.disabled = self.index in self.displayed_cards
+            if isinstance(child, Button):
+                if child.label == "Previous":
+                    child.disabled = self.index == 0
+                elif child.label == "Next":
+                    child.disabled = self.index == len(self.cards) - 1
+                elif child.custom_id == "display_card":
+                    child.disabled = self.index in self.displayed_cards
 
     def generate_embed(self):
         card = self.cards[self.index]
@@ -69,6 +81,102 @@ class CardPageView(View):
         embed.set_footer(text=f"Card {self.index + 1} of {len(self.cards)}")
         owner_mention = f"<@{self.owner_id}>"
         await interaction.channel.send(f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**", embed=embed)
+
+    async def reroll_callback(self, interaction: Interaction):
+        if interaction.user.id != self.owner_id:
+            await interaction.response.send_message("You can't use this reroll button.", ephemeral=True)
+            return
+
+        for child in self.children:
+            if isinstance(child, Button) and child.label == "Reroll":
+                child.disabled = True
+        await interaction.response.edit_message(view=self)
+
+        user_id_str = str(self.owner_id)
+        old_card = self.cards[self.index]
+
+        self.db.remove_character_and_card(user_id_str, old_card)
+
+        new_card, rarity_str = await self.generate_drop_return_card(interaction.user)
+
+        self.cards[self.index] = new_card
+
+        enabled_items = self.db.get_enabled_items(user_id_str) or []
+        if "card_reroll" in enabled_items:
+            enabled_items.remove("card_reroll")
+            self.db.update_user(user_id_str, {"enabled_items": enabled_items})
+
+            embed = Templates.drop_success()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Rerolled! ｡☁︎ﾟ｡⋆`"
+            embed.description = (
+                f"> {Templates.pastel_emojis[5]} <@{self.owner_id}>, your card has been rerolled!"
+                f"\nNew card: **{new_card.get('name', 'Unknown')}** with rarity **{rarity_str}**."
+                "\nUse `/mycards` to view it."
+            )
+            embed.set_image(url=new_card.get('thumbnail_url', ''))
+            print(f"[reroll] User {user_id_str} rerolled card {old_card.get('name', 'Unknown')} to {new_card.get('name', 'Unknown')}")
+            await interaction.channel.send(embed=embed)
+        else:
+            embed = Templates.drop_error()
+            embed.description = "> You do not have the Card Rerolls item enabled."
+            await interaction.channel.send(embed=embed)
+            return
+
+        self.clear_items()
+        self.update_buttons()
+        self.add_item(Button(label="Previous", style=ButtonStyle.blurple, disabled=self.index == 0))
+        self.add_item(Button(label="Next", style=ButtonStyle.blurple, disabled=self.index == len(self.cards) - 1))
+        display_btn = Button(label="Display", style=ButtonStyle.green, custom_id="display_card", disabled=False)
+        self.add_item(display_btn)
+
+        async def display_callback(button_interaction: Interaction):
+            card = self.cards[self.index]
+            display_btn.disabled = True
+            await button_interaction.response.edit_message(view=self)
+            name = card.get('name', 'Unknown')
+            rarity = card.get('rarity', card.get('top_rarity', 'Unknown'))
+            description = card.get('description', 'No description available.').replace('â€™', "")
+            group = card.get('group', 'Unknown')
+            embed_display = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
+            embed_display.set_footer(text=f"Card {self.index + 1} of {len(self.cards)}")
+            owner_mention = f"<@{self.owner_id}>"
+            await button_interaction.channel.send(f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**", embed=embed_display)
+        display_btn.callback = display_callback
+
+        await interaction.edit_original_message(embed=self.generate_embed(), view=self)
+
+    async def generate_drop_return_card(self, user):
+        from SAJAX.selection import select_random_character
+        user_id_str = str(user.id)
+        if not self.db.get_user(user_id_str):
+            self.db.insert_user(user_id_str)
+        formatted_drop = select_random_character()
+        formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
+        character = formatted_drop["character"]
+        rarity_key = formatted_drop["rarity"]
+        rarity = formatted_rarity[rarity_key]
+        thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
+        character_with_rarity = character.copy()
+        character_with_rarity["rarity"] = rarity_key
+        if thumbnail_url:
+            character_with_rarity["thumbnail_url"] = thumbnail_url
+        self.db.add_character(user_id_str, character_with_rarity)
+        self.db.add_card(user_id_str, character["character_id"])
+        return character_with_rarity, rarity
+
+    def assign_thumbnail(self, character_name: str, rarity: str) -> str:
+        with open(os.path.join(os.path.dirname(__file__), "characters_card_images.json"), "r", encoding="utf-8") as file:
+            data = json.load(file)
+        for character in data["characters"]:
+            if character["name"].lower() == character_name.lower():
+                for rarity_block in character["rarities"]:
+                    if rarity_block["rarity"].upper() == rarity.upper():
+                        urls = [url for key, url in rarity_block.items() if key.startswith("image_url_") and url.strip()]
+                        if not urls:
+                            return ""
+                        random.shuffle(urls)
+                        return random.choice(urls)
+        return ""
 
 class CardSelect(Select):
     def __init__(self, cards, templates, owner_id):
@@ -210,8 +318,9 @@ class Drop(commands.Cog):
             )
             view.message = message
         else:
-            view = CardPageView(cards, Templates, user.id)
+            view = CardPageView(cards, Templates, user.id, self.db)
             await ctx.send(embed=view.generate_embed(), view=view, ephemeral=True)
+
 
     @nextcord.slash_command(name="myshards", description="View your current shard count", guild_ids=[GUILD_ID])
     async def myshards(self, ctx: Interaction):
@@ -239,16 +348,46 @@ class Drop(commands.Cog):
         embed = Templates.drop_success()
         embed.title = "`⋆｡ﾟ☁︎｡𖦹 Your Shards ｡☁︎ﾟ｡⋆`"
         embed.description = f"> You currently have **{shards}** shards."
-        await ctx.send(embed=embed, ephemeral=True)
+        return await ctx.send(embed=embed, ephemeral=True)
+
+    async def fast_drop(self, user):
+        """
+        Fast drop method to generate cards without queue delays or cooldown skips.
+        Used for drop_queue_priority users.
+        """
+        user_id_str = str(user.id)
+        user_enabled_items = self.db.get_enabled_items(user_id_str) or []
+
+        drop_amount = 3
+        base_shard_amount = 20
+
+        if "drop_booster" in user_enabled_items:
+            drop_amount += random.choice([1, 2])
+
+        shard_amount = base_shard_amount * 2 if "shard_multiplier" in user_enabled_items else base_shard_amount
+
+        print(
+            f"[fast_drop] user: {user_id_str}, drop_amount: {drop_amount}, shard_amount: {shard_amount}, items: {user_enabled_items}")
+
+        if user.id not in self.locks:
+            self.locks[user.id] = asyncio.Lock()
+
+        async with self.locks[user.id]:
+            for _ in range(drop_amount):
+                await self.generate_drop(user)
+
+            self.db.add_shards(user_id_str, shard_amount)
 
     @nextcord.slash_command(name="drop", description="Summon your next SAJAX cards with this command!",
                             guild_ids=[GUILD_ID])
     async def drop(self, interaction: Interaction):
         user = interaction.user
+        user_id_str = str(user.id)
+        user_enabled_items = self.db.get_enabled_items(user_id_str) or []
 
-        if self.db.is_card_muted(str(user.id)):
+        if self.db.is_card_muted(user_id_str):
             embed = Templates.card_muted()
-            embed.description = f"> You are card muted and cannot view your cards."
+            embed.description = "> You are card muted and cannot view your cards."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
@@ -256,8 +395,13 @@ class Drop(commands.Cog):
         last_used = self.cooldowns.get(user.id, 0)
         if interaction.guild and interaction.guild.get_member(user.id).guild_permissions.administrator:
             last_used = 0
-        if now - last_used < self.COOLDOWN_SECONDS:
-            remaining = int(self.COOLDOWN_SECONDS - (now - last_used))
+
+        cooldown_time = self.COOLDOWN_SECONDS
+        if "drop_cooldown_reducer" in user_enabled_items:
+            cooldown_time = cooldown_time // 2
+
+        if now - last_used < cooldown_time:
+            remaining = int(cooldown_time - (now - last_used))
             mins, secs = divmod(remaining, 60)
             embed = Templates.drop_error()
             embed.description = f"> You're on cooldown! Try again in {mins}m {secs}s."
@@ -265,24 +409,47 @@ class Drop(commands.Cog):
             return
 
         self.cooldowns[user.id] = now
+
+        if "drop_queue_priority" in user_enabled_items:
+            await self.fast_drop(user)
+            embed = Templates.drop_success()
+            embed.description = (
+                f"> {Templates.pastel_emojis[5]} <@{user.id}>, cards have been summoned instantly due to your Drop Queue Priority!"
+                "\nUse `/mycards` to view them."
+            )
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
         embed = Templates.drop_summon()
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
         if user.id not in self.locks:
             self.locks[user.id] = asyncio.Lock()
 
+        drop_amount = 3
+        base_shard_amount = 20
+
+        if "drop_booster" in user_enabled_items:
+            drop_amount += random.choice([1, 2])
+
+        shard_amount = base_shard_amount * 2 if "shard_multiplier" in user_enabled_items else base_shard_amount
+
+        print(
+            f"[normal_drop] user: {user_id_str}, drop_amount: {drop_amount}, shard_amount: {shard_amount}, items: {user_enabled_items}")
+
         async with self.locks[user.id]:
-            for _ in range(3):
+            for _ in range(drop_amount):
                 await self.generate_drop(user)
 
-            self.db.add_shards(str(user.id), 20)
+            self.db.add_shards(user_id_str, shard_amount)
 
-            try:
-                dm = await user.create_dm()
-                embed = Templates.drop_success()
-                await dm.send(embed=embed)
-            except nextcord.Forbidden:
-                pass
+            response_embed = Templates.drop_success()
+            response_embed.description = (
+                f"> {Templates.pastel_emojis[5]} <@{user.id}>, cards have been summoned!"
+                "\nUse `/mycards` to view them."
+                f"\nYou received **{shard_amount}** shards as a bonus!"
+            )
+            await interaction.followup.send(embed=response_embed)
 
     @nextcord.slash_command(
         name="addcard",
@@ -379,7 +546,8 @@ class Drop(commands.Cog):
                                                    default=10)):
         user = interaction.user
 
-        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
+        if not interaction.guild or not interaction.guild.get_member(
+                interaction.user.id).guild_permissions.administrator:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
@@ -393,19 +561,12 @@ class Drop(commands.Cog):
             self.locks[user.id] = asyncio.Lock()
 
         async with self.locks[user.id]:
-            try:
-                for _ in range(amount):
-                    await self.generate_drop(user)
+            for _ in range(amount):
+                await self.generate_drop(user)
 
-                embed_success = Templates.drop_success()
-                embed_success.description = f"> You have received **{amount}** admin dropped cards!\nUse `/mycards` to view them."
-                try:
-                    dm = await user.create_dm()
-                    await dm.send(embed=embed_success)
-                except nextcord.Forbidden:
-                    pass
-            except Exception:
-                pass
+            embed_success = Templates.drop_success()
+            embed_success.description = f"> {Templates.pastel_emojis[5]} <@{user.id}>, **{amount}** cards have been admin dropped!\nUse `/mycards` to view them."
+            await interaction.followup.send(embed=embed_success)
 
     async def generate_drop(self, user):
         from SAJAX.selection import select_random_character

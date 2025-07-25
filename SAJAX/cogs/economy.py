@@ -5,7 +5,7 @@ from nextcord.ext import commands
 from nextcord.ui import View, button, Button, Select
 
 from SAJAX.database import Database
-from SAJAX.templates import Templates
+from SAJAX.templates import Templates, get_emoji
 
 GUILD_ID = 1369853145827770368
 
@@ -86,15 +86,18 @@ class EconomyCog(commands.Cog):
 
                 self.db.add_shards(self.payer_id, -self.amount)
                 self.db.add_shards(self.target_id, self.amount)
+
                 embed = Templates.drop_success()
                 embed.description = f"> Successfully paid {self.amount} shards to {target.display_name}."
                 embed.set_footer(text=f"Payment made by {payer.display_name}.")
-                target_user = self.bot.get_user(int(self.target_id))
-                if target_user:
-                    dm_embed = Templates.drop_success()
-                    dm_embed.description = f"> You received **{self.amount} shards** from **{payer.display_name}**."
-                    await target_user.send(embed=dm_embed)
                 await i.response.edit_message(embed=embed, view=None)
+
+                public_embed = Templates.drop_success()
+                public_embed.title = "`⋆｡ﾟ☁︎｡ 𖦹 Shard Payment ｡☁︎ﾟ｡⋆`"
+                public_embed.set_thumbnail(url=payer.display_avatar.url)
+                public_embed.description = f"> {get_emoji('money')} <@{self.target_id}> received **{self.amount} shards** from **{payer.display_name}**!"
+                await i.channel.send(embed=public_embed)
+
                 self.stop()
 
             @button(label="❌ Cancel", style=ButtonStyle.danger)
@@ -214,14 +217,13 @@ class EconomyCog(commands.Cog):
                         embed = Templates.drop_success()
                         embed.description = f"> Successfully gifted **{selected_card.get('name')}** to {target.display_name}!"
                         embed.set_image(url=selected_card.get("thumbnail_url", None))
-
-                        target_user = self.bot.get_user(int(self.target_id))
-                        if target_user:
-                            dm_embed = Templates.drop_success()
-                            dm_embed.set_image(url=selected_card.get("thumbnail_url", None))
-                            dm_embed.description = f"> You received a gift from **{sender.display_name}**: **{selected_card.get('name')}**!"
-                            await target_user.send(embed=dm_embed)
                         await i.response.edit_message(embed=embed, view=None)
+
+                        public_embed = Templates.drop_success()
+                        public_embed.title = "`⋆｡ﾟ☁︎｡ 𖦹 Card Gifted ｡☁︎ﾟ｡⋆`"
+                        public_embed.set_image(url=selected_card.get("thumbnail_url", None))
+                        public_embed.description = f"> {get_emoji('giftbox')} <@{self.target_id}> received **{selected_card.get('name')}** from **{sender.display_name}**!"
+                        await i.channel.send(embed=public_embed)
 
                     @button(label="❌ Cancel", style=ButtonStyle.danger)
                     async def cancel(self, button: Button, i: Interaction):
