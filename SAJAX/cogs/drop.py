@@ -13,7 +13,6 @@ from SAJAX.templates import Templates
 
 GUILD_ID = 1369853145827770368
 
-
 class CardPageView(View):
     def __init__(self, user_cards, templates, owner_id, timeout=180):
         super().__init__(timeout=timeout)
@@ -69,10 +68,7 @@ class CardPageView(View):
         embed = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
         embed.set_footer(text=f"Card {self.index + 1} of {len(self.cards)}")
         owner_mention = f"<@{self.owner_id}>"
-        # Use followup.send() after deferring response to avoid multiple initial response calls
-        await interaction.followup.send(f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**",
-                                        embed=embed)
-
+        await interaction.channel.send(f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**", embed=embed)
 
 class CardSelect(Select):
     def __init__(self, cards, templates, owner_id):
@@ -111,16 +107,13 @@ class CardSelect(Select):
             owner_mention = f"<@{self.owner_id}>"
             embed_display = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
             embed_display.set_footer(text=f"Card details for {name}")
-            # Use followup.send() after deferring response to avoid multiple initial response calls
-            await button_interaction.followup.send(
-                f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**", embed=embed_display)
+            await button_interaction.channel.send(f"> {Templates.pastel_emojis[5]} **Card displayed by {owner_mention}:**", embed=embed_display)
 
         display_button.callback = display_callback
         if index in view.displayed_cards:
             display_button.disabled = True
         view.add_item(display_button)
         await interaction.response.edit_message(embed=embed, view=view)
-
 
 class CardMenuView(View):
     def __init__(self, cards, templates, owner_id, timeout=180):
@@ -137,7 +130,6 @@ class CardMenuView(View):
                 await self.message.edit(view=self)
             except Exception:
                 pass
-
 
 class Drop(commands.Cog):
     def __init__(self, bot):
@@ -160,8 +152,7 @@ class Drop(commands.Cog):
             if character["name"].lower() == character_name.lower():
                 for rarity_block in character["rarities"]:
                     if rarity_block["rarity"].upper() == rarity.upper():
-                        urls = [url for key, url in rarity_block.items() if
-                                key.startswith("image_url_") and url.strip()]
+                        urls = [url for key, url in rarity_block.items() if key.startswith("image_url_") and url.strip()]
                         if not urls:
                             return ""
                         random.shuffle(urls)
@@ -184,7 +175,7 @@ class Drop(commands.Cog):
         if self.db.is_card_muted(str(user.id)):
             embed = Templates.card_muted()
             embed.description = f"> You are card muted and cannot view your cards."
-            await ctx.response.send_message(embed=embed, ephemeral=True)
+            await ctx.send(embed=embed, ephemeral=True)
             return
 
         now = time.time()
@@ -196,7 +187,7 @@ class Drop(commands.Cog):
             remaining = round(self.MYCARDS_COOLDOWN - (now - last_used), 1)
             embed = Templates.drop_error()
             embed.description = f"> You're on cooldown! Try again in {remaining}s."
-            await ctx.response.send_message(embed=embed, ephemeral=True)
+            await ctx.send(embed=embed, ephemeral=True)
             return
         self.mycards_cooldowns[user.id] = now
         user_data = self.db.get_user(str(user.id))
@@ -204,11 +195,11 @@ class Drop(commands.Cog):
         if not cards:
             embed = Templates.drop_error()
             embed.description = "> You have no cards yet! Try using `/drop` to summon some."
-            await ctx.response.send_message(embed=embed, ephemeral=True)
+            await ctx.send(embed=embed, ephemeral=True)
             return
         if mode == "menu":
             view = CardMenuView(cards, Templates, user.id)
-            message = await ctx.response.send_message(embed=Templates.card_details(
+            message = await ctx.send(embed=Templates.card_details(
                 cards[0].get('name', 'Unknown'),
                 cards[0].get('rarity', cards[0].get('top_rarity', 'Unknown')),
                 cards[0].get('description', 'No description available.').replace('â€™', ""),
@@ -220,7 +211,7 @@ class Drop(commands.Cog):
             view.message = message
         else:
             view = CardPageView(cards, Templates, user.id)
-            await ctx.response.send_message(embed=view.generate_embed(), view=view, ephemeral=True)
+            await ctx.send(embed=view.generate_embed(), view=view, ephemeral=True)
 
     @nextcord.slash_command(name="myshards", description="View your current shard count", guild_ids=[GUILD_ID])
     async def myshards(self, ctx: Interaction):
@@ -229,7 +220,7 @@ class Drop(commands.Cog):
         if self.db.is_card_muted(str(user.id)):
             embed = Templates.card_muted()
             embed.description = f"> You are card muted and cannot view your shards."
-            await ctx.response.send_message(embed=embed, ephemeral=True)
+            await ctx.send(embed=embed, ephemeral=True)
             return
 
         now = time.time()
@@ -241,14 +232,14 @@ class Drop(commands.Cog):
             remaining = round(self.MYSHARDS_COOLDOWN - (now - last_used), 1)
             embed = Templates.drop_error()
             embed.description = f"> You're on cooldown! Try again in {remaining}s."
-            await ctx.response.send_message(embed=embed, ephemeral=True)
+            await ctx.send(embed=embed, ephemeral=True)
             return
         self.myshards_cooldowns[user.id] = now
         shards = self.db.get_shards(str(user.id))
         embed = Templates.drop_success()
         embed.title = "`⋆｡ﾟ☁︎｡𖦹 Your Shards ｡☁︎ﾟ｡⋆`"
         embed.description = f"> You currently have **{shards}** shards."
-        await ctx.response.send_message(embed=embed, ephemeral=True)
+        await ctx.send(embed=embed, ephemeral=True)
 
     @nextcord.slash_command(name="drop", description="Summon your next SAJAX cards with this command!",
                             guild_ids=[GUILD_ID])
@@ -312,8 +303,7 @@ class Drop(commands.Cog):
         user = target or interaction.user
         user_id_str = str(user.id)
 
-        if not interaction.guild or not interaction.guild.get_member(
-                interaction.user.id).guild_permissions.administrator:
+        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
@@ -389,8 +379,7 @@ class Drop(commands.Cog):
                                                    default=10)):
         user = interaction.user
 
-        if not interaction.guild or not interaction.guild.get_member(
-                interaction.user.id).guild_permissions.administrator:
+        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
@@ -427,6 +416,39 @@ class Drop(commands.Cog):
         formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
         character = formatted_drop["character"]
         rarity_key = formatted_drop["rarity"]
+        rarity = formatted_rarity[rarity_key]
+        thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
+        character_with_rarity = character.copy()
+        character_with_rarity["rarity"] = rarity_key
+        if thumbnail_url:
+            character_with_rarity["thumbnail_url"] = thumbnail_url
+        self.db.add_character(user_id_str, character_with_rarity)
+        self.db.add_card(user_id_str, character["character_id"])
+        embed = Templates.drop_summon()
+        embed.title = f"You pulled a {rarity} character!"
+        embed.description = f"{character['name']}"
+        if thumbnail_url:
+            embed.set_thumbnail(url=thumbnail_url)
+        return embed
+
+    async def generate_drop_return_card(self, user):
+        from SAJAX.selection import select_random_character
+        user_id_str = str(user.id)
+        if not self.db.get_user(user_id_str):
+            self.db.insert_user(user_id_str)
+        formatted_drop = select_random_character()
+        formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
+        character = formatted_drop["character"]
+        rarity_key = formatted_drop["rarity"]
+        rarity = formatted_rarity[rarity_key]
+        thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
+        character_with_rarity = character.copy()
+        character_with_rarity["rarity"] = rarity_key
+        if thumbnail_url:
+            character_with_rarity["thumbnail_url"] = thumbnail_url
+        self.db.add_character(user_id_str, character_with_rarity)
+        self.db.add_card(user_id_str, character["character_id"])
+        return character_with_rarity, rarity
 
 def setup(bot):
     bot.add_cog(Drop(bot))
