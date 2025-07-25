@@ -1,6 +1,5 @@
 import time
 import nextcord
-from Tools.demo.mcast import sender
 from nextcord import SlashOption, Interaction, ButtonStyle, SelectOption
 from nextcord.ext import commands
 from nextcord.ui import View, button, Button, Select
@@ -38,6 +37,11 @@ class EconomyCog(commands.Cog):
         if payer.id == target.id:
             embed = Templates.drop_error()
             embed.description = "> You cannot pay shards to yourself."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        if target_id == self.bot.user.id:
+            embed = Templates.drop_error()
+            embed.description = "> You cannot pay shards to the bot."
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         now = time.time()
@@ -125,6 +129,11 @@ class EconomyCog(commands.Cog):
         if sender.id == target.id:
             embed = Templates.drop_error()
             embed.description = "> You cannot gift cards to yourself."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        if target_id == self.bot.user.id:
+            embed = Templates.drop_error()
+            embed.description = "> You cannot gift cards to the bot."
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         now = time.time()

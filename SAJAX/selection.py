@@ -1,10 +1,14 @@
 import json
+import os
 import random
 
-with open("data/rarities.json") as f:
+rarities_path = os.path.join(os.path.dirname(__file__), "data/rarities.json")
+characters_path = os.path.join(os.path.dirname(__file__), "data/characters.json")
+
+with open(rarities_path) as f:
     rarities_data = json.load(f)["rarities"]
 
-with open("data/characters.json") as f:
+with open(characters_path) as f:
     characters_data = json.load(f)
 
 RARITY_ORDER = ["B", "A", "R", "UR"]

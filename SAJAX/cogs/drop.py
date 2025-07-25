@@ -134,22 +134,16 @@ class CardMenuView(View):
 class Drop(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.queue = asyncio.Queue()
-        self.queued_users = set()
         self.cooldowns = {}
         self.COOLDOWN_SECONDS = 3600
+        self.locks = {}
         self.mycards_cooldowns = {}
         self.MYCARDS_COOLDOWN = 10
         self.myshards_cooldowns = {}
         self.MYSHARDS_COOLDOWN = 5
-        self.processing = False
-        self.process_queue.start()
         self.db = Database()
         self.json_path = os.path.join(os.path.dirname(__file__), "characters_card_images.json")
         self.characters_json_path = os.path.join(os.path.dirname(__file__), "characters.json")
-
-    def cog_unload(self):
-        self.process_queue.cancel()
 
     def assign_thumbnail(self, character_name: str, rarity: str) -> str:
         with open(self.json_path, "r", encoding="utf-8") as file:
@@ -158,10 +152,7 @@ class Drop(commands.Cog):
             if character["name"].lower() == character_name.lower():
                 for rarity_block in character["rarities"]:
                     if rarity_block["rarity"].upper() == rarity.upper():
-                        urls = [
-                            url for key, url in rarity_block.items()
-                            if key.startswith("image_url_") and url.strip() != ""
-                        ]
+                        urls = [url for key, url in rarity_block.items() if key.startswith("image_url_") and url.strip()]
                         if not urls:
                             return ""
                         random.shuffle(urls)
@@ -250,8 +241,9 @@ class Drop(commands.Cog):
         embed.description = f"> You currently have **{shards}** shards."
         await ctx.send(embed=embed, ephemeral=True)
 
-    @nextcord.slash_command(name="drop", description="Summon your next SAJAX cards with this command!", guild_ids=GUILD_ID)
-    async def drop(self, interaction: nextcord.Interaction):
+    @nextcord.slash_command(name="drop", description="Summon your next SAJAX cards with this command!",
+                            guild_ids=GUILD_ID)
+    async def drop(self, interaction: Interaction):
         user = interaction.user
 
         if self.db.is_card_muted(str(user.id)):
@@ -264,11 +256,6 @@ class Drop(commands.Cog):
         last_used = self.cooldowns.get(user.id, 0)
         if interaction.guild and interaction.guild.get_member(user.id).guild_permissions.administrator:
             last_used = 0
-        if user.id in self.queued_users:
-            embed = Templates.drop_error()
-            embed.description = "> You are already in the drop queue! Please wait for your turn."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
         if now - last_used < self.COOLDOWN_SECONDS:
             remaining = int(self.COOLDOWN_SECONDS - (now - last_used))
             mins, secs = divmod(remaining, 60)
@@ -276,23 +263,36 @@ class Drop(commands.Cog):
             embed.description = f"> You're on cooldown! Try again in {mins}m {secs}s."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
+
         self.cooldowns[user.id] = now
         embed = Templates.drop_summon()
         await interaction.response.send_message(embed=embed, ephemeral=True)
-        self.queued_users.add(user.id)
-        await self.queue.put((user, 3))
-        return
+
+        if user.id not in self.locks:
+            self.locks[user.id] = asyncio.Lock()
+
+        async with self.locks[user.id]:
+            for _ in range(3):
+                await self.generate_drop(user)
+
+            self.db.add_shards(str(user.id), 20)
+
+            try:
+                dm = await user.create_dm()
+                embed = Templates.drop_success()
+                await dm.send(embed=embed)
+            except nextcord.Forbidden:
+                pass
 
     @nextcord.slash_command(
         name="addcard",
         description="Add a specific card to a user’s collection (Admin only)",
         guild_ids=GUILD_ID,
-        default_member_permissions=nextcord.Permissions(administrator=True)
     )
     async def addcard(
             self,
             interaction: nextcord.Interaction,
-            character_name: str = SlashOption(description="Character name to add", required=True),
+            character: str = SlashOption(description="Character name to add", required=True),
             rarity: str = SlashOption(
                 description="Rarity of the character (B, A, R, UR)",
                 required=True,
@@ -302,6 +302,13 @@ class Drop(commands.Cog):
     ):
         user = target or interaction.user
         user_id_str = str(user.id)
+
+        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
+            embed = Templates.drop_error()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
+            embed.description = "> You do not have permission to use this command."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
 
         try:
             with open(self.characters_json_path, "r", encoding="utf-8") as f:
@@ -313,12 +320,12 @@ class Drop(commands.Cog):
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
-        character = next((char for char in data if char.get("name", "").lower() == character_name.lower()), None)
+        character = next((char for char in data if char.get("name", "").lower() == character.lower()), None)
 
         if not character:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Invalid Character ｡☁︎ﾟ｡⋆`"
-            embed.description = f"> Could not find character with name `{character_name}`."
+            embed.description = f"> Could not find character with name `{character}`."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
@@ -364,28 +371,41 @@ class Drop(commands.Cog):
 
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
-    @nextcord.slash_command(name="admin_drop", description="Admin-only version of drop that allows setting drop amount.", guild_ids=GUILD_ID, default_member_permissions=nextcord.Permissions(administrator=True))
-    async def admin_drop(self, interaction: nextcord.Interaction, amount: int = SlashOption(description="Number of cards to summon", required=False, default=10)):
+    @nextcord.slash_command(name="admindrop",
+                            description="Admin-only version of drop that allows setting drop amount.",
+                            guild_ids=GUILD_ID)
+    async def admin_drop(self, interaction: Interaction,
+                         amount: int = SlashOption(description="Number of cards to summon", required=False,
+                                                   default=10)):
         user = interaction.user
-        if user.id in self.queued_users:
+
+        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
             embed = Templates.drop_error()
-            embed.description = "You are already processing a drop! Please wait."
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
+            embed.description = "> You do not have permission to use this command."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
-        self.queued_users.add(user.id)
+
         embed = Templates.drop_summon()
         await interaction.response.send_message(embed=embed, ephemeral=True)
-        try:
-            for _ in range(amount):
-                await self.generate_drop_return_card(user)
-            embed_success = Templates.drop_success()
-            embed_success.description = f"> You have received **{amount}** admin dropped cards!\nUse `/mycards` to view them."
-            dm = await user.create_dm()
-            await dm.send(embed=embed_success)
-        except nextcord.Forbidden:
-            print(f"Could not DM {user}.")
-        finally:
-            self.queued_users.discard(user.id)
+
+        if user.id not in self.locks:
+            self.locks[user.id] = asyncio.Lock()
+
+        async with self.locks[user.id]:
+            try:
+                for _ in range(amount):
+                    await self.generate_drop(user)
+
+                embed_success = Templates.drop_success()
+                embed_success.description = f"> You have received **{amount}** admin dropped cards!\nUse `/mycards` to view them."
+                try:
+                    dm = await user.create_dm()
+                    await dm.send(embed=embed_success)
+                except nextcord.Forbidden:
+                    pass
+            except Exception:
+                pass
 
     async def generate_drop(self, user):
         from SAJAX.selection import select_random_character
@@ -429,37 +449,6 @@ class Drop(commands.Cog):
         self.db.add_character(user_id_str, character_with_rarity)
         self.db.add_card(user_id_str, character["character_id"])
         return character_with_rarity, rarity
-
-    @tasks.loop(seconds=0.5)
-    async def process_queue(self):
-        if self.queue.empty() or self.processing:
-            return
-        self.processing = True
-        user, amount = await self.queue.get()
-        try:
-            for _ in range(amount):
-                await self.generate_drop(user)
-            self.db.add_shards(str(user.id), 20)
-            self.queued_users.discard(user.id)
-            async def notify_user_drop_complete(user):
-                try:
-                    dm = await user.create_dm()
-                    embed = Templates.drop_success()
-                    await dm.send(embed=embed)
-                except nextcord.Forbidden:
-                    print(f"Could not DM {user}.")
-            asyncio.create_task(notify_user_drop_complete(user))
-        finally:
-            self.processing = False
-            await asyncio.sleep(1)
-
-    @process_queue.before_loop
-    async def before_queue(self):
-        await self.bot.wait_until_ready()
-
-    @process_queue.error
-    async def on_error(self, loop, context, exception):
-        print(f"Queue error: {exception}")
 
 def setup(bot):
     bot.add_cog(Drop(bot))

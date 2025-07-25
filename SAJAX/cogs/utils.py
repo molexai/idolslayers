@@ -14,8 +14,7 @@ class Utils(commands.Cog):
     @nextcord.slash_command(
         name="cardmute",
         description="Mute a user from receiving cards.",
-        guild_ids=GUILD_ID,
-        default_member_permissions=nextcord.Permissions(administrator=True)
+        guild_ids=GUILD_ID
     )
     async def cardmute(
         self,
@@ -26,6 +25,15 @@ class Utils(commands.Cog):
             required=True
         )
     ):
+        if interaction.guild:
+            member = interaction.guild.get_member(interaction.user.id)
+            if not (member.guild_permissions.administrator or member.guild_permissions.mute_members):
+                embed = Templates.drop_error()
+                embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
+                embed.description = "> You do not have permission to use this command."
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
         if self.db.is_card_muted(str(user.id)):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Something went wrong...｡☁︎ﾟ｡⋆`"
@@ -44,7 +52,6 @@ class Utils(commands.Cog):
         name="cardunmute",
         description="Unmute a user so they can receive cards again.",
         guild_ids=GUILD_ID,
-        default_member_permissions=nextcord.Permissions(administrator=True)
     )
     async def cardunmute(
         self,
@@ -55,6 +62,15 @@ class Utils(commands.Cog):
             required=True
         )
     ):
+        if interaction.guild:
+            member = interaction.guild.get_member(interaction.user.id)
+            if not (member.guild_permissions.administrator or member.guild_permissions.mute_members):
+                embed = Templates.drop_error()
+                embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
+                embed.description = "> You do not have permission to use this command."
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+
         if not self.db.is_card_muted(str(user.id)):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Something went wrong...｡☁︎ﾟ｡⋆`"
@@ -73,7 +89,6 @@ class Utils(commands.Cog):
         name="reset",
         description="Reset a user's data. (Admin only)",
         guild_ids=GUILD_ID,
-        default_member_permissions=nextcord.Permissions(administrator=True)
     )
     async def reset(
         self,
@@ -84,6 +99,12 @@ class Utils(commands.Cog):
             required=True
         )
     ):
+        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
+            embed = Templates.drop_error()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
+            embed.description = "> You do not have permission to use this command."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
         if user.id == self.bot.user.id:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Something went wrong...｡☁︎ﾟ｡⋆`"

