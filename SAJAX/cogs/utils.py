@@ -4,7 +4,7 @@ from nextcord import Interaction, SlashOption
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = [1387525150752378940, 1389313345986756708, 1369853145827770368]
+GUILD_ID = 1369853145827770368
 
 class Utils(commands.Cog):
     def __init__(self, bot):
@@ -14,7 +14,7 @@ class Utils(commands.Cog):
     @nextcord.slash_command(
         name="cardmute",
         description="Mute a user from receiving cards.",
-        guild_ids=GUILD_ID
+        guild_ids=[GUILD_ID]
     )
     async def cardmute(
         self,
@@ -49,7 +49,7 @@ class Utils(commands.Cog):
     @nextcord.slash_command(
         name="cardunmute",
         description="Unmute a user so they can receive cards again.",
-        guild_ids=GUILD_ID,
+        guild_ids=[GUILD_ID],
     )
     async def cardunmute(
         self,
@@ -84,7 +84,7 @@ class Utils(commands.Cog):
     @nextcord.slash_command(
         name="reset",
         description="Reset a user's data. (Admin only)",
-        guild_ids=GUILD_ID,
+        guild_ids=[GUILD_ID],
     )
     async def reset(
         self,

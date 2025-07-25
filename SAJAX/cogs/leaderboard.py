@@ -8,7 +8,7 @@ from nextcord.ext import commands
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = [1387525150752378940, 1389313345986756708, 1369853145827770368]
+GUILD_ID = 1369853145827770368
 
 class LeaderboardCog(commands.Cog):
     def __init__(self, bot):
@@ -25,7 +25,7 @@ class LeaderboardCog(commands.Cog):
     @nextcord.slash_command(
         name="leaderboard",
         description="View the SAJAX leaderboard.",
-        guild_ids=GUILD_ID
+        guild_ids=[GUILD_ID]
     )
     async def leaderboard(
         self,

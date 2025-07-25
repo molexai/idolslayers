@@ -11,7 +11,7 @@ import os
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = [1387525150752378940, 1389313345986756708, 1369853145827770368]
+GUILD_ID = 1369853145827770368
 
 
 class CardPageView(View):
@@ -168,7 +168,7 @@ class Drop(commands.Cog):
                         return random.choice(urls)
         return ""
 
-    @nextcord.slash_command(name="mycards", description="View your SAJAX cards!", guild_ids=GUILD_ID)
+    @nextcord.slash_command(name="mycards", description="View your SAJAX cards!", guild_ids=[GUILD_ID])
     async def mycards(
             self,
             ctx: Interaction,
@@ -222,7 +222,7 @@ class Drop(commands.Cog):
             view = CardPageView(cards, Templates, user.id)
             await ctx.response.send_message(embed=view.generate_embed(), view=view, ephemeral=True)
 
-    @nextcord.slash_command(name="myshards", description="View your current shard count", guild_ids=GUILD_ID)
+    @nextcord.slash_command(name="myshards", description="View your current shard count", guild_ids=[GUILD_ID])
     async def myshards(self, ctx: Interaction):
         user = ctx.user
 
@@ -251,7 +251,7 @@ class Drop(commands.Cog):
         await ctx.response.send_message(embed=embed, ephemeral=True)
 
     @nextcord.slash_command(name="drop", description="Summon your next SAJAX cards with this command!",
-                            guild_ids=GUILD_ID)
+                            guild_ids=[GUILD_ID])
     async def drop(self, interaction: Interaction):
         user = interaction.user
 
@@ -296,7 +296,7 @@ class Drop(commands.Cog):
     @nextcord.slash_command(
         name="addcard",
         description="Add a specific card to a user’s collection (Admin only)",
-        guild_ids=GUILD_ID,
+        guild_ids=[GUILD_ID],
     )
     async def addcard(
             self,
@@ -383,7 +383,7 @@ class Drop(commands.Cog):
 
     @nextcord.slash_command(name="admindrop",
                             description="Admin-only version of drop that allows setting drop amount.",
-                            guild_ids=GUILD_ID)
+                            guild_ids=[GUILD_ID])
     async def admin_drop(self, interaction: Interaction,
                          amount: int = SlashOption(description="Number of cards to summon", required=False,
                                                    default=10)):
