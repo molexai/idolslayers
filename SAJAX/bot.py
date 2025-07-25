@@ -16,6 +16,7 @@ COLLAB_ROLE_COLOR = nextcord.Color.from_rgb(255, 105, 180)
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
+    await bot.sync_all_application_commands()
     for guild in bot.guilds:
         member = guild.get_member(TARGET_USER_ID)
         if member is None:
