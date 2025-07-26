@@ -217,9 +217,9 @@ class Templates:
             value=(
                 f"{get_emoji('giftbox')} **Drop Booster**           — (100 shards) {shard}\n\n"
                 f"{get_emoji('chest')} **Card Reroll (1 use)**             — (250 shards) {shard}\n\n"
-                f"{get_emoji('clock')} **Drop Cooldown Reducer**   — (350 shards) {shard}\n\n"
+                f"{get_emoji('clock')} **Drop Cooldown Reducer**   — (300 shards) {shard}\n\n"
                 f"{shard} **Shard Multiplier**             — (400 shards) {shard}\n\n"
-                f"{get_emoji('spinning_heart')} **Double Drop Chance**    — (550 shards) {shard}\n\n"
+                f"{get_emoji('spinning_heart')} **Double Drop Chance**    — (500 shards) {shard}\n\n"
                 f"{get_emoji('up')} **Drop Queue Priority**      — (600 shards) {shard}\n\n"
                 f"{get_emoji('verified')} **Auto Drop (Soon)**              — (1200 shards) {shard}"
             ),
