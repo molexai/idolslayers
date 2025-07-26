@@ -154,6 +154,24 @@ class Database:
                 return True
         return False
 
+    def get_all_users(self):
+        return list(self.users.find())
+
+    def add_card_reroll_to_all_users(self):
+        users = self.get_all_users()
+        count = 0
+
+        for user in users:
+            user_id = user.get("user_id")
+            enabled_items = user.get("enabled_items", [])
+            if "card_reroll" not in enabled_items:
+                enabled_items.append("card_reroll")
+                self.update_user(user_id, {"enabled_items": enabled_items})
+                count += 1
+
+        return count
+
+
     def add_character(self, user_id: str, character):
         user_id = str(user_id)
         self.users.update_one(
