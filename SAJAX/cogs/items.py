@@ -1,5 +1,7 @@
 import os
 import json
+import time
+
 import nextcord
 from nextcord.ext import commands
 from nextcord import Interaction, Embed, Color
@@ -107,11 +109,30 @@ class Items(commands.Cog):
         self.bot = bot
         self.db = Database()
         self.json_path = os.path.join(os.path.dirname(__file__), "shop_items.json")
+        self.myitems_cooldowns = {}
+        self.MYITEMS_COOLDOWN = 5
 
     @nextcord.slash_command(name="myitems", description="View your owned items.", guild_ids=GUILD_ID)
     async def myitems(self, interaction: Interaction):
-        user_id = str(interaction.user.id)
-        user_data = self.db.get_user(user_id) or {}
+        user_id = interaction.user.id
+        now = time.time()
+        last_used = self.myitems_cooldowns.get(user_id, 0)
+
+        if interaction.guild:
+            member = interaction.guild.get_member(user_id)
+            if member and member.guild_permissions.administrator:
+                last_used = 0
+
+        if now - last_used < self.MYITEMS_COOLDOWN:
+            remaining = round(self.MYITEMS_COOLDOWN - (now - last_used), 1)
+            embed = Templates.drop_error()
+            embed.description = f"> You're on cooldown! Try again in {remaining}s."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        self.myitems_cooldowns[user_id] = now
+
+        user_data = self.db.get_user(str(user_id)) or {}
         usables = user_data.get("usables", {})
         owned_item_keys = list(usables.keys())
         if not owned_item_keys:
@@ -132,7 +153,7 @@ class Items(commands.Cog):
         shop_items = shop_data.get("shop_items", [])
         filtered_shop_items = [item for item in shop_items if item['name'].lower().replace(' ', '_') in owned_item_keys]
 
-        view = ItemPageView(owned_item_keys, shop_items, Templates, interaction.user.id)
+        view = ItemPageView(owned_item_keys, shop_items, Templates, user_id)
         embed = view.generate_embed()
         await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
