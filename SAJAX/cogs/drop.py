@@ -11,7 +11,7 @@ import os
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = 1387525150752378940
+GUILD_ID = 1369853145827770368
 
 class CardPageView(View):
     def __init__(self, user_cards, templates, owner_id, db: Database, timeout=180):
