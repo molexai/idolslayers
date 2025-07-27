@@ -11,7 +11,7 @@ import os
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = 1369853145827770368
+GUILD_ID = 1387525150752378940
 
 class CardPageView(View):
     def __init__(self, user_cards, templates, owner_id, db: Database, timeout=180):
@@ -363,8 +363,14 @@ class Drop(commands.Cog):
 
         if "drop_booster" in user_enabled_items:
             drop_amount += random.choice([1, 2])
+            user_enabled_items.remove("drop_booster")
+        self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
 
         shard_amount = base_shard_amount * 2 if "shard_multiplier" in user_enabled_items else base_shard_amount
+
+        if "shard_multiplier" in user_enabled_items:
+            user_enabled_items.remove("shard_multiplier")
+            self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
 
         print(
             f"[fast_drop] user: {user_id_str}, drop_amount: {drop_amount}, shard_amount: {shard_amount}, items: {user_enabled_items}")
@@ -399,6 +405,9 @@ class Drop(commands.Cog):
         cooldown_time = self.COOLDOWN_SECONDS
         if "drop_cooldown_reducer" in user_enabled_items:
             cooldown_time = cooldown_time // 2
+            user_enabled_items.remove("drop_cooldown_reducer")
+        self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
+
 
         if now - last_used < cooldown_time:
             remaining = int(cooldown_time - (now - last_used))
@@ -414,10 +423,12 @@ class Drop(commands.Cog):
             await self.fast_drop(user)
             embed = Templates.drop_success()
             embed.description = (
-                f"> {Templates.pastel_emojis[5]} <@{user.id}>, cards have been summoned instantly due to your Drop Queue Priority!"
+                f"> {Templates.pastel_emojis[5]} <@{user.id}>, cards have been summoned instantly due to your **Drop Queue Priority**!"
                 "\nUse `/mycards` to view them."
             )
-            await interaction.response.send_message(embed=embed, ephemeral=True)
+            await interaction.response.send_message(embed=embed)
+            user_enabled_items.remove("drop_queue_priority")
+            self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
             return
 
         embed = Templates.drop_summon()
@@ -431,8 +442,14 @@ class Drop(commands.Cog):
 
         if "drop_booster" in user_enabled_items:
             drop_amount += random.choice([1, 2])
+            user_enabled_items.remove("drop_booster")
+        self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
 
         shard_amount = base_shard_amount * 2 if "shard_multiplier" in user_enabled_items else base_shard_amount
+
+        if "shard_multiplier" in user_enabled_items:
+            user_enabled_items.remove("shard_multiplier")
+            self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
 
         print(
             f"[normal_drop] user: {user_id_str}, drop_amount: {drop_amount}, shard_amount: {shard_amount}, items: {user_enabled_items}")
