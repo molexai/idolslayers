@@ -88,7 +88,8 @@ class EconomyCog(commands.Cog):
                 self.db.add_shards(self.target_id, self.amount)
 
                 embed = Templates.drop_success()
-                embed.description = f"> Successfully paid {self.amount} shards to {target.display_name}."
+                embed.title = "`⋆｡ﾟ☁︎｡𖦹 Shard Payment Successful ｡☁︎ﾟ｡⋆`"
+                embed.description = f"> Successfully paid **{self.amount} shards** to **{target.display_name}**."
                 embed.set_footer(text=f"Payment made by {payer.display_name}.")
                 await i.response.edit_message(embed=embed, view=None)
 
@@ -108,8 +109,8 @@ class EconomyCog(commands.Cog):
                 self.stop()
 
         embed = Templates.drop_summon()
-        embed.title = "Payment Confirmation"
-        embed.description = f"Do you want to pay **{amount} shards** to **{target.display_name}**?"
+        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Payment Confirmation ｡☁︎ﾟ｡⋆`"
+        embed.description = f"Do you want to pay **{amount}**{get_emoji('shard_non_pink')} to **{target.display_name}**?"
         await interaction.response.send_message(embed=embed, view=PayConfirmView(self.db, payer_id, target_id, amount), ephemeral=True)
 
     @nextcord.slash_command(
@@ -195,12 +196,12 @@ class EconomyCog(commands.Cog):
                     return await ctx.response.edit_message(embed=embed, view=None)
 
                 class GiftConfirmView(View):
-                    def __init__(self, target_id, sender_id):
-                        self.db = Database()
+                    def __init__(self, db, target_id, sender_id):
+                        super().__init__()
+                        self.db = db
                         self.target_id = target_id
                         self.sender_id = sender_id
                         self.bot = ctx.client
-                        super().__init__()
 
                     @button(label="✅ Yes, gift this card", style=ButtonStyle.success)
                     async def confirm(self, button: Button, i: Interaction):
@@ -239,7 +240,7 @@ class EconomyCog(commands.Cog):
                     selected_card.get("thumbnail_url", None)
                 )
                 embed.set_footer(text=f"Do you want to gift this card to {target.display_name}?")
-                await ctx.response.edit_message(embed=embed, view=GiftConfirmView(target_id=self.target_id, sender_id=self.sender_id))
+                await ctx.response.edit_message(embed=embed, view=GiftConfirmView(self.db, self.target_id, self.sender_id))
 
         view = View(timeout=60)
         view.add_item(CharacterSelect(self.db, sender_id, target_id, matching))

@@ -1,15 +1,19 @@
 import time
-from dotenv import load_dotenv
+
 from pymongo import MongoClient, ASCENDING
 
-load_dotenv()
 
 class Database:
+    _client = None
+
     def __init__(self):
-        self.uri = "mongodb+srv://sajax:sajax@sajax.t2kzc70.mongodb.net/"
-        self.client = MongoClient(self.uri, tls=True)
-        self.db = self.client["sajax"]
+        if Database._client is None:
+            uri = "mongodb+srv://sajax:sajax@sajax.t2kzc70.mongodb.net/"
+            Database._client = MongoClient(uri, tls=True)
+
+        self.db = Database._client["sajax"]
         self.users = self.db["users"]
+
         #self.cache = {}
         self.cooldowns = {}
 

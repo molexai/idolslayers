@@ -105,13 +105,13 @@ class Utils(commands.Cog):
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Uh-oh! Something went wrong...｡☁︎ﾟ｡⋆`"
             embed.description = "You cannot reset the bot's data."
             return await interaction.response.send_message(embed=embed, ephemeral=True)
-        db = Database()
+
         self.db.remove_all_characters(str(user.id))
         self.db.update_user(str(user.id), {
             "shards": 0,
             "cards": [],
             "characters": [],
-            "card_mute": db.card_mute_status(str(user.id)),
+            "card_mute": self.db.card_mute_status(str(user.id)),
         })
 
         embed = Templates.drop_error()

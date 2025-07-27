@@ -65,23 +65,24 @@ class SellCog(commands.Cog):
         ]
 
         class CharacterSelect(Select):
-            def __init__(self):
+            def __init__(self, db):
                 super().__init__(
                     placeholder="Select which character to sell…",
                     min_values=1,
                     max_values=1,
                     options=options
                 )
+                self.db = db  # Store db reference here
 
             async def callback(self, ctx: Interaction):
                 idx = int(self.values[0])
                 char = matching[idx]
 
                 class ConfirmView(View):
-                    def __init__(self):
+                    def __init__(self, db):
                         super().__init__()
                         self.rarity_worth = None
-                        self.db = Database()
+                        self.db = db  # Use shared db instance
 
                     @button(label="✅ Yes", style=nextcord.ButtonStyle.success)
                     async def yes(self, button, i2: Interaction):
@@ -105,10 +106,10 @@ class SellCog(commands.Cog):
                     async def no(self, button, i2: Interaction):
                         await i2.response.edit_message(embed=Templates.sell_cancelled(), view=None)
 
-                await ctx.response.edit_message(embed=Templates.sell_confirm(char), view=ConfirmView())
+                await ctx.response.edit_message(embed=Templates.sell_confirm(char), view=ConfirmView(self.db))
 
         view = View(timeout=60)
-        view.add_item(CharacterSelect())
+        view.add_item(CharacterSelect(self.db))  # Pass db here
 
         await interaction.response.send_message(embed=Templates.sell_prompt(matching), view=view, ephemeral=True)
 
@@ -147,9 +148,9 @@ class SellCog(commands.Cog):
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         class ConfirmSellAll(View):
-            def __init__(self):
+            def __init__(self, db):
                 super().__init__()
-                self.db = Database()
+                self.db = db  # Use shared db instance
 
             @button(label="✅ Yes", style=nextcord.ButtonStyle.success)
             async def confirm(self, button, i2: Interaction):
@@ -178,7 +179,7 @@ class SellCog(commands.Cog):
 
         confirm_embed = Templates.sell_all_confirm()
 
-        await interaction.response.send_message(embed=confirm_embed, view=ConfirmSellAll(), ephemeral=True)
+        await interaction.response.send_message(embed=confirm_embed, view=ConfirmSellAll(self.db), ephemeral=True)
 
 def setup(bot):
     bot.add_cog(SellCog(bot))
