@@ -6,7 +6,7 @@
       "description": "Kindness is a powerful force, even in the face of darkness. Help Rumi and her friends spread kindness to those in need.",
       "requirements": [
         "Gift 10 Huntrix based characters to random users",
-        "Pay 3 random users 100 shards each"
+        "Pay 3 random users 1500 shards each"
       ],
       "rewards": [
         {
@@ -27,7 +27,7 @@
       "description": "Friendship can overcome any obstacle. Help Rumi and her friends strengthen their bonds.",
       "requirements": [
         "Gift 5 UR characters to your friends",
-        "Pay 2 friends 150 shards each"
+        "Pay 2 friends 2000 shards each"
       ],
       "rewards": [
         {
@@ -47,7 +47,7 @@
       "name": "The Resilient Spender",
       "description": "Sometimes, spending shards wisely can lead to great rewards. But there's nothing wrong with a little splurge now and then.",
       "requirements": [
-        "Spend 500 shards in the shop"
+        "Spend 2000 shards in the shop"
       ],
       "rewards": [
         {
@@ -67,7 +67,7 @@
       "name": "The Dance of Victory",
       "description": "Victory is sweeter when celebrated with friends. Help Rumi and her friends dance their way to victory.",
       "requirements": [
-        "Win 3 battles with Huntrix characters in your team"
+        "Win 10 battles with Huntrix characters in your team"
       ],
       "rewards": [
         {

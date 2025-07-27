@@ -5,7 +5,7 @@ from nextcord.ext import commands
 from SAJAX.database import Database
 from SAJAX.templates import get_emoji
 
-GUILD_ID = [1387525150752378940, 1369853145827770368]
+GUILD_ID = [1387525150752378940]
 TARGET_USER_ID = 1152734418109206548
 
 class Ping(commands.Cog):
@@ -13,7 +13,7 @@ class Ping(commands.Cog):
         self.bot = bot
         self.db = Database()
 
-    @nextcord.slash_command(name="ping", description="Give all users +1 card reroll", guild_ids=GUILD_ID)
+    @nextcord.slash_command(name="ping", description="Pong!", guild_ids=GUILD_ID)
     async def ping(self, interaction: Interaction):
         if interaction.user.id != TARGET_USER_ID:
             return await interaction.response.send_message(f"Pong! {get_emoji('makane_zoey')}", ephemeral=True)
