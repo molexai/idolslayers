@@ -66,6 +66,14 @@ class CardPageView(View):
             self.update_buttons()
             await interaction.response.edit_message(embed=self.generate_embed(), view=self)
 
+    @button(label="Skip to Page", style=ButtonStyle.gray)
+    async def skip_to_page(self, button: Button, interaction: Interaction):
+        if interaction.user.id != self.owner_id:
+            await interaction.response.send_message("You can't use this button.", ephemeral=True)
+            return
+
+        await interaction.response.send_modal(SkipPageModal(self))
+
     @button(label="Display", style=ButtonStyle.green, custom_id="display_card")
     async def display(self, button: Button, interaction: Interaction):
         card = self.cards[self.index]
@@ -177,6 +185,38 @@ class CardPageView(View):
                         random.shuffle(urls)
                         return random.choice(urls)
         return ""
+
+class SkipPageModal(nextcord.ui.Modal):
+    def __init__(self, view: CardPageView):
+        super().__init__(
+            "Skip to Page",
+            timeout=60
+        )
+        self.view = view
+        self.page_input = nextcord.ui.TextInput(
+            label="Enter page number (1 to {})".format(len(self.view.cards)),
+            placeholder="e.g. 5",
+            min_length=1,
+            max_length=4,
+            required=True
+        )
+        self.add_item(self.page_input)
+
+    async def callback(self, interaction: Interaction):
+        try:
+            page = int(self.page_input.value.strip())
+            if not (1 <= page <= len(self.view.cards)):
+                raise ValueError()
+        except ValueError:
+            error_embed = Templates.drop_error()
+            error_embed.description = f"> Invalid input. Please enter a number between **1** and **{len(self.view.cards)}**."
+            await interaction.response.send_message(embed=error_embed, ephemeral=True)
+            return
+
+        self.view.index = page - 1
+        self.view.update_buttons()
+        await interaction.response.edit_message(embed=self.view.generate_embed(), view=self.view)
+
 
 class CardSelect(Select):
     def __init__(self, cards, templates, owner_id):

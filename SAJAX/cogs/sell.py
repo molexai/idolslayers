@@ -3,9 +3,10 @@ import os
 import time
 
 import nextcord
+from nextcord import SlashOption, Interaction, SelectOption
 from nextcord.ext import commands
-from nextcord import SlashOption, Interaction, SelectOption, Embed, Color
-from nextcord.ui import View, Select, button
+from nextcord.ui import View, Select, button, Button
+
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
@@ -55,38 +56,136 @@ class SellCog(commands.Cog):
             return await interaction.response.send_message(embed=Templates.sell_no_character(character_name),
                                                            ephemeral=True)
 
-        options = [
-            SelectOption(
-                label=f"{i + 1}. {c['name']}",
-                description=f"Rarity: {c.get('rarity', c.get('top_rarity', '?'))}",
-                value=str(i)
-            )
-            for i, c in enumerate(matching[:25])
-        ]
+        class PaginatedSelect(View):
+            def __init__(self, db, user_id, matching_chars):
+                super().__init__(timeout=60)
+                self.db = db
+                self.user_id = user_id
+                self.matching_chars = matching_chars
+                self.page = 0
+                self.options_per_page = 25
+                self.max_page = (len(matching_chars) - 1) // self.options_per_page if matching_chars else 0
 
-        class CharacterSelect(Select):
-            def __init__(self, db):
-                super().__init__(
-                    placeholder="Select which character to sell…",
-                    min_values=1,
-                    max_values=1,
-                    options=options
-                )
-                self.db = db  # Store db reference here
+                options = self.get_options()
+                if not options:
+                    options = [
+                        SelectOption(
+                            label="No characters available",
+                            description="",
+                            value="none",
+                            default=True
+                        )
+                    ]
+                    self.select = Select(
+                        placeholder="No characters to select",
+                        min_values=0,
+                        max_values=0,
+                        options=options,
+                        disabled=True
+                    )
+                else:
+                    self.select = Select(
+                        placeholder="Select which character to sell…",
+                        min_values=1,
+                        max_values=1,
+                        options=options
+                    )
+                self.add_item(self.select)
 
-            async def callback(self, ctx: Interaction):
-                idx = int(self.values[0])
-                char = matching[idx]
+                self.prev_button = Button(label="Previous", style=nextcord.ButtonStyle.blurple, disabled=True)
+                self.next_button = Button(label="Next", style=nextcord.ButtonStyle.blurple, disabled=(self.max_page == 0))
+                self.add_item(self.prev_button)
+                self.add_item(self.next_button)
+
+                self.prev_button.callback = self.prev_page
+                self.next_button.callback = self.next_page
+                self.select.callback = self.select_callback
+
+            def get_options(self):
+                start = self.page * self.options_per_page
+                end = start + self.options_per_page
+                slice_chars = self.matching_chars[start:end]
+
+                options = [
+                    SelectOption(
+                        label=f"{start + i + 1}. {c['name']}",
+                        description=f"Rarity: {c.get('rarity', c.get('top_rarity', '?'))}",
+                        value=str(start + i)
+                    )
+                    for i, c in enumerate(slice_chars)
+                ]
+                return options
+
+            async def update_select(self, interaction: Interaction):
+                options = self.get_options()
+                if not options:
+                    self.select.options = []
+                    self.select.disabled = True
+                    self.prev_button.disabled = True
+                    self.next_button.disabled = True
+                else:
+                    self.select.options = options
+                    self.select.disabled = False
+                    self.prev_button.disabled = self.page == 0
+                    self.next_button.disabled = self.page == self.max_page
+                await interaction.response.edit_message(view=self)
+
+            async def prev_page(self, interaction: Interaction):
+                if self.page > 0:
+                    self.page -= 1
+                    await self.update_select(interaction)
+
+            async def next_page(self, interaction: Interaction):
+                if self.page < self.max_page:
+                    self.page += 1
+                    await self.update_select(interaction)
+
+            async def select_callback(self, interaction: Interaction):
+                select = self.select
+                if select.values[0] == "none":
+                    await interaction.response.defer()
+                    return
+
+                idx = int(select.values[0])
+                user_data = self.db.get_user(self.user_id) or {}
+                current_chars = user_data.get("characters", [])
+
+                char = None
+                if idx < len(self.matching_chars):
+                    candidate = self.matching_chars[idx]
+                    for c in current_chars:
+                        if c.get("name") == candidate.get("name") and c.get("rarity", c.get("top_rarity", None)) == candidate.get("rarity", candidate.get("top_rarity", None)):
+                            char = candidate
+                            break
+
+                if not char:
+                    await interaction.response.edit_message(embed=Templates.sell_no_character("selected character"),
+                                                            view=None)
+                    return
 
                 class ConfirmView(View):
-                    def __init__(self, db):
+                    def __init__(self, db, user_id):
                         super().__init__()
                         self.rarity_worth = None
-                        self.db = db  # Use shared db instance
+                        self.db = db
+                        self.user_id = user_id
 
                     @button(label="✅ Yes", style=nextcord.ButtonStyle.success)
                     async def yes(self, button, i2: Interaction):
-                        self.db.remove_character_and_card(user_id, char)
+                        user_data_check = self.db.get_user(self.user_id) or {}
+                        chars_check = user_data_check.get("characters", [])
+                        found = False
+                        for c in chars_check:
+                            if c.get("name") == char.get("name") and c.get("rarity", c.get("top_rarity", None)) == char.get("rarity", char.get("top_rarity", None)):
+                                found = True
+                                break
+
+                        if not found:
+                            await i2.response.edit_message(embed=Templates.sell_no_character("selected character"),
+                                                          view=None)
+                            return
+
+                        self.db.remove_character_and_card(self.user_id, char)
                         rarity = char.get("rarity", char.get("top_rarity", "Unknown"))
 
                         rarities_path = os.path.join(os.path.dirname(__file__), "rarities.json")
@@ -99,18 +198,17 @@ class SellCog(commands.Cog):
                         }
 
                         shards = self.rarity_worth.get(rarity, 10)
-                        self.db.add_shards(user_id, int(shards))
+                        self.db.add_shards(self.user_id, int(shards))
                         await i2.response.edit_message(embed=Templates.sell_success(shards), view=None)
 
                     @button(label="❌ No", style=nextcord.ButtonStyle.danger)
                     async def no(self, button, i2: Interaction):
                         await i2.response.edit_message(embed=Templates.sell_cancelled(), view=None)
 
-                await ctx.response.edit_message(embed=Templates.sell_confirm(char), view=ConfirmView(self.db))
+                await interaction.response.edit_message(embed=Templates.sell_confirm(char),
+                                                        view=ConfirmView(self.db, self.user_id))
 
-        view = View(timeout=60)
-        view.add_item(CharacterSelect(self.db))  # Pass db here
-
+        view = PaginatedSelect(self.db, user_id, matching)
         await interaction.response.send_message(embed=Templates.sell_prompt(matching), view=view, ephemeral=True)
 
     @nextcord.slash_command(
@@ -150,7 +248,7 @@ class SellCog(commands.Cog):
         class ConfirmSellAll(View):
             def __init__(self, db):
                 super().__init__()
-                self.db = db  # Use shared db instance
+                self.db = db
 
             @button(label="✅ Yes", style=nextcord.ButtonStyle.success)
             async def confirm(self, button, i2: Interaction):

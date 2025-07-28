@@ -164,16 +164,40 @@ class EconomyCog(commands.Cog):
             embed.description = f"> You don't have any cards named **{character}**."
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
-        options = [
-            SelectOption(
-                label=f"{i+1}. {c['name']}",
-                description=f"Rarity: {c.get('rarity', c.get('top_rarity','?'))}",
-                value=str(i)
-            ) for i, c in enumerate(matching)
-        ]
+        PAGE_SIZE = 25
+        total_pages = (len(matching) + PAGE_SIZE - 1) // PAGE_SIZE
+
+        class CharacterSelectWithPagination(View):
+            def __init__(self, db, sender_id, target_id, matching, page=0):
+                super().__init__(timeout=60)
+                self.db = db
+                self.sender_id = sender_id
+                self.target_id = target_id
+                self.matching = matching
+                self.page = page
+                self.total_pages = (len(matching) + PAGE_SIZE - 1) // PAGE_SIZE
+                self.update_select()
+
+                if self.total_pages > 1:
+                    if self.page > 0:
+                        self.add_item(PrevButton())
+                    if self.page < self.total_pages - 1:
+                        self.add_item(NextButton())
+
+            def update_select(self):
+                start = self.page * PAGE_SIZE
+                end = start + PAGE_SIZE
+                options = [
+                    SelectOption(
+                        label=f"{i + 1 + start}. {c['name']}",
+                        description=f"Rarity: {c.get('rarity', c.get('top_rarity', '?'))}",
+                        value=str(i + start)
+                    ) for i, c in enumerate(self.matching[start:end])
+                ]
+                self.add_item(CharacterSelect(options, self.db, self.sender_id, self.target_id, self.matching))
 
         class CharacterSelect(Select):
-            def __init__(self, db, sender_id, target_id, matching):
+            def __init__(self, options, db, sender_id, target_id, matching):
                 super().__init__(
                     placeholder="Select which character to gift…",
                     min_values=1,
@@ -188,7 +212,6 @@ class EconomyCog(commands.Cog):
             async def callback(self, ctx: Interaction):
                 idx = int(self.values[0])
                 selected_card = self.matching[idx]
-
                 current_chars = self.db.get_characters(self.sender_id)
                 if selected_card not in current_chars:
                     embed = Templates.drop_error()
@@ -201,7 +224,6 @@ class EconomyCog(commands.Cog):
                         self.db = db
                         self.target_id = target_id
                         self.sender_id = sender_id
-                        self.bot = ctx.client
 
                     @button(label="✅ Yes, gift this card", style=ButtonStyle.success)
                     async def confirm(self, button: Button, i: Interaction):
@@ -240,14 +262,37 @@ class EconomyCog(commands.Cog):
                     selected_card.get("thumbnail_url", None)
                 )
                 embed.set_footer(text=f"Do you want to gift this card to {target.display_name}?")
-                await ctx.response.edit_message(embed=embed, view=GiftConfirmView(self.db, self.target_id, self.sender_id))
+                await ctx.response.edit_message(embed=embed,
+                                                view=GiftConfirmView(self.db, self.target_id, self.sender_id))
 
-        view = View(timeout=60)
-        view.add_item(CharacterSelect(self.db, sender_id, target_id, matching))
+        class PrevButton(Button):
+            def __init__(self):
+                super().__init__(label="◀️ Previous", style=ButtonStyle.secondary)
+
+            async def callback(self, i: Interaction):
+                new_view = CharacterSelectWithPagination(self.view.db, self.view.sender_id, self.view.target_id,
+                                                         self.view.matching, page=self.view.page - 1)
+                embed = Templates.drop_summon()
+                embed.title = f"Select which '{character}' to gift to {target.display_name} (Page {self.view.page})"
+                await i.response.edit_message(embed=embed, view=new_view)
+
+        class NextButton(Button):
+            def __init__(self):
+                super().__init__(label="▶️ Next", style=ButtonStyle.secondary)
+
+            async def callback(self, i: Interaction):
+                new_view = CharacterSelectWithPagination(self.view.db, self.view.sender_id, self.view.target_id,
+                                                         self.view.matching, page=self.view.page + 1)
+                embed = Templates.drop_summon()
+                embed.title = f"Select which '{character}' to gift to {target.display_name} (Page {self.view.page + 2})"
+                await i.response.edit_message(embed=embed, view=new_view)
+
+        initial_view = CharacterSelectWithPagination(self.db, sender_id, target_id, matching, page=0)
 
         embed = Templates.drop_summon()
-        embed.title = f"Select which '{character}' to gift to {target.display_name}"
-        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+        embed.title = f"Select which '{character}' to gift to {target.display_name} (Page 1)"
+        await interaction.response.send_message(embed=embed, view=initial_view, ephemeral=True)
+
 
 def setup(bot):
     bot.add_cog(EconomyCog(bot))
