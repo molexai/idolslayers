@@ -41,4 +41,4 @@ if cogs_dir.exists():
 else:
     print(f"❌ Cogs directory not found at {cogs_dir}")
 
-bot.run("MTM5ODMzNzEwODgyOTE0NzE3Ng.GJNyxk.2qqt3lPxgyV3y41gIZM2OC1oBkHbrdgwvhwb0Y")
+bot.run("MTM4NzUwOTI1MTg5MDYxNDQyMg.GRCvtO.FzrhOIog7Ds9QHNDFLlX2TWdreRnYzK5Gqn5-c")
