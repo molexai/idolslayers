@@ -215,13 +215,13 @@ class Templates:
         embed.add_field(
             name="Items for Sale",
             value=(
-                f"{get_emoji('giftbox')} **Drop Booster**           —  (7550 shards) {shard}\n\n"
-                f"{get_emoji('chest')} **Card Reroll**             — (5200 shards) {shard}\n\n"
-                f"{get_emoji('clock')} **Drop Cooldown Reducer**   — (2300 shards) {shard}\n\n"
-                f"{shard} **Shard Multiplier**             — (3400 shards) {shard}\n\n"
-                f"{get_emoji('spinning_heart')} **Double Drop Chance**    — (7800 shards) {shard}\n\n"
-                f"{get_emoji('up')} **Drop Queue Priority**      — (6500 shards) {shard}\n\n"
-                f"{get_emoji('verified')} **Auto Drop (Soon)**              — (15000 shards) {shard}"
+                f"{get_emoji('giftbox')} **Drop Booster**           —  **7500**{shard}\n\n"
+                f"{get_emoji('chest')} **Card Reroll**             — **1200**{shard}\n\n"
+                f"{get_emoji('clock')} **Drop Cooldown Reducer**   — **2300**{shard}\n\n"
+                f"{shard} **Shard Multiplier**             — **3400**{shard}\n\n"
+                f"{get_emoji('spinning_heart')} **Double Drop Chance**    — **7800**{shard}\n\n"
+                f"{get_emoji('up')} **Drop Queue Priority**      — **6500**{shard}\n\n"
+                f"{get_emoji('verified')} **Auto Drop (Soon)**              — **15000**{shard}"
             ),
             inline=False
         )
@@ -236,7 +236,7 @@ class Templates:
             description=f"> {description}",
             color=Color.from_rgb(255, 228, 225)
         )
-        embed.add_field(name="Price", value=f"{price} shards {get_emoji('shard_non_pink')}", inline=True)
+        embed.add_field(name="Price", value=f"**{price}**{get_emoji('shard_non_pink')}", inline=True)
         embed.set_footer(text="Thanks for shopping with SAJAX! ♡")
         return embed
 
@@ -247,7 +247,7 @@ class Templates:
             description=f"> {description}",
             color=Color.from_rgb(255, 228, 225)
         )
-        embed.add_field(name="Worth", value=f"{worth}{get_emoji('shard_non_pink')}", inline=True)
+        embed.add_field(name="Worth", value=f"**{worth}**{get_emoji('shard_non_pink')}", inline=True)
         embed.set_footer(text="Thanks for shopping with SAJAX! ♡")
         return embed
 
