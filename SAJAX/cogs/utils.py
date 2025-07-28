@@ -4,7 +4,7 @@ from nextcord import Interaction, SlashOption
 from SAJAX.database import Database
 from SAJAX.templates import Templates
 
-GUILD_ID = 1387525150752378940
+GUILD_ID = 1369853145827770368
 
 class Utils(commands.Cog):
     def __init__(self, bot):
