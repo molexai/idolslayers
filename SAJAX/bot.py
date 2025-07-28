@@ -18,6 +18,12 @@ async def on_ready():
     print(f"✅ Logged in as {bot.user}")
     await bot.sync_all_application_commands()
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        return  
+    raise error
+
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 

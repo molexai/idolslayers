@@ -57,11 +57,11 @@ class SellCog(commands.Cog):
 
         options = [
             SelectOption(
-                label=f"{i+1}. {c['name']}",
-                description=f"Rarity: {c.get('rarity', c.get('top_rarity','?'))}",
+                label=f"{i + 1}. {c['name']}",
+                description=f"Rarity: {c.get('rarity', c.get('top_rarity', '?'))}",
                 value=str(i)
             )
-            for i, c in enumerate(matching)
+            for i, c in enumerate(matching[:25])
         ]
 
         class CharacterSelect(Select):
