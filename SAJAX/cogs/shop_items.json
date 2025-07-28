@@ -1,37 +1,37 @@
 {
   "shop_items": [
     {
-      "name": "Drop Booster (One Time Use)",
-      "price": 7550,
+      "name": "Drop Booster",
+      "price": 7500,
       "description": "Receive an extra card drop or two on your next summon."
     },
     {
-      "name": "Card Reroll (One Time Use)",
-      "price": 5200,
+      "name": "Card Reroll",
+      "price": 1200,
       "description": "Reroll a card to get a different card, possibly with better stats."
     },
     {
-      "name": "Drop Cooldown Reducer (One Time Use)",
+      "name": "Drop Cooldown Reducer",
       "price": 2300,
       "description": "Reduce the cooldown time between your card drops to get cards more often."
     },
     {
-      "name": "Shard Multiplier (One Time Use)",
+      "name": "Shard Multiplier",
       "price": 3400,
       "description": "Increase the amount of shards you earn from drops."
     },
     {
-      "name": "Double Drop Chance (One Time Use)",
+      "name": "Double Drop Chance",
       "price": 7800,
       "description": "Double your chance to get two item drops instead of one."
     },
     {
-      "name": "Drop Queue Priority (One Time Use)",
+      "name": "Drop Queue Priority",
       "price": 6500,
       "description": "Get priority in the drop queue so your drops come before others."
     },
     {
-      "name": "Auto Drop (Coming Soon)",
+      "name": "Auto Drop",
       "price": 15000,
       "description": "Automatically receive item drops without needing to manually summon."
     }

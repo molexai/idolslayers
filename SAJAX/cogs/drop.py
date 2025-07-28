@@ -9,7 +9,7 @@ import json
 import os
 
 from SAJAX.database import Database
-from SAJAX.templates import Templates
+from SAJAX.templates import Templates, get_emoji
 
 GUILD_ID = 1369853145827770368
 
@@ -387,6 +387,7 @@ class Drop(commands.Cog):
     @nextcord.slash_command(name="drop", description="Summon your next SAJAX cards with this command!",
                             guild_ids=[GUILD_ID])
     async def drop(self, interaction: Interaction):
+        global double_drop_activated_embed, drop_booster_embed, shard_muliplier_embed
         user = interaction.user
         user_id_str = str(user.id)
         user_enabled_items = self.db.get_enabled_items(user_id_str) or []
@@ -439,17 +440,61 @@ class Drop(commands.Cog):
 
         drop_amount = 3
         base_shard_amount = 20
-
-        if "drop_booster" in user_enabled_items:
-            drop_amount += random.choice([1, 2])
-            user_enabled_items.remove("drop_booster")
-        self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
+        double_drop = False
+        drop_booster = False
+        shard_muliplier = False
 
         shard_amount = base_shard_amount * 2 if "shard_multiplier" in user_enabled_items else base_shard_amount
 
         if "shard_multiplier" in user_enabled_items:
             user_enabled_items.remove("shard_multiplier")
             self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
+            shard_muliplier = True
+            if shard_muliplier:
+                shard_muliplier_embed = Templates.drop_success()
+                shard_muliplier_embed.description = (
+                    f"> {Templates.pastel_emojis[5]} <@{user.id}>, your **Shard Multiplier** activated!"
+                    f"\nYou received **{shard_amount}**{get_emoji('shard_non_pink')}"
+                )
+                shard_muliplier_embed.title = "`⋆｡ﾟ☁︎｡𖦹 Shard Multiplier Activated! ｡☁︎ﾟ｡⋆`"
+                shard_muliplier_embed.color = nextcord.Color.from_rgb(255, 182, 193)
+
+
+        if "double_drop_chance" in user_enabled_items:
+            # 75% chance to double the drop amount
+            if random.random() < 0.75:
+                print(f"[double_drop] User {user_id_str} activated double drop chance!")
+                drop_amount *= 2
+                shard_amount *= 2
+                user_enabled_items.remove("double_drop_chance")
+                self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
+                double_drop = True
+
+                double_drop_activated_embed = Templates.drop_success()
+                if double_drop:
+                    double_drop_activated_embed.description = (
+                        f"> {Templates.pastel_emojis[5]} <@{user.id}>, your **Double Drop Chance** activated!"
+                        f"\nYou received **{shard_amount}** shards and **{drop_amount}** cards!"
+                    )
+                    double_drop_activated_embed.title = "`⋆｡ﾟ☁︎｡𖦹 Double Drop Activated! ｡☁︎ﾟ｡⋆`"
+                    double_drop_activated_embed.color = nextcord.Color.from_rgb(255, 105, 180)
+
+        if "drop_booster" in user_enabled_items:
+            drop_amount += random.choice([1, 2])
+            drop_booster = True
+            print(f"[normal_drop] User {user_id_str} has Drop Booster enabled, increasing drop amount to {drop_amount}.")
+            user_enabled_items.remove("drop_booster")
+
+            if drop_booster:
+                drop_booster_embed = Templates.drop_success()
+                drop_booster_embed.description = (
+                    f"> {Templates.pastel_emojis[5]} <@{user.id}>, your **Drop Booster** activated!"
+                    f"\nYou received **{drop_amount}** cards!"
+                )
+                drop_booster_embed.title = "`⋆｡ﾟ☁︎｡𖦹 Drop Booster Activated! ｡☁︎ﾟ｡⋆`"
+                drop_booster_embed.color = nextcord.Color.from_rgb(255, 165, 0) #
+
+        self.db.update_user(user_id_str, {"enabled_items": user_enabled_items})
 
         print(
             f"[normal_drop] user: {user_id_str}, drop_amount: {drop_amount}, shard_amount: {shard_amount}, items: {user_enabled_items}")
@@ -463,10 +508,15 @@ class Drop(commands.Cog):
             response_embed = Templates.drop_success()
             response_embed.description = (
                 f"> {Templates.pastel_emojis[5]} <@{user.id}>, cards have been summoned!"
-                "\nUse `/mycards` to view them."
-                f"\nYou received **{shard_amount}** shards as a bonus!"
+                "\nUse `/mycards` to view them. Enjoy!"
             )
             await interaction.followup.send(embed=response_embed)
+            if double_drop:
+                await interaction.followup.send(embed=double_drop_activated_embed)
+            elif drop_booster:
+                await interaction.followup.send(embed=drop_booster_embed)
+            elif shard_muliplier:
+                await interaction.followup.send(embed=shard_muliplier_embed)
 
     @nextcord.slash_command(
         name="addcard",
