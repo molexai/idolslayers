@@ -116,10 +116,10 @@ class Ads(commands.Cog):
             embed.description = "> Please provide a valid ad name (max 50 characters)."
             return await interaction.send(embed=embed, ephemeral=True)
 
-        if description and len(description) > 200:
+        if description and len(description) > 800:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Description Too Long ｡☁︎ﾟ｡⋆`"
-            embed.description = "> The description must be 200 characters or less."
+            embed.description = "> The description must be 800 characters or less."
             return await interaction.send(embed=embed, ephemeral=True)
 
         if image and not image.startswith(("http://", "https://")):
