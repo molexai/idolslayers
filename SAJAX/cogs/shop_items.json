@@ -31,6 +31,11 @@
       "description": "Get priority in the drop queue so your drops come before others."
     },
     {
+      "name": "Advertisement Max Increase",
+      "price": 5000,
+        "description": "Increase the maximum number of advertisements you can create by **+3**. \n> **Note:** Requires a minimum of **3** advertisements to be active."
+    },
+    {
       "name": "Auto Drop",
       "price": 15000,
       "description": "Automatically receive item drops without needing to manually summon."

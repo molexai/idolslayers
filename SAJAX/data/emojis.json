@@ -51,6 +51,10 @@
     {
       "name": "verified",
       "emoji_id": "<a:verified:1398353017924747274>"
+    },
+    {
+      "name": "plus",
+      "emoji_id": "<:green_plus:1400961564382593157>"
     }
   ]
 }

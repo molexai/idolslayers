@@ -221,6 +221,7 @@ class Templates:
                 f"{shard} **Shard Multiplier**             — **3400**{shard}\n\n"
                 f"{get_emoji('spinning_heart')} **Double Drop Chance**    — **7800**{shard}\n\n"
                 f"{get_emoji('up')} **Drop Queue Priority**      — **6500**{shard}\n\n"
+                f"{get_emoji('plus')} **Advertisement Maximum Increase**            — **5000**{shard}\n\n"
                 f"{get_emoji('verified')} **Auto Drop (Soon)**              — **15000**{shard}"
             ),
             inline=False

@@ -161,6 +161,20 @@ class Database:
     def get_all_users(self):
         return list(self.users.find())
 
+    def remove_user(self, user_id: str):
+        user_id = str(user_id)
+        result = self.users.delete_one({"user_id": user_id})
+        return result.deleted_count > 0
+
+    def remove_advertisement(self, user_id: str, ad_id: str):
+        user_id = str(user_id)
+        ad_id = str(ad_id)
+        result = self.users.update_one(
+            {"user_id": user_id},
+            {"$pull": {"ad_data": {"ad_id": ad_id}}}
+        )
+        return result.modified_count > 0
+
     def add_card_reroll_to_all_users(self):
         users = self.get_all_users()
         count = 0

@@ -91,6 +91,7 @@ class ShopDropdown(Select):
             nextcord.SelectOption(label="Shard Multiplier", value="Shard Multiplier"),
             nextcord.SelectOption(label="Double Drop Chance", value="Double Drop Chance"),
             nextcord.SelectOption(label="Drop Queue Priority", value="Drop Queue Priority"),
+            nextcord.SelectOption(label="Advertisement Max Increase", value="Advertisement Max Increase"),
             nextcord.SelectOption(label="Auto Drop (Soon)", value="Auto Drop"),
         ]
 
@@ -164,8 +165,6 @@ class ShopView(View):
     def __init__(self, user_id: str, db: Database):
         super().__init__(timeout=None)
         self.add_item(ShopDropdown(user_id, db))
-
-
 
 class Shop(commands.Cog):
     def __init__(self, bot):
