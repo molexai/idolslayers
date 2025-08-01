@@ -66,28 +66,41 @@ class Ads(commands.Cog):
         user_id = str(interaction.user.id)
         user_data = self.db.get_user(user_id)
         ad_maximum = user_data.get("ad_maximum", 5)
+        global_maximum_ads_allowed = 20
         amount_of_ads = len(user_data.get("ad_data", []))
 
+        # Apply increase first if possible
         if "advertisement_max_increase" in user_data.get("enabled_items", []) and amount_of_ads >= 3:
-            ad_maximum += 3
-            user_data["ad_maximum"] = ad_maximum
-            user_data["enabled_items"].remove("advertisement_max_increase")
-            self.db.update_user(user_id, user_data)
-            embed = Templates.drop_success()
-            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Advertisement Limit Increased ｡☁︎ﾟ｡⋆`"
-            embed.description = (
-                f"> {Templates.pastel_emojis[5]} <@{user_id}>, Your advertisement limit has been increased to **{ad_maximum}** ads.\n"
-                f"> You can now create more ads! ♡"
-            )
-            embed.color = color_randomize()
-            embed.set_footer(text="Thank you for using SAJAX Ads!")
-            await interaction.send(embed=embed, ephemeral=False)
+            if ad_maximum >= global_maximum_ads_allowed:
+                embed = Templates.drop_error()
+                embed.title = "`⋆｡ﾟ☁︎｡𖦹 Advertisement Limit Reached ｡☁︎ﾟ｡⋆`"
+                embed.description = (
+                    f"> {Templates.pastel_emojis[1]} You have reached the maximum advertisement limit of **{global_maximum_ads_allowed}**.\n"
+                    f"> You will not be able to increase your maximum advertise limit anymore. ♡"
+                )
+                user_data["enabled_items"].remove("advertisement_max_increase")
+                self.db.update_user(user_id, user_data)
+                await interaction.send(embed=embed, ephemeral=True)
 
+            else:
+                ad_maximum += 3
+                user_data["ad_maximum"] = ad_maximum
+                user_data["enabled_items"].remove("advertisement_max_increase")
+                self.db.update_user(user_id, user_data)
+                embed = Templates.drop_success()
+                embed.title = "`⋆｡ﾟ☁︎｡𖦹 Advertisement Limit Increased ｡☁︎ﾟ｡⋆`"
+                embed.description = (
+                    f"> {Templates.pastel_emojis[5]} <@{user_id}>, Your advertisement limit has been increased to **{ad_maximum}** ads.\n"
+                    f"> You can now create more ads! ♡"
+                )
+                embed.color = color_randomize()
+                embed.set_footer(text="Thank you for using SAJAX Ads!")
+                await interaction.send(embed=embed, ephemeral=False)
 
         if "ad_data" not in user_data:
             user_data["ad_data"] = []
 
-        if len(user_data["ad_data"]) >= ad_maximum:
+        if len(user_data["ad_data"]) >= ad_maximum or amount_of_ads >= global_maximum_ads_allowed:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Advertisement Limit Reached ｡☁︎ﾟ｡⋆`"
             embed.description = (

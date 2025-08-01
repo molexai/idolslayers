@@ -553,9 +553,9 @@ class Drop(commands.Cog):
             await interaction.followup.send(embed=response_embed)
             if double_drop:
                 await interaction.followup.send(embed=double_drop_activated_embed)
-            elif drop_booster:
+            if drop_booster:
                 await interaction.followup.send(embed=drop_booster_embed)
-            elif shard_muliplier:
+            if shard_muliplier:
                 await interaction.followup.send(embed=shard_muliplier_embed)
 
     @nextcord.slash_command(
