@@ -3,143 +3,639 @@
     {
       "name": "Bobby",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784447847366837/Untitled90_20250723222225.png?ex=6882fbb5&is=6881aa35&hm=d580e45455311c3f07412e441a4f8b15cb40525ed48f82f24d7d95a38d663402&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784447432003594/Untitled90_20250723222117.png?ex=6882fbb5&is=6881aa35&hm=3147b7bcb338984153d7e505fd92b333a8183252fb0b6cb1253c2831aa628560&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784444634664970/Untitled90_20250723222149.png?ex=6882fbb5&is=6881aa35&hm=13053a6bd243efac2bb736e6d7bb05fc23672b9245d4f44ee764e802868057e3&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784507310145556/Untitled90_20250723223552.png?ex=6882fbc4&is=6881aa44&hm=89c3e26b1fda9c1b28b294745ca851174d8cbe7204a4f16c1e9b94bd1e6ef9e3&"},
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232960774078655/Bobby-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232961101238392/Bobby-B-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232961696956427/Bobby-B-3.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232498477760614/Bobby-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232499006509056/Bobby-A-2.png",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Rumi",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676970787209336/Untitled90_20250723151950.png?ex=6882979d&is=6881461d&hm=1e450f1c445c3579b2cea080fe4837db8c315a376264a84fbfd54e21f9f3dd88&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676971273752656/Untitled90_20250723152039.png?ex=6882979d&is=6881461d&hm=f9fd92996c93fb3a0ee4d341707ee10bed9e7cc9c23122f07e35857421d081da&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676971785195571/Untitled90_20250723152117.png?ex=6882979d&is=6881461d&hm=9bfc69d7f44c5fc30daab19cea107034100d6b12122626bad3d1313589c260bc&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676972213276854/Untitled90_20250723152202.png?ex=6882979d&is=6881461d&hm=3b2e3884cb45044931919415b7697e0ede4d999deab054fc4d9d699b82c301a7&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676972620120225/Untitled90_20250723152324.png?ex=6882979d&is=6881461d&hm=583713b0f22563cf00ebdda7ebdb4461f87d8c0cb539ae16989fdd0d5d55351e&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676916496011465/Untitled90_20250723150900.png?ex=68829790&is=68814610&hm=3ffd36a96788610c6805e00f3a08475d45295470c6cacce72c4f72eb3a4d86db&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676916986613841/Untitled90_20250723150941.png?ex=68829790&is=68814610&hm=37c9494f99c9d65c6f0bc319826fad1acaed7f1c5cde82b684d33b89a7e4a622&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676917351649290/Untitled90_20250723151021.png?ex=68829790&is=68814610&hm=1bb5374ca002d47b210d5605415608274829ed16df5a0fbf7581cc03009ff909&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676917817085952/Untitled90_20250723151058.png?ex=68829790&is=68814610&hm=e619e580fdabacba9c1f8062c4f7c8f0a9c51fc33428db10dc903d2dcf4493ce&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667593694875708/Untitled90_20250723145123.png?ex=68828ee1&is=68813d61&hm=37f81d7838e42fbd13fb76afc32f5a7edcb813bc9cb57618d2b24f387e93eaa5&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667595867390003/Untitled90_20250723143907.png?ex=68828ee2&is=68813d62&hm=6b6f8b1a1d2885cbc34c78956cec357ff0b0871ddcd0a6aa5c19c02afccba44e&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667598543618131/Untitled90_20250723144004.png?ex=68828ee2&is=68813d62&hm=8e57661349f3d566455450e962f96e87607d6a654655b0dc560cf33acb51bee7&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667594558898247/Untitled90_20250721164800.png?ex=68828ee1&is=68813d61&hm=0fc4787034955d0468bc8a049fe6ce8bb627af58048e0046859e40da5307d798&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228705879162971/Rumi-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228705526714419/Rumi-B-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228705103085752/Rumi-B-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228704549441647/Rumi-B-4.png",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228704092393532/Rumi-B-5.png",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228213971324989/Rumi-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228213501296750/Rumi-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228212918554624/Rumi-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228212050198649/Rumi-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227575145271307/rumi-R-2.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227574553743460/rumi-R-1.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227575988322304/rumi-R-3.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227376121085984/rumi-UR-1.png?ex=6890d3b0&is=688f8230&hm=3adeb2f93b00a8edbe9436bc5a710aa4ccc56094462b7e528511af8a2ed3df72&",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Mira",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676973190549546/Untitled90_20250723152547.png?ex=6882979d&is=6881461d&hm=95954fcda7dd908167b757ba3f2414011b441a9b30668ad050ac889633bd1af6&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676973568032850/Untitled90_20250723152630.png?ex=6882979e&is=6881461e&hm=75fd8ebb16e523a1c850f7288acce1aec61b5694ef9a264bd930a44b1bf5e3ec&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676973949452358/Untitled90_20250723152702.png?ex=6882979e&is=6881461e&hm=580d5f827d4799e67870c8907432fcfb594a711b61d10fabe61645a94283a469&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676974343848157/Untitled90_20250723152735.png?ex=6882979e&is=6881461e&hm=cae14bb93acf096abe51bd08a96e5855edfcc473079c59e568e91d748c8d4022&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676884770295828/Untitled90_20250723150050.png?ex=68829788&is=68814608&hm=109672465a7d372c0485e1f77e2b5ca85c17af69339527c0b632a073f2441fd6&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676885126680666/Untitled90_20250723150425.png?ex=68829788&is=68814608&hm=ba2efef0bb1550f46c5e20e141cb992ba621afa5852c987396eb5361fca6d787&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676885437054976/Untitled90_20250723150457.png?ex=68829789&is=68814609&hm=f1bcdd13682df06f726795b9b155d69b5516e99dd8d0f23c30015739bab93999&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676885806416072/Untitled90_20250723150536.png?ex=68829789&is=68814609&hm=a032c2904b12efb23e12e65e7581aea16c69cbc16203cfa65274cbbf46a69996&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667645972680884/Untitled90_20250723144821.png?ex=68828eee&is=68813d6e&hm=272953f1654c0b34a0696b6b02e8b731c1027d0ffbc9044b0255378ff6b4d155&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667646589239369/Untitled90_20250723144918.png?ex=68828eee&is=68813d6e&hm=4984e919b1ec31b25f485887e40d058903ef6d40244c5ea2f35944b21ab6860b&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667647331504198/Untitled90_20250723144716.png?ex=68828eee&is=68813d6e&hm=2eafdda46e6daccbcf897a34d6ec97df153fbcd4be0c84d2b36d3876d93bd318&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667597998100520/Untitled90_20250723143222.png?ex=68828ee2&is=68813d62&hm=24412929ca8fdf6ad11596867fb09f27a1dc31d94628a5b617ec14925c352bcb&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228553185660938/Mira-B-4.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228552799518751/Mira-B-5.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228553546108958/Mira-B-3.png?ex=6890d4c8&is=688f8348&hm=eee9ed24046445a9b8b854fce9b03756289aede312efe09630c6c6a3a6db9997&",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228553898426398/Mira-B-2.png?ex=6890d4c8&is=688f8348&hm=0302597971475eda615c83b28944ddf76f8d3dcae847800aa72f4da684ac780c&",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228554347483197/Mira-B-1.png?ex=6890d4c8&is=688f8348&hm=4f0eecd70efc890976beda167fedb27f7c45b5efc2bca5ef8493822729ba5b2f&",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228215942385756/Mira-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228215502110770/Mira-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228214889877655/Mira-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228214436757574/Mira-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227572951384094/mira-R-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227573521940613/mira-R-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227572334952489/mira-R-3.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227377064939520/mira-UR-1.png?ex=6890d3b0&is=688f8230&hm=528635384cc2a560e180039d58a3b0fe03b1a1487a70183b66623b9846d6d373&",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Zoey",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676918169669832/Untitled90_20250723151300.png?ex=68829790&is=68814610&hm=b325fe18ca1fac7312b9449953142e2294a83b30a3cbd5953200b88b7611418f&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676918484107334/Untitled90_20250723151334.png?ex=68829790&is=68814610&hm=a363b649f09b38c96ca1599abe1e5e012afd5f3024f0206ec0a31f55da0621aa&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676919033696266/Untitled90_20250723151523.png?ex=68829791&is=68814611&hm=adb9e0977ab8dbdda76ff906cc7864a354eca1cd421742314a46173e8138f1f2&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676919478157352/Untitled90_20250723151602.png?ex=68829791&is=68814611&hm=202b4042be9c2ee3c1be0605bed5876733b6047eeeae558d4ccc2d7ba569bf0f&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676920052650074/Untitled90_20250723151651.png?ex=68829791&is=68814611&hm=d94eb32ced583bd2646620ee2ea43e594109a8a022b99d39113d5a86d5b4eb50&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676877937770567/Untitled90_20250723145744.png?ex=68829787&is=68814607&hm=c5911e5bc0cb925515603d8518450accb4bb44c1fd44c8e6ac999d4865eeb3c2&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676883231113296/Untitled90_20250723145818.png?ex=68829788&is=68814608&hm=e5bad204d7b147fc604bd8ff397bbd0bbd5adc94ac2492fb5275869de4ae1b0e&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676883738497044/Untitled90_20250723145938.png?ex=68829788&is=68814608&hm=8308f491d189583ebde9bab89f7ced43b5ec09fa408ec2395ae9e3e661e4ec86&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397676884317438063/Untitled90_20250723150016.png?ex=68829788&is=68814608&hm=fb990002742408d551758ee97e25f2abeb5e3cd8283f04796b4165027ca4822a&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667593317384192/Untitled90_20250723143740.png?ex=68828ee1&is=68813d61&hm=59db3ddd387dc9632fb0c7b0d95eac8cae65a409a9931b6508b1cbd4fe633af5&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667595230117958/Untitled90_20250723144224.png?ex=68828ee2&is=68813d62&hm=f0b545d22586e0ec213ec7949fb264d6ab9fc3fae9fee479b798a4d1e1d984d2&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667596605849640/Untitled90_20250723144213.png?ex=68828ee2&is=68813d62&hm=e79994c6869102fe61d5dd86e631bcc028925796b6b7341d06c35ae45387ffd0&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667597075615765/Untitled90_20250723143132.png?ex=68828ee2&is=68813d62&hm=48a076c2d2ca453073c1145dc786d2d9f4585fed9d9e601bdaeef2e9fd13ceae&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228556490641498/zoey-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228556100567100/Zoey-B-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228555727142951/Zoey-B-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228555379019786/Zoey-B-4.png",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228554867310612/Zoey-B-5.png",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228276428443648/zoey-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228275971526829/zoey-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228216966053908/zoey-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228216349360259/zoey-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227571680510053/zoey-R-2.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227572334952489/zoey-r-3.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227571005493360/zoey-R-1.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227376578531442/zoey-UR-1.png?ex=6890d3b0&is=688f8230&hm=15f62563d61c3e0b6ff439a92a2d2f0d2fd27482ca4e3a2ba999bb047d3f8ffd&",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Celine",
       "rarities": [
-        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784445125394602/Untitled90_20250723223404.png?ex=6882fbb5&is=6881aa35&hm=eb979210f820dd51172b8834b53876985dfdd9d270e13947d611447433d8a1cc&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784446601662615/Untitled90_20250723223301.png?ex=6882fbb5&is=6881aa35&hm=dba01e8906249b728806f98685ee3179666d627df5d0efda545a4ccec0a9c4f3&"},
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232960413503580/Celine-B-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232495915176107/Celine-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232496406040708/Celine-A-2.png",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Old Traditional Demon Slayer",
       "rarities": [
-        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397667597612355615/Untitled90_20250721164507.png?ex=68828ee2&is=68813d62&hm=48821ae9cd90a483b1adb9de0d48a12cbdf9bf77a6d1064b2357d60402afee28&"}
+        {
+          "rarity": "B",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232497219473449/Hunter-A-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Rumi's Mom",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796629851017376/Untitled90_20250723232424.png?ex=6883070e&is=6881b58e&hm=5af9b61226d65a607ac818fb4883f472ca3ddf0b92a05423024dbb9a1543f640&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796630773628928/Untitled90_20250723231404.png?ex=6883070e&is=6881b58e&hm=e7f964ba4a6d5617b2f302a68c43d8fd5f69510dc9d4cdf014d2b6bbe423b5b2&"},
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232959981223936/Ryu-B-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232496770809866/Ryu-A-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Gwi-ma",
       "rarities": [
-        { "rarity": "B", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698199514251385/Untitled90_20250723154504.png?ex=6882ab62&is=688159e2&hm=eef14b620ba54715a6afcb29f0644e8f88a472cd084fc3b523dfd1f68e7eca8a&"}
+        {
+          "rarity": "B",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Bird (Six-eyed Magpie)",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784446132031509/Untitled90_20250723222907.png?ex=6882fbb5&is=6881aa35&hm=1839c0c2cb497327808b80d551488f23dcb9d5ca1d49016e17d4f8f01cd5066f&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784445527785573/Untitled90_20250723222857.png?ex=6882fbb5&is=6881aa35&hm=597de366e8e1d6bec70c5bde5100f372e85f4bc302dfcc5ee6f1624596c67213&"},
-        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232963047522314/SussyBird-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232963458301992/SussyBird-B-2.png",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Tiger (Idiot Tiger)",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784447042195547/Untitled90_20250723222919.png?ex=6882fbb5&is=6881aa35&hm=a13ffb4507d9a99987e7b550d6c93bed45a3dcaaf3cdbcdc60713da040637775&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784444185743510/Untitled90_20250723222933.png?ex=6882fbb5&is=6881aa35&hm=30fe1b64a503826cf5291ca78033152c26417b3e39ba98911b1672403ed74866&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397784443745472563/Untitled90_20250723222944.png?ex=6882fbb4&is=6881aa34&hm=69e671c9291bc0e4172366ea60bcaf201e46c4b70ae509cfe703e262675e2432&"},
-        { "rarity": "A", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" },
-        { "rarity": "UR", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232962137096335/DerpyTiger-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232962569244822/DerpyTiger-B-2.png",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232499438387220/DerpyTiger-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232499958353970/DerpyTiger-A-2.png",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Crying Demon",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796630362591363/Untitled90_20250723232317.png?ex=6883070e&is=6881b58e&hm=89880550644684ee55a6f1f5f3a74c1f1ce03e18ab3ba2bff4cb1ffc63c462e9&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397796629515603979/Untitled90_20250723231641.png?ex=6883070e&is=6881b58e&hm=2b312b8e01cc10b14826c558e0d8cf63cb77faf4cc39fd5ed2dfb7ecc915303e&"},
-        { "rarity": "R", "image_url_1": "", "image_url_2": "", "image_url_3": "", "image_url_4": "", "image_url_5": "", "image_url_6": "" }
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232992122306741/JellyCryingDemon-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232992789073930/JellyCryingDemon-B-2.png",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232500424052837/JellyCryingDemon-A-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Jinu",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698438900219944/Untitled90_20250723162733.png?ex=6882ab9b&is=68815a1b&hm=1e58ff5de9cec95c65694d66e27c3087bcd21410c0a0574a5bbac4239f2e785c&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698439311134750/Untitled90_20250723162728.png?ex=6882ab9b&is=68815a1b&hm=3fe0db83693371ff280860a4936b7919f2130ef33820487c6fbc5d2c918090e0&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698440028487852/Untitled90_20250723162753.png?ex=6882ab9c&is=68815a1c&hm=ab5127427532107a09572e2a6126109c8ef28f66197ad80486382abb93bf0ba4&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698440368099388/Untitled90_20250723162802.png?ex=6882ab9c&is=68815a1c&hm=a97b2d4df3d98ee1ae73e05ba4c82a468010688e79f5790a817ec38dc25ea0d9&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698441941090426/Untitled90_20250723162748.png?ex=6882ab9c&is=68815a1c&hm=d0ad3833701c093febfb9bed7e8017368f3a7fdd7fba1c3f6cd37314b1182563&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698259111120896/Untitled90_20250723160249.png?ex=6882ab70&is=688159f0&hm=5a5ec5a2d41d1ccf017b2969e48e7d2ee3b79f5e6f64c5eac23a1086ae259cbb&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698260550025407/Untitled90_20250723160147.png?ex=6882ab71&is=688159f1&hm=a0ed753d757a9f1137810742a4bbf7153f331319404c74117e2b6d2de97f4f98&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698262093398167/Untitled90_20250723160336.png?ex=6882ab71&is=688159f1&hm=a99f3cae4a9fa2a0328e1dd3aec3e6cce703c2da661358834dc0d9054ffe4d74&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698262601040005/Untitled90_20250723160109.png?ex=6882ab71&is=688159f1&hm=e59c467a7860a901920dcbecad7777f9dd5d462deacb2c70c52edda88a24f716&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698261132775454/Untitled90_20250723155824.png?ex=6882ab71&is=688159f1&hm=edef3afb4dc0cf5b9dc36393119f9d6f361f94778e6c93173ed7eccd6df1bca9&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698202924482641/Untitled90_20250723155356.png?ex=6882ab63&is=688159e3&hm=1e963c0f068abdd05834caa4a977391c347fdf5f7ba57b1b6152516a350f8e71&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698124331356280/Untitled90_20250723153522.png?ex=6882ab50&is=688159d0&hm=f5a9e0fbf1777ad7dba0591474a4e46961b154e5b28b7b0be97bf0ac73f87bad&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698125698695391/Untitled90_20250723153548.png?ex=6882ab51&is=688159d1&hm=c5480cd2fcdfc31635903095bf0cf131077c785ca8567f429f49fa5753ab640d&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231252572340442/Jinu-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231253088505939/Jinu-B-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231253973237770/Jinu-B-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231254506049678/Jinu-B-4.png",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231255009361970/Jinu-B-5.png",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230378773254314/Jinu-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230379360190514/Jinu-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230379788140575/Jinu-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230380266160138/Jinu-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229741331189882/Jinu-R-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229741830438964/Jinu-R-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229742274773073/Jinu-R-3.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228976659103774/Jinu-UR-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Abby",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698439717978152/Untitled90_20250723163227.png?ex=6882ab9c&is=68815a1c&hm=dcbb89afca44b0e1ca59b827bb55ae3c0fb554a8c476a91bcc9013e8df825440&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698440737194154/Untitled90_20250723163231.png?ex=6882ab9c&is=68815a1c&hm=1c9a86d19cbc44f7165167f3b9ad896d07bf8bcf98f1614ee90954f9e7bcf254&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698441098035260/Untitled90_20250723163626.png?ex=6882ab9c&is=68815a1c&hm=03d36d74db3c9d15832ab5a4180814f0b05c33c5714a1e93f18639632e32e071&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698438514081982/Untitled90_20250723163533.png?ex=6882ab9b&is=68815a1b&hm=db5f103cbc602259ce3d7dc3716148e56b6c07aa47366bb23d6b75902e51450d&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698502380883979/Untitled90_20250723163719.png?ex=6882abaa&is=68815a2a&hm=805112235d19ae28e498df7dd3f3061ad5db157374ddb47f29b6b0b56d097089&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698258259804292/Untitled90_20250723160658.png?ex=6882ab70&is=688159f0&hm=b29b290487f3cc3ffbb21b1175793217660b5c3246bf04be068a14a05f4ac33d&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698258679103580/Untitled90_20250723160813.png?ex=6882ab70&is=688159f0&hm=d3986ea54d59b6d22e9e1c0b87be87d331c68691904ef5614e480b903c81389c&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698260088393929/Untitled90_20250723160613.png?ex=6882ab71&is=688159f1&hm=4a17305e6513e966b5fdd4f3e925564040354479d43655e2a5a33a7a8b7e05c7&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698261720236195/Untitled90_20250723160910.png?ex=6882ab71&is=688159f1&hm=0441765ba92b212fef4f26eb98a55497b5b65f61286daebd7f8d07f8bf3d4932&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698202542805014/Untitled90_20250723155258.png?ex=6882ab63&is=688159e3&hm=7cd21691cda05706496f0322ef6ed6ee47b6db40ba0b74f363b1e37eba78a0b7&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698201368395866/Untitled90_20250723155200.png?ex=6882ab63&is=688159e3&hm=864457a7571f4f9fc547c80520c93632d8014198618cf2b4d5271e82e17102b4&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698125002576032/Untitled90_20250723153838.png?ex=6882ab50&is=688159d0&hm=1a3ec0347d01ee1dd4ddc8e617dba4c4f3ccd014e191831ed178f4310040ef85&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231728038772878/Abby-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231728667787295/Abby-B-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231729162981467/Abby-B-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231735391387850/Abby-B-4.png",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231735714353253/Abby-B-5.png",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230669597642802/Abby-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230670000427128/Abby-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230670604538058/Abby-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230671082422423/Abby-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229959627931668/Abby-R-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229959166431252/Abby-R-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229958835212318/Abby-R-3.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228977183522826/Abby-UR-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Mystery",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698542193344622/Untitled90_20250723165130.png?ex=6882abb4&is=68815a34&hm=1380349119513fb7c261a0fd1dd1f1c1ee68c0429bc1cbf50349002c3315be6f&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698542545535057/Untitled90_20250723165037.png?ex=6882abb4&is=68815a34&hm=52e2a403e4770d705784eda8897d5d10f0050c49fc1f074bea59b0c9a1ea9c1d&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698542960906341/Untitled90_20250723165104.png?ex=6882abb4&is=68815a34&hm=c47d50846d3b561ae878de6bd86b977f5fce447a88f5e6047c5ec9777fa4b520&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698543350841374/Untitled90_20250723165245.png?ex=6882abb4&is=68815a34&hm=4ed1d992ed078fe1c1df33b544596c9218682c40ac6d7948a511d5759eb7c33e&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698543690584225/Untitled90_20250723165200.png?ex=6882abb4&is=68815a34&hm=34b1ff4c7546b327aeb5d246b5bd18287e0e293304eeeadb2da4e0a3def8fce3&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698441508814909/Untitled90_20250723162141.png?ex=6882ab9c&is=68815a1c&hm=2beacd439e8a9116fde30f7f9d794b5c2528f165bb37ea6a8ae2ed65cbdfddc7&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698360735039709/Untitled90_20250723161931.png?ex=6882ab89&is=68815a09&hm=984ca3a4ff936191c345abfb5e205bd983f3c89d873a3c63009c706f0b5ec656&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698360022138961/Untitled90_20250723162121.png?ex=6882ab89&is=68815a09&hm=6f11a99261cb3f19afc518fe7ba4796d947cc98d933f72973229b98a4665cbc6&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698357681455214/Untitled90_20250723161832.png?ex=6882ab88&is=68815a08&hm=9de272056ac9e5ad6691fedbe6b8e53ed9eb9c8074147d9c937eb5c7b62a4069&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698201724784690/Untitled90_20250723154731.png?ex=6882ab63&is=688159e3&hm=a74bf66b299fecc07086b0d8b761251f7eebfa41de07cc4b95683f28e5f03e91&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698199124312194/Untitled90_20250723154743.png?ex=6882ab62&is=688159e2&hm=7c93860d2a32f9c4b1ad632b0198fb4972a1665be63ea605cd097c14c9d8191a&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698127720485005/Untitled90_20250723154300.png?ex=6882ab51&is=688159d1&hm=bb0b010e10311c08e57838e0ee21f4f1ad5fee9a8d8fbcbc690ed1b42f4c27b7&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231250244501564/Mystery-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231250680713299/Mystery-B-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231251108528289/Mystery-B-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231251561644154/Mystery-B-4.png",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231251926421556/Mystery-B-5.png",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230380752703560/Mystery-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230381189169312/Mystery-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230381688029306/Mystery-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230382116110376/Mystery-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229742694207548/Mystery-R-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229743176814744/Mystery-R-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229743608696955/Mystery-R-3.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228978001547274/Mystery-UR-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Romance",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698501307142225/Untitled90_20250723164440.png?ex=6882abaa&is=68815a2a&hm=6a1017c1c7c9c1822a802689c4119100f02aec13cdf1126800aab6262677c060&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698499738341548/Untitled90_20250723164318.png?ex=6882abaa&is=68815a2a&hm=b393722645294224659d79ee5e9d90b35fc14c13351a8afc5d391fef7f333a83&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698498899480766/Untitled90_20250723164407.png?ex=6882abaa&is=68815a2a&hm=ecf0abebaf6b8e4a2221a15bd3c20c508a0d0209e91806ea80a02414937be020&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698498564198400/Untitled90_20250723164331.png?ex=6882abaa&is=68815a2a&hm=c1eac78b09215fd5f58c82154ff03bd4b117b700a0a878b0d5e9e3938ed046e4&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698360420335737/Untitled90_20250723161635.png?ex=6882ab89&is=68815a09&hm=aa83ec397e95eb46a472c0c856c576171321b4a429e4a2009f7c05f1ed42cdeb&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698358885486644/Untitled90_20250723161752.png?ex=6882ab88&is=68815a08&hm=f957d624452c0769a31350a9d933b61831d32b3beb87e914638e0df7c748eca3&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698358478372950/Untitled90_20250723161705.png?ex=6882ab88&is=68815a08&hm=1951ae7371dddaa4f7371f550909d55636b24e6c012f4ae2b72c3976d41387c0&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698357337657466/Untitled90_20250723161555.png?ex=6882ab88&is=68815a08&hm=70d1c0358a4a345f749c27d207d571b09c3bdb0c0a32ed6a0440aaf4b1d0eedf&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698202131759114/Untitled90_20250723154908.png?ex=6882ab63&is=688159e3&hm=ab748e16d2bce0a2ded60b5f78986935171c8b5704361b6f6182ca8a263b74e3&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698200508563516/Untitled90_20250723154949.png?ex=6882ab62&is=688159e2&hm=7aedaf659d9bb680610b05768a5976c6caf73b6e32b4c3915818a93e4bea49ba&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698126827094057/Untitled90_20250723154227.png?ex=6882ab51&is=688159d1&hm=451ed0182a3fd3885de604d032b2ed7c474a8bb60d932ca4e30c0df2556a8013&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231725648154685/Romance-B-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231726180696094/Romance-B-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231726650327070/Romance-B-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231727199785081/Romance-B-4.png",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231727657222286/Romance-B-5.png",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230671472623699/Romance-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230671896117258/Romance-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230672508616808/Romance-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230672961605672/Romance-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229744124465152/Romance-R-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229744539697162/Romance-R-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229744963325973/Romance-R-3.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228977552752791/Romance-UR-1.png",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     },
     {
       "name": "Baby",
       "rarities": [
-        { "rarity": "B", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698501860786217/Untitled90_20250723164849.png?ex=6882abaa&is=68815a2a&hm=c778465882c60e800a5ee84ac7955e9ab9c166c18d1bfe7f3e0ee3937e678376&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698500044652634/Untitled90_20250723164721.png?ex=6882abaa&is=68815a2a&hm=10531ddd6b5c310d69f6056444b7aa43ba666842d155cc2c91d4fb2f426606ff&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698500413886654/Untitled90_20250723164857.png?ex=6882abaa&is=68815a2a&hm=509192a0ad6069dd31037251bf776341ef48e3406e5a222e38389def43c92be8&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698500913004605/Untitled90_20250723164643.png?ex=6882abaa&is=68815a2a&hm=4e9b73ed24082d554f9fef40f27cdd56ae183580256fff4fb65d99fb531183d0&", "image_url_5": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698499273035806/Untitled90_20250723164803.png?ex=6882abaa&is=68815a2a&hm=2879f7bc6614ae51fa86c8908827afafbf5f2e3e05b7c8c839f026913d8e8bcc&"},
-        { "rarity": "A", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698359686463659/Untitled90_20250723161243.png?ex=6882ab88&is=68815a08&hm=482cf44d42a952a7a7698c0c72787d755f2c241b1647bc6daca75c91baebb6fa&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698359313043647/Untitled90_20250723161159.png?ex=6882ab88&is=68815a08&hm=e259cb4ce0a431ea3cd7e415d45bc24320893b7a793bb4a89f5612a9be48606f&", "image_url_3": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698358059077744/Untitled90_20250723161317.png?ex=6882ab88&is=68815a08&hm=efc49a3ba8672133b136bd27868fba66f56d8f50bfa7ea6aeeaca0941592bafc&", "image_url_4": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698259497254982/Untitled90_20250723161117.png?ex=6882ab71&is=688159f1&hm=2282d182cddf23f05460212abc8e80d696ce994d51189a63a85c6aac69e5459c&"},
-        { "rarity": "R", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698200995106877/Untitled90_20250723155039.png?ex=6882ab63&is=688159e3&hm=a3b34562fc9fb1f07769d9dacf69a9bc1dfb6f8ad00f7c84b89d2ffe3fe4e7f5&", "image_url_2": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698199979950244/Untitled90_20250723155107.png?ex=6882ab62&is=688159e2&hm=629f8448056e45a9ee3fc02e55e824a6f9f6353c9a7b59ad657b8dd075efdbdb&"},
-        { "rarity": "UR", "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698126113935434/Untitled90_20250723154126.png?ex=6882ab51&is=688159d1&hm=f8785e54ac790d8bed1336031f1f6ef3acfde331eac3663ddf3299cfe2a9a198&"}
+        {
+          "rarity": "B",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231930988564490/Baby-B-3.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231931445739763/Baby-B-4.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231931835944961/Baby-B-5.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231932221685850/Baby-B-6.png",
+          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231930607009803/Baby-B-2.png?ex=6890d7ed&is=688f866d&hm=7556ab657a4cc7ff93b065fa2701ce45a23ee3700073f0ecf449b1596df05ff2&",
+          "image_url_6": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231930296504420/Baby-B1.png?ex=6890d7ed&is=688f866d&hm=0859adac624e864774a52e227261fa6b513137cac1d0dd2ed2faea33b64c63e6&"
+        },
+        {
+          "rarity": "A",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230831334199366/Baby-A-1.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230831745499217/Baby-A-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230832160608400/Baby-A-3.png",
+          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230832600879114/Baby-A-4.png",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229957560139848/Baby-R-3.png",
+          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229957954277446/Baby-R-2.png",
+          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229958373834792/Baby-R-1.png",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        },
+        {
+          "rarity": "UR",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228976659103774/Baby-UR-1.png?ex=6890d52d&is=688f83ad&hm=499047befc38abb0113d4fc1cbedc9998681ba97ab35126ebd146fdecbbbb972&",
+          "image_url_2": "",
+          "image_url_3": "",
+          "image_url_4": "",
+          "image_url_5": "",
+          "image_url_6": ""
+        }
       ]
     }
   ]

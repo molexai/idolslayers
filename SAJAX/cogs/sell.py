@@ -209,7 +209,10 @@ class SellCog(commands.Cog):
                                                         view=ConfirmView(self.db, self.user_id))
 
         view = PaginatedSelect(self.db, user_id, matching)
-        await interaction.response.send_message(embed=Templates.sell_prompt(matching), view=view, ephemeral=True)
+        embed = Templates.sell_prompt(matching)
+        if embed.description and len(embed.description) > 4096:
+            embed.description = embed.description[:4000] + "..."
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
     @nextcord.slash_command(
         name="sellall",
