@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import asyncio
 
 import nextcord
 from nextcord import SlashOption, Interaction, Embed, Color
@@ -16,6 +17,7 @@ class LeaderboardCog(commands.Cog):
         self.db = Database()
         self.leaderboard_cooldowns = {}
         self.LEADERBOARD_COOLDOWN = 10
+        self.db_lock = asyncio.Lock()
 
         rarities_path = os.path.join(os.path.dirname(__file__), 'rarities.json')
         with open(rarities_path, 'r', encoding='utf-8') as f:
@@ -52,7 +54,8 @@ class LeaderboardCog(commands.Cog):
 
         self.leaderboard_cooldowns[user.id] = now
 
-        all_users = list(self.db.users.find({}))
+        async with self.db_lock:
+            all_users = list(self.db.users.find({}))
         guild = interaction.guild
 
         if type == 'shards':
