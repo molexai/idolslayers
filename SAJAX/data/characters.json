@@ -159,5 +159,35 @@
     "group": "Saja Boys",
     "description": "The youngest member. Cries in group photos and obliterates enemies in the same hour. Has no chill. Everyone’s scared of him.",
     "rarity": ""
-  }
+  },
+  {
+    "name": "Rumi (Limited)",
+    "character_id": "rumi_limited",
+    "thumbnail_url": "",
+    "top_rarity": "R",
+    "lowest_rarity": "R",
+    "group": "Huntrix",
+    "description": "Rumi looks up, unsure but holding her ground. Her glow is soft, but her stare is sharp.",
+    "rarity": ""
+  },
+    {
+        "name": "Jinu (Limited)",
+        "character_id": "jinu_limited",
+        "thumbnail_url": "",
+        "top_rarity": "R",
+        "lowest_rarity": "R",
+        "group": "Saja Boys",
+        "description": "Jinu stands still, eyes locked, unreadable. The chain between them says more than words.",
+        "rarity": ""
+    },
+    {
+        "name": "Special Card: Jinu & Rumi",
+        "character_id": "jinu_rumi_special",
+        "thumbnail_url": "",
+        "top_rarity": "S",
+        "lowest_rarity": "S",
+        "group": "Special",
+        "description": "Jinu and Rumi caught in a moment — tension, longing, and something unspoken. A card that glows with pink heat and pixel love.",
+        "rarity": ""
+    }
 ]

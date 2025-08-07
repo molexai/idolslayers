@@ -27,6 +27,13 @@
       "drop_rate": 5.5,
       "description": "Extremely rare and powerful.",
       "worth": 350
+    },
+    {
+      "tier": "S",
+      "name": "Special",
+      "drop_rate": 0.0,
+      "description": "Special edition cards with unique abilities.",
+      "worth": 10000
     }
   ]
 }

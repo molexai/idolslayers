@@ -233,6 +233,12 @@ class EconomyCog(commands.Cog):
                             embed.description = "> You no longer own that card."
                             return await i.response.edit_message(embed=embed, view=None)
 
+                        # make sure they cant gift if the rarity is S
+                        if selected_card.get("rarity", selected_card.get("top_rarity", "")) == "S":
+                            embed = Templates.drop_error()
+                            embed.description = "> You cannot gift **S tier** cards."
+                            return await i.response.edit_message(embed=embed, view=None)
+
                         self.db.remove_character_and_card(self.sender_id, selected_card)
                         self.db.add_character(self.target_id, selected_card)
                         self.db.add_card(self.target_id, selected_card.get("character_id"))

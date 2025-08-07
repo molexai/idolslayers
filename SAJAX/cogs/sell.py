@@ -185,8 +185,15 @@ class SellCog(commands.Cog):
                                                           view=None)
                             return
 
-                        self.db.remove_character_and_card(self.user_id, char)
                         rarity = char.get("rarity", char.get("top_rarity", "Unknown"))
+
+                        if rarity == "S":
+                            # Say they cant sell it
+                            embed = Templates.drop_error()
+                            embed.description = "> You cannot sell **S tier** characters."
+                            return await i2.response.edit_message(embed=embed, view=None)
+
+                        self.db.remove_character_and_card(self.user_id, char)
 
                         rarities_path = os.path.join(os.path.dirname(__file__), "rarities.json")
                         with open(rarities_path, "r", encoding="utf-8") as f:

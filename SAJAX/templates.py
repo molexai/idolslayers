@@ -35,6 +35,7 @@ class Templates:
         "<:z_musicnotepink_DNS:1397625875213717724>",
         "<:z_musicnotepurple_DNS:1397625855672455281>",
         "<:z_musicnotegold_DNS:1397669618566430872>",
+        "<:ai2:1402817377569214474>"
     ]
     rarity_fire_emojis = [
         "<a:z_sajaboysfiregreen_DNS:1397628059200524398>",
@@ -265,7 +266,8 @@ def convert_rarity(rarity):
     convert_rarity = {"B": Templates.rarity_emojis[0],
                       "A": Templates.rarity_emojis[1],
                       "R": Templates.rarity_emojis[2],
-                      "UR": Templates.rarity_emojis[3]}
+                      "UR": Templates.rarity_emojis[3],
+                      "S": Templates.rarity_emojis[5]}
     if rarity == "UR+":
         return Templates.rarity_emojis[4]
     return convert_rarity.get(rarity)
@@ -279,6 +281,8 @@ def convert_fire(rarity):
 
 def convert_huntrix_ur(group, rarity):
     if group == "Huntrix" and rarity == "UR":
+        if rarity == "S":
+            return Templates.rarity_emojis[5]
         return convert_rarity("UR+")
     return convert_rarity(rarity)
 

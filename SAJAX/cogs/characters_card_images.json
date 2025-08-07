@@ -493,6 +493,33 @@
           "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228976659103774/Baby-UR-1.png?ex=6890d52d&is=688f83ad&hm=499047befc38abb0113d4fc1cbedc9998681ba97ab35126ebd146fdecbbbb972&"
         }
       ]
+    },
+    {
+      "name": "Rumi (Limited)",
+      "rarities": [
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843086362775665/rumi-limited.png?ex=689562ef&is=6894116f&hm=c5d3236107b4e1ac6e557361565ff975d9d538334d102180ac7e763e78b69605&"
+        }
+      ]
+    },
+    {
+      "name": "Jinu (Limited)",
+        "rarities": [
+        {
+          "rarity": "R",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843086861893734/jinu-limited.png?ex=689562ef&is=6894116f&hm=87136146df60a7035957693eb09d58670bc9257da3c7d101613bac3f961d9dbc&"
+        }
+        ]
+    },
+    {
+      "name": "Special Card: Jinu & Rumi",
+        "rarities": [
+        {
+          "rarity": "S",
+          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843316084543499/output.png?ex=68956326&is=689411a6&hm=a4787bc327a15dd92c789dfa980424d823547b20f78e7745b1fe3fd4d5f5b564&"
+        }
+        ]
     }
   ]
 }

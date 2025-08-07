@@ -156,20 +156,38 @@ class CardPageView(View):
     async def generate_drop_return_card(self, user):
         from SAJAX.selection import select_random_character
         user_id_str = str(user.id)
+
         if not self.db.get_user(user_id_str):
             self.db.insert_user(user_id_str)
-        formatted_drop = select_random_character()
+
         formatted_rarity = {"B": "Balanced", "A": "Amazing", "R": "Rare", "UR": "Ultra Rare"}
-        character = formatted_drop["character"]
-        rarity_key = formatted_drop["rarity"]
-        rarity = formatted_rarity[rarity_key]
+
+        while True:
+            formatted_drop = select_random_character()
+            character = formatted_drop["character"]
+            rarity_key = formatted_drop["rarity"]
+            rarity = formatted_rarity[rarity_key]
+
+            # 🔒 Check if Limited character is allowed
+            if "(Limited)" in character["name"]:
+                global_setting = self.db.get_global_settings("global_setting_limited_cards")
+                limited_cards_enabled = global_setting.get("value", "false").lower() == "true"
+
+                if not limited_cards_enabled:
+                    print(f"[drop_blocked] Limited card '{character['name']}' blocked for user {user_id_str}")
+                    continue  # try again
+
+            break  # character is allowed, proceed
+
         thumbnail_url = self.assign_thumbnail(character["name"], rarity_key)
         character_with_rarity = character.copy()
         character_with_rarity["rarity"] = rarity_key
         if thumbnail_url:
             character_with_rarity["thumbnail_url"] = thumbnail_url
+
         self.db.add_character(user_id_str, character_with_rarity)
         self.db.add_card(user_id_str, character["character_id"])
+
         return character_with_rarity, rarity
 
     def assign_thumbnail(self, character_name: str, rarity: str) -> str:
@@ -558,6 +576,64 @@ class Drop(commands.Cog):
             if shard_muliplier:
                 await interaction.followup.send(embed=shard_muliplier_embed)
 
+
+            # check global setting "global_setting_limited_cards" in db to see if limited cards are enabled
+            global_setting = self.db.get_global_settings("global_setting_limited_cards")
+            limited_cards_enabled = global_setting.get("value", "false").lower() == "true"
+            if not limited_cards_enabled:
+                return
+            # check if user has both the Rumi (Limited) card and the Jinu (Limited) card
+            user_data = self.db.get_user(user_id_str)
+            characters = user_data.get("characters", [])
+            has_rumi = any(char.get("name") == "Rumi (Limited)" for char in characters)
+            has_jinu = any(char.get("name") == "Jinu (Limited)" for char in characters)
+            if has_rumi and has_jinu:
+                # check if user already has the Rumi & Jinu (Limited) card
+                has_duo = any(char.get("name") == "Special Card: Jinu & Rumi" for char in characters)
+                if not has_duo:
+                    rumi_jinu_card = {
+                        "name": "Special Card: Jinu & Rumi",
+                        "character_id": "jinu_rumi_special",
+                        "thumbnail_url": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843316084543499/output.png?ex=68956326&is=689411a6&hm=a4787bc327a15dd92c789dfa980424d823547b20f78e7745b1fe3fd4d5f5b564&",
+                        "top_rarity": "S",
+                        "lowest_rarity": "S",
+                        "group": "Special",
+                        "description": "Jinu and Rumi caught in a moment — tension, longing, and something unspoken. A card that glows with pink heat and pixel love.",
+                        "rarity": "S"
+                    }
+                    self.db.add_character(user_id_str, rumi_jinu_card)
+                    self.db.add_card(user_id_str, rumi_jinu_card["character_id"])
+                    duo_embed = Templates.drop_success()
+                    duo_embed.title = "`⋆｡ﾟ☁︎｡𖦹 Special Card Unlocked! ｡☁︎ﾟ｡⋆`"
+                    duo_embed.description = (
+                        f"> {Templates.pastel_emojis[5]} <@{user.id}>, you've unlocked the special card **Rumi & Jinu (Limited)**!"
+                        "\nThis card has been added to your collection. Congratulations!"
+                    )
+                    duo_embed.set_image(url=rumi_jinu_card["thumbnail_url"])
+                    await interaction.followup.send(embed=duo_embed)
+                    print(f"[special_card] User {user_id_str} unlocked Rumi & Jinu (Limited) card.")
+
+    @nextcord.slash_command(name="setglobalsetting", description="Set a global setting (Admin only)", guild_ids=[GUILD_ID])
+    async def setglobalsetting(
+            self,
+            interaction: Interaction,
+            setting_name: str = SlashOption(description="Name of the setting", required=True),
+            value: bool = SlashOption(description="Value to set (true/false)", required=True)
+    ):
+        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
+            embed = Templates.drop_error()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
+            embed.description = "> You do not have permission to use this command."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        self.db.set_global_settings(setting_name, value)
+        embed = Templates.drop_success()
+        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Setting Updated ｡☁︎ﾟ｡⋆`"
+        embed.description = f"> Successfully set global setting **{setting_name}** to **{value}**."
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
     @nextcord.slash_command(
         name="addcard",
         description="Add a specific card to a user’s collection (Admin only)",
@@ -570,7 +646,7 @@ class Drop(commands.Cog):
             rarity: str = SlashOption(
                 description="Rarity of the character (B, A, R, UR)",
                 required=True,
-                choices={"B": "B", "A": "A", "R": "R", "UR": "UR"}
+                choices={"B": "B", "A": "A", "R": "R", "UR": "UR", "S": "S"}
             ),
             target: nextcord.User = SlashOption(description="User to give the card to", required=False, default=None)
     ):

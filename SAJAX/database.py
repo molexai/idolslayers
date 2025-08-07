@@ -43,6 +43,15 @@ class Database:
             self.users.insert_one(user)
         return user
 
+    def get_global_settings(self, name: str):
+        settings_collection = self.db["global_settings"]
+        settings = settings_collection.find_one({name: name})
+        return settings
+
+    def set_global_settings(self, name: str, value: bool):
+        settings_collection = self.db["global_settings"]
+        settings_collection.update_one({name: name}, {"$set": {"value": f"{str(value).lower()}"}}, upsert=True)
+
     def get_shards(self, user_id: str):
         user_id = str(user_id)
         user = self.get_user(user_id)
