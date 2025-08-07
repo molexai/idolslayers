@@ -590,7 +590,6 @@ class Drop(commands.Cog):
             has_rumi = any(char.get("name") == "Rumi (Limited)" for char in characters)
             has_jinu = any(char.get("name") == "Jinu (Limited)" for char in characters)
             if has_rumi and has_jinu:
-                # check if user already has the Rumi & Jinu (Limited) card
                 has_duo = any(char.get("name") == "Special Card: Jinu & Rumi" for char in characters)
                 if not has_duo:
                     rumi_jinu_card = {
@@ -609,7 +608,7 @@ class Drop(commands.Cog):
                     duo_embed.title = "`⋆｡ﾟ☁︎｡𖦹 Special Card Unlocked! ｡☁︎ﾟ｡⋆`"
                     duo_embed.description = (
                         f"> {Templates.pastel_emojis[5]} <@{user.id}>, you've unlocked the special card **Rumi & Jinu (Limited)**!"
-                        "\nThis card has been added to your collection. Congratulations!"
+                        "\n> Use `/mycards` to view it. Enjoy!"
                     )
                     duo_embed.set_image(url=rumi_jinu_card["thumbnail_url"])
                     await interaction.followup.send(embed=duo_embed)
