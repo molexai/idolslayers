@@ -8,8 +8,6 @@ import random
 import json
 import os
 
-from setuptools.package_index import user_agent
-
 from SAJAX.database import Database
 from SAJAX.templates import Templates, get_emoji
 
@@ -595,7 +593,7 @@ class Drop(commands.Cog):
                     rumi_jinu_card = {
                         "name": "Special Card: Jinu & Rumi",
                         "character_id": "jinu_rumi_special",
-                        "thumbnail_url": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843316084543499/output.png?ex=68956326&is=689411a6&hm=a4787bc327a15dd92c789dfa980424d823547b20f78e7745b1fe3fd4d5f5b564&",
+                        "thumbnail_url": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/jinu_and_rumi_limited.png",
                         "top_rarity": "S",
                         "lowest_rarity": "S",
                         "group": "Special",

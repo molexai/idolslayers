@@ -5,14 +5,14 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232960774078655/Bobby-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232961101238392/Bobby-B-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232961696956427/Bobby-B-3.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Bobby-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Bobby-B-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Bobby-B-3.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232498477760614/Bobby-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232499006509056/Bobby-A-2.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Bobby-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Bobby-A-2.png"
         },
         {
           "rarity": "R",
@@ -39,28 +39,28 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228705879162971/Rumi-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228705526714419/Rumi-B-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228705103085752/Rumi-B-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228704549441647/Rumi-B-4.png",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228704092393532/Rumi-B-5.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-B-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-B-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-B-4.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-B-5.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228213971324989/Rumi-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228213501296750/Rumi-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228212918554624/Rumi-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228212050198649/Rumi-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Rumi-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227575145271307/rumi-R-2.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227574553743460/rumi-R-1.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227575988322304/rumi-R-3.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/rumi-R-2.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/rumi-R-1.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/rumi-R-3.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227376121085984/rumi-UR-1.png?ex=6890d3b0&is=688f8230&hm=3adeb2f93b00a8edbe9436bc5a710aa4ccc56094462b7e528511af8a2ed3df72&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/rumi-UR-1.png"
         }
       ]
     },
@@ -69,28 +69,28 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228553185660938/Mira-B-4.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228552799518751/Mira-B-5.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228553546108958/Mira-B-3.png?ex=6890d4c8&is=688f8348&hm=eee9ed24046445a9b8b854fce9b03756289aede312efe09630c6c6a3a6db9997&",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228553898426398/Mira-B-2.png?ex=6890d4c8&is=688f8348&hm=0302597971475eda615c83b28944ddf76f8d3dcae847800aa72f4da684ac780c&",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228554347483197/Mira-B-1.png?ex=6890d4c8&is=688f8348&hm=4f0eecd70efc890976beda167fedb27f7c45b5efc2bca5ef8493822729ba5b2f&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-B-4.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-B-5.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-B-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-B-2.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-B-1.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228215942385756/Mira-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228215502110770/Mira-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228214889877655/Mira-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228214436757574/Mira-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mira-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227572951384094/mira-R-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227573521940613/mira-R-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227572334952489/mira-R-3.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/mira-R-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/mira-R-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/mira-R-3.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227377064939520/mira-UR-1.png?ex=6890d3b0&is=688f8230&hm=528635384cc2a560e180039d58a3b0fe03b1a1487a70183b66623b9846d6d373&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/mira-UR-1.png"
         }
       ]
     },
@@ -99,28 +99,28 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228556490641498/zoey-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228556100567100/Zoey-B-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228555727142951/Zoey-B-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228555379019786/Zoey-B-4.png",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228554867310612/Zoey-B-5.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Zoey-B-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Zoey-B-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Zoey-B-4.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Zoey-B-5.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228276428443648/zoey-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228275971526829/zoey-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228216966053908/zoey-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228216349360259/zoey-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227571680510053/zoey-R-2.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227572334952489/zoey-r-3.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227571005493360/zoey-R-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-R-2.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-r-3.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-R-1.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401227376578531442/zoey-UR-1.png?ex=6890d3b0&is=688f8230&hm=15f62563d61c3e0b6ff439a92a2d2f0d2fd27482ca4e3a2ba999bb047d3f8ffd&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/zoey-UR-1.png"
         }
       ]
     },
@@ -129,12 +129,12 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232960413503580/Celine-B-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Celine-B-1.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232495915176107/Celine-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232496406040708/Celine-A-2.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Celine-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Celine-A-2.png"
         },
         {
           "rarity": "R",
@@ -170,7 +170,7 @@
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232497219473449/Hunter-A-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Hunter-A-1.png"
         },
         {
           "rarity": "R",
@@ -197,11 +197,11 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232959981223936/Ryu-B-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Ryu-B-1.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232496770809866/Ryu-A-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Ryu-A-1.png"
         },
         {
           "rarity": "R",
@@ -246,7 +246,7 @@
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1396507059842715801/1397698199514251385/Untitled90_20250723154504.png?ex=6882ab62&is=688159e2&hm=eef14b620ba54715a6afcb29f0644e8f88a472cd084fc3b523dfd1f68e7eca8a&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Untitled90_20250723154504.png"
         }
       ]
     },
@@ -255,8 +255,8 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232963047522314/SussyBird-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232963458301992/SussyBird-B-2.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/SussyBird-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/SussyBird-B-2.png"
         },
         {
           "rarity": "A",
@@ -292,13 +292,13 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232962137096335/DerpyTiger-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232962569244822/DerpyTiger-B-2.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/DerpyTiger-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/DerpyTiger-B-2.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232499438387220/DerpyTiger-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232499958353970/DerpyTiger-A-2.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/DerpyTiger-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/DerpyTiger-A-2.png"
         },
         {
           "rarity": "R",
@@ -325,12 +325,12 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232992122306741/JellyCryingDemon-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232992789073930/JellyCryingDemon-B-2.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/JellyCryingDemon-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/JellyCryingDemon-B-2.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401232500424052837/JellyCryingDemon-A-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/JellyCryingDemon-A-1.png"
         },
         {
           "rarity": "R",
@@ -348,28 +348,28 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231252572340442/Jinu-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231253088505939/Jinu-B-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231253973237770/Jinu-B-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231254506049678/Jinu-B-4.png",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231255009361970/Jinu-B-5.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-B-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-B-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-B-4.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-B-5.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230378773254314/Jinu-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230379360190514/Jinu-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230379788140575/Jinu-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230380266160138/Jinu-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229741331189882/Jinu-R-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229741830438964/Jinu-R-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229742274773073/Jinu-R-3.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-R-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-R-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-R-3.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228976659103774/Jinu-UR-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Jinu-UR-1.png"
         }
       ]
     },
@@ -378,28 +378,28 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231728038772878/Abby-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231728667787295/Abby-B-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231729162981467/Abby-B-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231735391387850/Abby-B-4.png",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231735714353253/Abby-B-5.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-B-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-B-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-B-4.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-B-5.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230669597642802/Abby-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230670000427128/Abby-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230670604538058/Abby-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230671082422423/Abby-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229959627931668/Abby-R-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229959166431252/Abby-R-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229958835212318/Abby-R-3.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-R-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-R-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-R-3.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228977183522826/Abby-UR-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Abby-UR-1.png"
         }
       ]
     },
@@ -408,28 +408,28 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231250244501564/Mystery-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231250680713299/Mystery-B-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231251108528289/Mystery-B-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231251561644154/Mystery-B-4.png",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231251926421556/Mystery-B-5.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-B-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-B-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-B-4.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-B-5.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230380752703560/Mystery-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230381189169312/Mystery-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230381688029306/Mystery-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230382116110376/Mystery-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229742694207548/Mystery-R-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229743176814744/Mystery-R-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229743608696955/Mystery-R-3.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-R-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-R-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-R-3.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228978001547274/Mystery-UR-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Mystery-UR-1.png"
         }
       ]
     },
@@ -438,28 +438,28 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231725648154685/Romance-B-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231726180696094/Romance-B-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231726650327070/Romance-B-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231727199785081/Romance-B-4.png",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231727657222286/Romance-B-5.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-B-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-B-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-B-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-B-4.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-B-5.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230671472623699/Romance-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230671896117258/Romance-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230672508616808/Romance-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230672961605672/Romance-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229744124465152/Romance-R-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229744539697162/Romance-R-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229744963325973/Romance-R-3.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-R-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-R-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-R-3.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228977552752791/Romance-UR-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Romance-UR-1.png"
         }
       ]
     },
@@ -468,29 +468,29 @@
       "rarities": [
         {
           "rarity": "B",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231930988564490/Baby-B-3.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231931445739763/Baby-B-4.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231931835944961/Baby-B-5.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231932221685850/Baby-B-6.png",
-          "image_url_5": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231930607009803/Baby-B-2.png?ex=6890d7ed&is=688f866d&hm=7556ab657a4cc7ff93b065fa2701ce45a23ee3700073f0ecf449b1596df05ff2&",
-          "image_url_6": "https://cdn.discordapp.com/attachments/1398838656315162715/1401231930296504420/Baby-B1.png?ex=6890d7ed&is=688f866d&hm=0859adac624e864774a52e227261fa6b513137cac1d0dd2ed2faea33b64c63e6&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-B-3.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-B-4.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-B-5.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-B-6.png",
+          "image_url_5": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-B-2.png",
+          "image_url_6": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-B1.png"
         },
         {
           "rarity": "A",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230831334199366/Baby-A-1.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230831745499217/Baby-A-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230832160608400/Baby-A-3.png",
-          "image_url_4": "https://cdn.discordapp.com/attachments/1398838656315162715/1401230832600879114/Baby-A-4.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-A-1.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-A-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-A-3.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-A-4.png"
         },
         {
           "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229957560139848/Baby-R-3.png",
-          "image_url_2": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229957954277446/Baby-R-2.png",
-          "image_url_3": "https://cdn.discordapp.com/attachments/1398838656315162715/1401229958373834792/Baby-R-1.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-R-3.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-R-2.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-R-1.png"
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1401228976659103774/Baby-UR-1.png?ex=6890d52d&is=688f83ad&hm=499047befc38abb0113d4fc1cbedc9998681ba97ab35126ebd146fdecbbbb972&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Baby-UR-1.png"
         }
       ]
     },
@@ -498,28 +498,28 @@
       "name": "Rumi (Limited)",
       "rarities": [
         {
-          "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843086362775665/rumi-limited.png?ex=689562ef&is=6894116f&hm=c5d3236107b4e1ac6e557361565ff975d9d538334d102180ac7e763e78b69605&"
+          "rarity": "UR",
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/rumi-limited.png"
         }
       ]
     },
     {
       "name": "Jinu (Limited)",
-        "rarities": [
+      "rarities": [
         {
-          "rarity": "R",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843086861893734/jinu-limited.png?ex=689562ef&is=6894116f&hm=87136146df60a7035957693eb09d58670bc9257da3c7d101613bac3f961d9dbc&"
+          "rarity": "UR",
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/jinu-limited.png"
         }
-        ]
+      ]
     },
     {
       "name": "Special Card: Jinu & Rumi",
-        "rarities": [
+      "rarities": [
         {
           "rarity": "S",
-          "image_url_1": "https://cdn.discordapp.com/attachments/1398838656315162715/1402843316084543499/output.png?ex=68956326&is=689411a6&hm=a4787bc327a15dd92c789dfa980424d823547b20f78e7745b1fe3fd4d5f5b564&"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/jinu_and_rumi_limited.png"
         }
-        ]
+      ]
     }
   ]
 }

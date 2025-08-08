@@ -164,8 +164,8 @@
     "name": "Rumi (Limited)",
     "character_id": "rumi_limited",
     "thumbnail_url": "",
-    "top_rarity": "R",
-    "lowest_rarity": "R",
+    "top_rarity": "UR",
+    "lowest_rarity": "UR",
     "group": "Huntrix",
     "description": "Rumi looks up, unsure but holding her ground. Her glow is soft, but her stare is sharp.",
     "rarity": ""
@@ -174,8 +174,8 @@
         "name": "Jinu (Limited)",
         "character_id": "jinu_limited",
         "thumbnail_url": "",
-        "top_rarity": "R",
-        "lowest_rarity": "R",
+        "top_rarity": "UR",
+        "lowest_rarity": "UR",
         "group": "Saja Boys",
         "description": "Jinu stands still, eyes locked, unreadable. The chain between them says more than words.",
         "rarity": ""
