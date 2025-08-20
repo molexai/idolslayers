@@ -19,21 +19,10 @@ from nextcord.ui import View, Button
 
 import aiohttp
 
-async def is_url_valid(url: str) -> bool:
-    """Checks if the image URL works (status 200, 301, 302, etc.)."""
-    if not url or not url.strip():
-        return False
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.head(url, allow_redirects=True, timeout=aiohttp.ClientTimeout(total=5)) as resp:
-                return resp.status in (200, 201, 204, 301, 302, 307, 308)
-    except (aiohttp.ClientError, asyncio.TimeoutError):
-        try:
-            async with session.get(url, timeout=aiohttp.ClientTimeout(total=5)) as resp:
-                return resp.status in (200, 201, 204, 301, 302, 307, 308)
-        except (aiohttp.ClientError, asyncio.TimeoutError):
-            return False
-    return False
+def is_url_valid(url: str) -> bool:
+    """Checks if the URL is from the expected GitHub raw content path."""
+    return bool(url and url.strip().startswith("https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/"))
+
 
 
 class CardPageView(View):
@@ -71,7 +60,7 @@ class CardPageView(View):
         current_thumbnail = card.get("thumbnail_url", "")
 
         # ✅ Check if current image is valid
-        if await is_url_valid(current_thumbnail):
+        if is_url_valid(current_thumbnail):  # Removed `await` since it's not async
             embed = Templates.drop_success()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
             embed.description = (
@@ -101,7 +90,6 @@ class CardPageView(View):
             character_name=card["name"],
             thumbnail_url=new_thumbnail
         )
-
         if not success:
             embed = Templates.drop_error()
             embed.description = "> Failed to update the image in the database. Please try again later."
