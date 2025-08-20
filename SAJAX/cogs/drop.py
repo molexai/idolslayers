@@ -307,6 +307,131 @@ class CardMenuView(View):
             except Exception:
                 pass
 
+class FixCardSelect(Select):
+    def __init__(self, options, drop_cog, user_id, matching):
+        super().__init__(
+            placeholder="Select which card to fix…",
+            min_values=1,
+            max_values=1,
+            options=options
+        )
+        self.drop_cog = drop_cog
+        self.user_id = user_id
+        self.matching = matching
+
+    async def callback(self, interaction: Interaction):
+        idx = int(self.values[0])
+        selected_card = self.matching[idx]
+        current_thumbnail = selected_card.get("thumbnail_url", "")
+
+        # Check if the current thumbnail URL is valid
+        if is_url_valid(current_thumbnail):
+            embed = Templates.drop_success()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
+            embed.description = (
+                f"> The image for **{selected_card.get('name', 'Unknown')}** "
+                "is already valid and does not need fixing."
+            )
+            embed.set_image(url=current_thumbnail)
+            return await interaction.response.edit_message(embed=embed, view=None)
+
+        rarity_key = selected_card.get("rarity", selected_card.get("top_rarity", "B"))
+
+        # Assign a new thumbnail URL
+        new_thumbnail = self.drop_cog.assign_thumbnail(selected_card["name"], rarity_key)
+        if not new_thumbnail:
+            embed = Templates.drop_error()
+            embed.description = "> Could not generate a new thumbnail URL for this card."
+            return await interaction.response.edit_message(embed=embed, view=None)
+
+        # Remove the old character
+        self.drop_cog.db.remove_character_and_card(self.user_id, selected_card)
+
+        # Add the new character with the same attributes but new thumbnail
+        new_card = selected_card.copy()
+        new_card["thumbnail_url"] = new_thumbnail
+        self.drop_cog.db.add_character(self.user_id, new_card)
+        self.drop_cog.db.add_card(self.user_id, new_card.get("character_id"))
+
+        embed = Templates.drop_success()
+        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Fixed! ｡☁︎ﾟ｡⋆`"
+        embed.description = f"> Successfully fixed the thumbnail for **{new_card.get('name')}**!"
+        embed.set_image(url=new_thumbnail)
+        await interaction.response.edit_message(embed=embed, view=None)
+
+class PrevButton(Button):
+    def __init__(self):
+        super().__init__(label="Previous", style=ButtonStyle.secondary)
+
+    async def callback(self, interaction: Interaction):
+        self.view.page -= 1
+        self.view.add_select()
+        await interaction.response.edit_message(view=self.view)
+
+class NextButton(Button):
+    def __init__(self):
+        super().__init__(label="Next", style=ButtonStyle.secondary)
+
+    async def callback(self, interaction: Interaction):
+        self.view.page += 1
+        self.view.add_select()
+        await interaction.response.edit_message(view=self.view)
+
+class FixCardSelectView(View):
+    def __init__(self, drop_cog, user_id, matching):
+        super().__init__(timeout=60)
+        self.drop_cog = drop_cog
+        self.user_id = user_id
+        self.matching = matching
+        self.page = 0  # Track the current page of options
+        self.add_select()
+
+    def add_select(self):
+        # Calculate the start and end indices for the current page
+        start = self.page * 25
+        end = start + 25
+        current_page_options = self.matching[start:end]
+
+        # Add options for the current page
+        options = [
+            SelectOption(
+                label=f"{c['name']} (Rarity: {c.get('rarity', c.get('top_rarity', '?'))})",
+                value=str(start + i)  # Use the actual index in the full list
+            )
+            for i, c in enumerate(current_page_options)
+        ]
+
+        # Add the select menu
+        self.clear_items()  # Clear existing items
+        self.add_item(FixCardSelect(options, self.drop_cog, self.user_id, self.matching))
+
+        # Add pagination buttons if there are more pages
+        if len(self.matching) > 25:
+            if self.page > 0:
+                self.add_item(self.PrevButton())
+            if end < len(self.matching):
+                self.add_item(self.NextButton())
+
+    class PrevButton(Button):
+        def __init__(self):
+            super().__init__(label="Previous", style=ButtonStyle.secondary)
+
+        async def callback(self, interaction: Interaction):
+            self.view.page -= 1
+            self.view.add_select()
+            await interaction.response.edit_message(view=self.view)
+
+    class NextButton(Button):
+        def __init__(self):
+            super().__init__(label="Next", style=ButtonStyle.secondary)
+
+        async def callback(self, interaction: Interaction):
+            self.view.page += 1
+            self.view.add_select()
+            await interaction.response.edit_message(view=self.view)
+
+
+
 class Drop(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -364,79 +489,10 @@ class Drop(commands.Cog):
 
         if len(matching) > 1:
             # If multiple cards match, let the user select which one to fix
-            class FixCardSelectView(View):
-                def __init__(self, db, user_id, matching):
-                    super().__init__(timeout=60)
-                    self.db = db
-                    self.user_id = user_id
-                    self.matching = matching
-                    self.add_select()
-
-                def add_select(self):
-                    options = [
-                        SelectOption(
-                            label=f"{c['name']} (Rarity: {c.get('rarity', c.get('top_rarity', '?'))})",
-                            value=str(i)
-                        )
-                        for i, c in enumerate(self.matching)
-                    ]
-                    self.add_item(FixCardSelect(options, self.db, self.user_id, self.matching))
-
-            class FixCardSelect(Select):
-                def __init__(self, options, db, user_id, matching):
-                    super().__init__(
-                        placeholder="Select which card to fix…",
-                        min_values=1,
-                        max_values=1,
-                        options=options
-                    )
-                    self.db = db
-                    self.user_id = user_id
-                    self.matching = matching
-
-                async def callback(self, interaction: Interaction):
-                    idx = int(self.values[0])
-                    selected_card = self.matching[idx]
-                    current_thumbnail = selected_card.get("thumbnail_url", "")
-
-                    # Check if the current thumbnail URL is valid
-                    if is_url_valid(current_thumbnail):
-                        embed = Templates.drop_success()
-                        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
-                        embed.description = (
-                            f"> The image for **{selected_card.get('name', 'Unknown')}** "
-                            "is already valid and does not need fixing."
-                        )
-                        embed.set_image(url=current_thumbnail)
-                        return await interaction.response.edit_message(embed=embed, view=None)
-
-                    rarity_key = selected_card.get("rarity", selected_card.get("top_rarity", "B"))
-
-                    # Assign a new thumbnail URL
-                    new_thumbnail = self.db.assign_thumbnail(selected_card["name"], rarity_key)
-                    if not new_thumbnail:
-                        embed = Templates.drop_error()
-                        embed.description = "> Could not generate a new thumbnail URL for this card."
-                        return await interaction.response.edit_message(embed=embed, view=None)
-
-                    # Remove the old character
-                    self.db.remove_character_and_card(self.user_id, selected_card)
-
-                    # Add the new character with the same attributes but new thumbnail
-                    new_card = selected_card.copy()
-                    new_card["thumbnail_url"] = new_thumbnail
-                    self.db.add_character(self.user_id, new_card)
-                    self.db.add_card(self.user_id, new_card.get("character_id"))
-
-                    embed = Templates.drop_success()
-                    embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Fixed! ｡☁︎ﾟ｡⋆`"
-                    embed.description = f"> Successfully fixed the thumbnail for **{new_card.get('name')}**!"
-                    embed.set_image(url=new_thumbnail)
-                    await interaction.response.edit_message(embed=embed, view=None)
-
-            view = FixCardSelectView(self.db, user_id, matching)
+            view = FixCardSelectView(self, user_id, matching)
             embed = Templates.drop_summon()
             embed.title = f"Select which '{name}' to fix"
+            embed.set_image(url="https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/fix_card.jpg")
             await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
         else:
             # Only one matching card, fix it directly
@@ -456,7 +512,7 @@ class Drop(commands.Cog):
 
             rarity_key = selected_card.get("rarity", selected_card.get("top_rarity", "B"))
 
-            new_thumbnail = self.db.assign_thumbnail(selected_card["name"], rarity_key)
+            new_thumbnail = self.assign_thumbnail(selected_card["name"], rarity_key)
             if not new_thumbnail:
                 embed = Templates.drop_error()
                 embed.description = "> Could not generate a new thumbnail URL for this card."
