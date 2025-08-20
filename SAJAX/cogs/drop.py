@@ -17,16 +17,23 @@ import aiohttp
 from nextcord import ButtonStyle, Interaction
 from nextcord.ui import View, Button
 
+import aiohttp
+
 async def is_url_valid(url: str) -> bool:
-    """Checks if the image URL works (status 200)."""
+    """Checks if the image URL works (status 200, 301, 302, etc.)."""
     if not url or not url.strip():
         return False
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.head(url) as resp:
-                return resp.status == 200
-    except:
-        return False
+            async with session.head(url, allow_redirects=True, timeout=aiohttp.ClientTimeout(total=5)) as resp:
+                return resp.status in (200, 201, 204, 301, 302, 307, 308)
+    except (aiohttp.ClientError, asyncio.TimeoutError):
+        try:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=5)) as resp:
+                return resp.status in (200, 201, 204, 301, 302, 307, 308)
+        except (aiohttp.ClientError, asyncio.TimeoutError):
+            return False
+    return False
 
 
 class CardPageView(View):
