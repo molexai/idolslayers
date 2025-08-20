@@ -49,18 +49,16 @@ class CardPageView(View):
         fix_button.callback = self.fix_image_callback
         self.add_item(fix_button)
 
-    # ✅ Callback for Fix Image
     async def fix_image_callback(self, interaction: Interaction):
         if interaction.user.id != self.owner_id:
             await interaction.response.send_message("You can't use this button.", ephemeral=True)
             return
 
         card = self.cards[self.index]
-        rarity_key = card.get("rarity", card.get("top_rarity", "B"))  # fallback
+        rarity_key = card.get("rarity", card.get("top_rarity", "B"))
         current_thumbnail = card.get("thumbnail_url", "")
 
-        # ✅ Check if current image is valid
-        if is_url_valid(current_thumbnail):  # Removed `await` since it's not async
+        if is_url_valid(current_thumbnail):
             embed = Templates.drop_success()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
             embed.description = (
@@ -71,7 +69,6 @@ class CardPageView(View):
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
-        # ✅ Try to assign a new thumbnail if the old one is broken
         new_thumbnail = self.assign_thumbnail(card["name"], rarity_key)
         if not new_thumbnail:
             embed = Templates.drop_error()
@@ -79,10 +76,6 @@ class CardPageView(View):
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
-        # ✅ Update the card object
-        card["thumbnail_url"] = new_thumbnail
-
-        # ✅ Update DB with fixed card (using both character_id and name)
         user_id_str = str(self.owner_id)
         success = self.db.update_character_thumbnail(
             user_id=user_id_str,
@@ -90,25 +83,40 @@ class CardPageView(View):
             character_name=card["name"],
             thumbnail_url=new_thumbnail
         )
+
         if not success:
             embed = Templates.drop_error()
             embed.description = "> Failed to update the image in the database. Please try again later."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
-        # ✅ Refresh embed
-        embed = self.generate_embed()
-        await interaction.response.edit_message(embed=embed, view=self)
-
-        # ✅ Success feedback
-        embed = Templates.drop_success()
-        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Fixed! ｡☁︎ﾟ｡⋆`"
-        embed.description = (
-            f"> {Templates.pastel_emojis[5]} <@{self.owner_id}>, the image for **{card.get('name', 'Unknown')}** has been fixed!"
-            "\nUse `/mycards` to view it."
+        # Refetch the user's data to ensure the latest version
+        updated_user = self.db.get_user(user_id_str)
+        updated_characters = updated_user.get("characters", [])
+        updated_card = next(
+            (c for c in updated_characters if
+             c.get("character_id") == card.get("character_id") and c.get("name") == card["name"]),
+            None
         )
-        embed.set_image(url=new_thumbnail)
-        await interaction.channel.send(embed=embed)
+
+        if updated_card and updated_card.get("thumbnail_url") == new_thumbnail:
+            # Force refresh the embed with the new thumbnail
+            embed = self.generate_embed()
+            await interaction.response.edit_message(embed=embed, view=self)
+
+            # Success feedback with cache-busting URL
+            embed = Templates.drop_success()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Fixed! ｡☁︎ﾟ｡⋆`"
+            embed.description = (
+                f"> {Templates.pastel_emojis[5]} <@{self.owner_id}>, the image for **{card.get('name', 'Unknown')}** has been fixed!"
+                "\nUse `/mycards` to view it."
+            )
+            embed.set_image(url=f"{new_thumbnail}?t={int(time.time())}")  # Cache-busting
+            await interaction.channel.send(embed=embed)
+        else:
+            embed = Templates.drop_error()
+            embed.description = "> The image was not updated correctly. Please try again."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
 
     def update_buttons(self):
         for child in self.children:
