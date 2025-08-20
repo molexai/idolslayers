@@ -490,7 +490,7 @@ class Drop(commands.Cog):
         if len(matching) > 1:
             # If multiple cards match, let the user select which one to fix
             view = FixCardSelectView(self, user_id, matching)
-            embed = Templates.drop_summon()
+            embed = Templates.drop_success()
             embed.title = f"Select which '{name}' to fix"
             embed.description = f"> You have multiple cards named **{name}**. Please select one to fix."
             embed.set_image(url="https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/fix_card.jpg")
