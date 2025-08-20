@@ -1,29 +1,26 @@
-from nextcord.ext import commands
-import nextcord
-from nextcord import SlashOption, Interaction, ButtonStyle
-from nextcord.ui import View, button, Button, Select
 import asyncio
-import time
-import random
 import json
 import os
+import random
+import time
+
+import nextcord
+from nextcord import SlashOption, SelectOption
+from nextcord.ext import commands
+from nextcord.ui import button, Select
 
 from SAJAX.database import Database
 from SAJAX.templates import Templates, get_emoji
 
 GUILD_ID = 1369853145827770368
 
-import aiohttp
 from nextcord import ButtonStyle, Interaction
 from nextcord.ui import View, Button
 
-import aiohttp
-
 def is_url_valid(url: str) -> bool:
     """Checks if the URL is from the expected GitHub raw content path."""
-    return bool(url and url.strip().startswith("https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/"))
-
-
+    return bool(url and url.strip().startswith(
+        "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/"))
 
 class CardPageView(View):
     def __init__(self, user_cards, templates, owner_id, db: Database, timeout=180):
@@ -43,80 +40,6 @@ class CardPageView(View):
             reroll_button = Button(label="Reroll", style=ButtonStyle.red)
             reroll_button.callback = self.reroll_callback
             self.add_item(reroll_button)
-
-        # ✅ Add Fix Image button
-        fix_button = Button(label="Fix Image", style=ButtonStyle.gray)
-        fix_button.callback = self.fix_image_callback
-        self.add_item(fix_button)
-
-    async def fix_image_callback(self, interaction: Interaction):
-        if interaction.user.id != self.owner_id:
-            await interaction.response.send_message("You can't use this button.", ephemeral=True)
-            return
-
-        card = self.cards[self.index]
-        rarity_key = card.get("rarity", card.get("top_rarity", "B"))
-        current_thumbnail = card.get("thumbnail_url", "")
-
-        if is_url_valid(current_thumbnail):
-            embed = Templates.drop_success()
-            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
-            embed.description = (
-                f"> {Templates.pastel_emojis[5]} <@{self.owner_id}>, the image for **{card.get('name', 'Unknown')}** "
-                "is already valid and does not need fixing."
-            )
-            embed.set_image(url=current_thumbnail)
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
-
-        new_thumbnail = self.assign_thumbnail(card["name"], rarity_key)
-        if not new_thumbnail:
-            embed = Templates.drop_error()
-            embed.description = "> The image for this card could not be fixed. Please try again later."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
-
-        user_id_str = str(self.owner_id)
-        success = self.db.update_character_thumbnail(
-            user_id=user_id_str,
-            character_id=card.get("character_id", ""),
-            character_name=card["name"],
-            thumbnail_url=new_thumbnail
-        )
-
-        if not success:
-            embed = Templates.drop_error()
-            embed.description = "> Failed to update the image in the database. Please try again later."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
-
-        # Refetch the user's data to ensure the latest version
-        updated_user = self.db.get_user(user_id_str)
-        updated_characters = updated_user.get("characters", [])
-        updated_card = next(
-            (c for c in updated_characters if
-             c.get("character_id") == card.get("character_id") and c.get("name") == card["name"]),
-            None
-        )
-
-        if updated_card and updated_card.get("thumbnail_url") == new_thumbnail:
-            # Force refresh the embed with the new thumbnail
-            embed = self.generate_embed()
-            await interaction.response.edit_message(embed=embed, view=self)
-
-            # Success feedback with cache-busting URL
-            embed = Templates.drop_success()
-            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Fixed! ｡☁︎ﾟ｡⋆`"
-            embed.description = (
-                f"> {Templates.pastel_emojis[5]} <@{self.owner_id}>, the image for **{card.get('name', 'Unknown')}** has been fixed!"
-                "\nUse `/mycards` to view it."
-            )
-            embed.set_image(url=f"{new_thumbnail}?t={int(time.time())}")  # Cache-busting
-            await interaction.channel.send(embed=embed)
-        else:
-            embed = Templates.drop_error()
-            embed.description = "> The image was not updated correctly. Please try again."
-            await interaction.response.send_message(embed=embed, ephemeral=True)
 
     def update_buttons(self):
         for child in self.children:
@@ -411,6 +334,148 @@ class Drop(commands.Cog):
                         random.shuffle(urls)
                         return random.choice(urls)
         return ""
+
+    @nextcord.slash_command(
+        name="fixcard",
+        description="Fix the thumbnail of a card by name.",
+        guild_ids=[GUILD_ID]
+    )
+    async def fixcard(
+            self,
+            interaction: Interaction,
+            name: str = SlashOption(description="Name of the character to fix", required=True)
+    ):
+        user = interaction.user
+        user_id = str(user.id)
+
+        if self.db.is_card_muted(user_id):
+            embed = Templates.card_muted()
+            embed.description = "> You are card muted and cannot fix your cards."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        user_data = self.db.get_user(user_id)
+        characters = user_data.get("characters", [])
+        matching = [c for c in characters if c.get("name", "").strip().lower() == name.strip().lower()]
+
+        if not matching:
+            embed = Templates.drop_error()
+            embed.description = f"> You don't have any cards named **{name}**."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        if len(matching) > 1:
+            # If multiple cards match, let the user select which one to fix
+            class FixCardSelectView(View):
+                def __init__(self, db, user_id, matching):
+                    super().__init__(timeout=60)
+                    self.db = db
+                    self.user_id = user_id
+                    self.matching = matching
+                    self.add_select()
+
+                def add_select(self):
+                    options = [
+                        SelectOption(
+                            label=f"{c['name']} (Rarity: {c.get('rarity', c.get('top_rarity', '?'))})",
+                            value=str(i)
+                        )
+                        for i, c in enumerate(self.matching)
+                    ]
+                    self.add_item(FixCardSelect(options, self.db, self.user_id, self.matching))
+
+            class FixCardSelect(Select):
+                def __init__(self, options, db, user_id, matching):
+                    super().__init__(
+                        placeholder="Select which card to fix…",
+                        min_values=1,
+                        max_values=1,
+                        options=options
+                    )
+                    self.db = db
+                    self.user_id = user_id
+                    self.matching = matching
+
+                async def callback(self, interaction: Interaction):
+                    idx = int(self.values[0])
+                    selected_card = self.matching[idx]
+                    current_thumbnail = selected_card.get("thumbnail_url", "")
+
+                    # Check if the current thumbnail URL is valid
+                    if is_url_valid(current_thumbnail):
+                        embed = Templates.drop_success()
+                        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
+                        embed.description = (
+                            f"> The image for **{selected_card.get('name', 'Unknown')}** "
+                            "is already valid and does not need fixing."
+                        )
+                        embed.set_image(url=current_thumbnail)
+                        return await interaction.response.edit_message(embed=embed, view=None)
+
+                    rarity_key = selected_card.get("rarity", selected_card.get("top_rarity", "B"))
+
+                    # Assign a new thumbnail URL
+                    new_thumbnail = self.db.assign_thumbnail(selected_card["name"], rarity_key)
+                    if not new_thumbnail:
+                        embed = Templates.drop_error()
+                        embed.description = "> Could not generate a new thumbnail URL for this card."
+                        return await interaction.response.edit_message(embed=embed, view=None)
+
+                    # Remove the old character
+                    self.db.remove_character_and_card(self.user_id, selected_card)
+
+                    # Add the new character with the same attributes but new thumbnail
+                    new_card = selected_card.copy()
+                    new_card["thumbnail_url"] = new_thumbnail
+                    self.db.add_character(self.user_id, new_card)
+                    self.db.add_card(self.user_id, new_card.get("character_id"))
+
+                    embed = Templates.drop_success()
+                    embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Fixed! ｡☁︎ﾟ｡⋆`"
+                    embed.description = f"> Successfully fixed the thumbnail for **{new_card.get('name')}**!"
+                    embed.set_image(url=new_thumbnail)
+                    await interaction.response.edit_message(embed=embed, view=None)
+
+            view = FixCardSelectView(self.db, user_id, matching)
+            embed = Templates.drop_summon()
+            embed.title = f"Select which '{name}' to fix"
+            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+        else:
+            # Only one matching card, fix it directly
+            selected_card = matching[0]
+            current_thumbnail = selected_card.get("thumbnail_url", "")
+
+            # Check if the current thumbnail URL is valid
+            if is_url_valid(current_thumbnail):
+                embed = Templates.drop_success()
+                embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
+                embed.description = (
+                    f"> The image for **{selected_card.get('name', 'Unknown')}** "
+                    "is already valid and does not need fixing."
+                )
+                embed.set_image(url=current_thumbnail)
+                return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+            rarity_key = selected_card.get("rarity", selected_card.get("top_rarity", "B"))
+
+            new_thumbnail = self.db.assign_thumbnail(selected_card["name"], rarity_key)
+            if not new_thumbnail:
+                embed = Templates.drop_error()
+                embed.description = "> Could not generate a new thumbnail URL for this card."
+                return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+            # Remove the old character
+            self.db.remove_character_and_card(user_id, selected_card)
+
+            # Add the new character with the same attributes but new thumbnail
+            new_card = selected_card.copy()
+            new_card["thumbnail_url"] = new_thumbnail
+            self.db.add_character(user_id, new_card)
+            self.db.add_card(user_id, new_card.get("character_id"))
+
+            embed = Templates.drop_success()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Fixed! ｡☁︎ﾟ｡⋆`"
+            embed.description = f"> Successfully fixed the thumbnail for **{new_card.get('name')}**!"
+            embed.set_image(url=new_thumbnail)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @nextcord.slash_command(name="mycards", description="View your SAJAX cards!", guild_ids=[GUILD_ID])
     async def mycards(
