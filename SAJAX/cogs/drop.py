@@ -493,7 +493,7 @@ class Drop(commands.Cog):
             embed = Templates.drop_success()
             embed.title = f"Select which '{name}' to fix"
             embed.description = f"> You have multiple cards named **{name}**. Please select one to fix."
-            embed.set_image(url="https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/fix_card.jpg")
+            embed.set_thumbnail(url="https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/fix_card.jpg")
             await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
         else:
             # Only one matching card, fix it directly
