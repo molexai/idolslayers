@@ -167,6 +167,31 @@ class Database:
                 return True
         return False
 
+    def update_character_thumbnail(self, user_id: str, character_id: str, character_name: str,
+                                   thumbnail_url: str) -> bool:
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+
+        if not user or "characters" not in user:
+            return False
+
+        updated = False
+        characters = user["characters"]
+        for i, char in enumerate(characters):
+            if char.get("character_id") == character_id and char.get("name") == character_name:
+                characters[i]["thumbnail_url"] = thumbnail_url
+                updated = True
+                break
+
+        if updated:
+            self.users.update_one(
+                {"user_id": user_id},
+                {"$set": {"characters": characters}},
+                upsert=True
+            )
+
+        return updated
+
     def get_all_users(self):
         return list(self.users.find())
 

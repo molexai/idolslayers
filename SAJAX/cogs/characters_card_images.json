@@ -183,12 +183,10 @@
         },
         {
           "rarity": "UR",
-          "image_url_1": "",
-          "image_url_2": "",
-          "image_url_3": "",
-          "image_url_4": "",
-          "image_url_5": "",
-          "image_url_6": ""
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/1920s-hunter.png",
+          "image_url_2": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/1960s-hunter.png",
+          "image_url_3": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/1940s-hunter.png",
+          "image_url_4": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/first-hunters.png"
         }
       ]
     },
@@ -246,7 +244,7 @@
         },
         {
           "rarity": "UR",
-          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/Untitled90_20250723154504.png"
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/gwi-ma.png"
         }
       ]
     },

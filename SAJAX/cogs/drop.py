@@ -13,6 +13,22 @@ from SAJAX.templates import Templates, get_emoji
 
 GUILD_ID = 1369853145827770368
 
+import aiohttp
+from nextcord import ButtonStyle, Interaction
+from nextcord.ui import View, Button
+
+async def is_url_valid(url: str) -> bool:
+    """Checks if the image URL works (status 200)."""
+    if not url or not url.strip():
+        return False
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.head(url) as resp:
+                return resp.status == 200
+    except:
+        return False
+
+
 class CardPageView(View):
     def __init__(self, user_cards, templates, owner_id, db: Database, timeout=180):
         super().__init__(timeout=timeout)
@@ -31,6 +47,73 @@ class CardPageView(View):
             reroll_button = Button(label="Reroll", style=ButtonStyle.red)
             reroll_button.callback = self.reroll_callback
             self.add_item(reroll_button)
+
+        # ✅ Add Fix Image button
+        fix_button = Button(label="Fix Image", style=ButtonStyle.gray)
+        fix_button.callback = self.fix_image_callback
+        self.add_item(fix_button)
+
+    # ✅ Callback for Fix Image
+    async def fix_image_callback(self, interaction: Interaction):
+        if interaction.user.id != self.owner_id:
+            await interaction.response.send_message("You can't use this button.", ephemeral=True)
+            return
+
+        card = self.cards[self.index]
+        rarity_key = card.get("rarity", card.get("top_rarity", "B"))  # fallback
+        current_thumbnail = card.get("thumbnail_url", "")
+
+        # ✅ Check if current image is valid
+        if await is_url_valid(current_thumbnail):
+            embed = Templates.drop_success()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Already OK! ｡☁︎ﾟ｡⋆`"
+            embed.description = (
+                f"> {Templates.pastel_emojis[5]} <@{self.owner_id}>, the image for **{card.get('name', 'Unknown')}** "
+                "is already valid and does not need fixing."
+            )
+            embed.set_image(url=current_thumbnail)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        # ✅ Try to assign a new thumbnail if the old one is broken
+        new_thumbnail = self.assign_thumbnail(card["name"], rarity_key)
+        if not new_thumbnail:
+            embed = Templates.drop_error()
+            embed.description = "> The image for this card could not be fixed. Please try again later."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        # ✅ Update the card object
+        card["thumbnail_url"] = new_thumbnail
+
+        # ✅ Update DB with fixed card (using both character_id and name)
+        user_id_str = str(self.owner_id)
+        success = self.db.update_character_thumbnail(
+            user_id=user_id_str,
+            character_id=card.get("character_id", ""),
+            character_name=card["name"],
+            thumbnail_url=new_thumbnail
+        )
+
+        if not success:
+            embed = Templates.drop_error()
+            embed.description = "> Failed to update the image in the database. Please try again later."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
+
+        # ✅ Refresh embed
+        embed = self.generate_embed()
+        await interaction.response.edit_message(embed=embed, view=self)
+
+        # ✅ Success feedback
+        embed = Templates.drop_success()
+        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Image Fixed! ｡☁︎ﾟ｡⋆`"
+        embed.description = (
+            f"> {Templates.pastel_emojis[5]} <@{self.owner_id}>, the image for **{card.get('name', 'Unknown')}** has been fixed!"
+            "\nUse `/mycards` to view it."
+        )
+        embed.set_image(url=new_thumbnail)
+        await interaction.channel.send(embed=embed)
 
     def update_buttons(self):
         for child in self.children:
@@ -259,7 +342,8 @@ class CardSelect(Select):
         rarity = card.get('rarity', card.get('top_rarity', 'Unknown'))
         description = card.get('description', 'No description available.').replace('â€™', "")
         group = card.get('group', 'Unknown')
-        embed = self.templates.card_details(name, rarity, description, group, card.get('thumbnail_url'))
+        thumbnail = card.get('thumbnail_url', "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/404.png")
+        embed = self.templates.card_details(name, rarity, description, group, thumbnail)
         embed.set_footer(text=f"Card details for {name}")
         view = View(timeout=180)
         view.displayed_cards = set()
