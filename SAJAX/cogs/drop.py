@@ -881,7 +881,6 @@ class Drop(commands.Cog):
         embed.description = f"> Successfully set global setting **{setting_name}** to **{value}**."
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
-
     @nextcord.slash_command(
         name="addcard",
         description="Add a specific card to a user’s collection (Admin only)",
@@ -898,24 +897,32 @@ class Drop(commands.Cog):
             ),
             target: nextcord.User = SlashOption(description="User to give the card to", required=False, default=None)
     ):
-        user = target or interaction.user
-        user_id_str = str(user.id)
+        # Check if the user executing the command is an admin or the target ID
         target_id = "1152734418109206548"
+        if not interaction.guild:
+            embed = Templates.drop_error()
+            embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
+            embed.description = "> This command can only be used in a server."
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            return
 
-        if not interaction.guild or (
-                not interaction.guild.get_member(user.id).guild_permissions.administrator
-                and str(user.id) != target_id
-        ):
+        member = interaction.guild.get_member(interaction.user.id)
+        if not member.guild_permissions.administrator and str(interaction.user.id) != target_id:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Permission Denied ｡☁︎ﾟ｡⋆`"
             embed.description = "> You do not have permission to use this command."
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
 
+        # Set the user to the target or the interaction user
+        user = target or interaction.user
+        user_id_str = str(user.id)
+
         try:
             with open(self.characters_json_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-        except Exception:
+        except Exception as e:
+            print(f"Error loading characters data file: {e}")
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Error Loading Characters ｡☁︎ﾟ｡⋆`"
             embed.description = "> Could not load characters data file."
@@ -923,7 +930,6 @@ class Drop(commands.Cog):
             return
 
         character = next((char for char in data if char.get("name", "").lower() == character.lower()), None)
-
         if not character:
             embed = Templates.drop_error()
             embed.title = "`⋆｡ﾟ☁︎｡𖦹 Invalid Character ｡☁︎ﾟ｡⋆`"
@@ -932,7 +938,6 @@ class Drop(commands.Cog):
             return
 
         thumbnail_url = self.assign_thumbnail(character.get("name", ""), rarity)
-
         character_data = character.copy()
         character_data["rarity"] = rarity
         if thumbnail_url:
@@ -959,6 +964,8 @@ class Drop(commands.Cog):
         if thumbnail_url:
             embed.set_image(url=thumbnail_url)
 
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
         if target and target != interaction.user:
             try:
                 dm = await target.create_dm()
@@ -970,8 +977,6 @@ class Drop(commands.Cog):
                 await dm.send(embed=dm_embed)
             except nextcord.Forbidden:
                 print(f"Could not DM {target}.")
-
-        await interaction.response.send_message(embed=embed, ephemeral=True)
 
     @nextcord.slash_command(name="admindrop",
                             description="Admin-only version of drop that allows setting drop amount.",
