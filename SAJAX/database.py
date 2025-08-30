@@ -228,6 +228,23 @@ class Database:
             upsert=True
         )
 
+    def card_count(self, user_id: str, card_name: str) -> str:
+        """
+        Returns the number of cards with the specified name for the given user.
+
+        Args:
+            user_id (str): The ID of the user.
+            card_name (str): The name of the card to count.
+
+        Returns:
+            int: The number of cards with the specified name.
+        """
+        user_id = str(user_id)
+        user = self.get_user(user_id)
+        characters = user.get("characters", [])
+        count = len([c for c in characters if c.get("name", "").strip().lower() == card_name.strip().lower()])
+        return str(count)
+
     def add_shards(self, user_id: str, shards):
         user_id = str(user_id)
         self.users.update_one(
@@ -235,3 +252,38 @@ class Database:
             {"$inc": {"shards": shards}},
             upsert=True
         )
+
+    def global_card_count(self, card_name: str, top_n: int = 3) -> list:
+        """
+        Returns a list of the top N users with the highest count of the specified card.
+
+        Args:
+            card_name (str): The name of the card to count.
+            top_n (int): The number of top users to return. Default is 3.
+
+        Returns:
+            list: A list of tuples where each tuple contains (user_id, count) for the top N users.
+        """
+        card_name = card_name.strip().lower()
+        result = {}
+
+        # Fetch all users from the database
+        all_users = self.get_all_users()
+
+        # Iterate through each user
+        for user in all_users:
+            user_id = user.get("user_id")
+            characters = user.get("characters", [])
+
+            # Count occurrences of the card
+            count = len([c for c in characters if c.get("name", "").strip().lower() == card_name])
+
+            # Add to the result dictionary if the count is greater than 0
+            if count > 0:
+                result[user_id] = count
+
+        # Sort the result by count in descending order
+        sorted_result = sorted(result.items(), key=lambda item: item[1], reverse=True)
+
+        # Return the top N users
+        return sorted_result[:top_n]

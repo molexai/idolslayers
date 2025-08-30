@@ -461,6 +461,34 @@ class Drop(commands.Cog):
         return ""
 
     @nextcord.slash_command(
+        name="cardcount",
+        description="View how many cards you have.",
+        guild_ids=[GUILD_ID]
+    )
+    async def cardcount(self, interaction: Interaction, character: str = SlashOption(name="Name of the character", required=True)):
+
+        user = interaction.user
+        user_id = str(user.id)
+
+        if self.db.is_card_muted(user_id):
+            embed = Templates.card_muted()
+            embed.description = "> You are card muted and cannot view your card count."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        count = self.db.card_count(user_id, character)
+
+        if count == 0:
+            embed = Templates.drop_error()
+            embed.description = f"> You don't have any cards named **{character}**."
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        embed = Templates.drop_success()
+        embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Count ｡☁︎ﾟ｡⋆`"
+        embed.description = f"> You have **{count}** card(s) named **{character}**."
+        return await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
+    @nextcord.slash_command(
         name="fixcard",
         description="Fix the thumbnail of a card by name.",
         guild_ids=[GUILD_ID]

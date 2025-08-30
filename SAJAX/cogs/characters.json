@@ -189,5 +189,25 @@
         "group": "Special",
         "description": "Jinu and Rumi caught in a moment — tension, longing, and something unspoken. A card that glows with pink heat and pixel love.",
         "rarity": ""
+    },
+    {
+        "name": "Special Card: Glitched Derpy",
+        "character_id": "glitched_derpy",
+        "thumbnail_url": "",
+        "top_rarity": "S",
+        "lowest_rarity": "S",
+        "group": "Special",
+        "description": "A derpy, glitchy apparition that defies logic and reason. Its chaotic energy disrupts enemy attacks and confuses even the most seasoned demon slayers.",
+        "rarity": ""
+    },
+    {
+        "name": "Special Card: Cosmic Mike",
+        "character_id": "cosmic_mike",
+        "thumbnail_url": "",
+        "top_rarity": "S",
+        "lowest_rarity": "S",
+        "group": "Special",
+        "description": "Mike, but make it cosmic. Wields the power of the stars and a killer sense of humor to dazzle friends and obliterate foes.",
+        "rarity": ""
     }
 ]

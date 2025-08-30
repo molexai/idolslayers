@@ -518,6 +518,24 @@
           "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/jinu_and_rumi_limited.png"
         }
       ]
+    },
+    {
+      "name": "Special Card: Glitched Derpy",
+      "rarities": [
+        {
+          "rarity": "S",
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/glitched-derpy.png"
+        }
+      ]
+    },
+    {
+      "name": "Special Card: Cosmic Mike",
+      "rarities": [
+        {
+          "rarity": "S",
+          "image_url_1": "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/cosmic-mike.png"
+        }
+      ]
     }
   ]
 }
