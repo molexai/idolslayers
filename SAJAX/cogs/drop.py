@@ -465,8 +465,15 @@ class Drop(commands.Cog):
         description="View how many cards you have.",
         guild_ids=[GUILD_ID]
     )
-    async def cardcount(self, interaction: Interaction, character: str = SlashOption(name="Name of the character", required=True)):
-
+    async def cardcount(
+            self,
+            interaction: Interaction,
+            character: str = SlashOption(
+                name="character",  # ✅ lowercase, no spaces
+                description="Name of the character",  # ✅ description can have spaces
+                required=True
+            )
+    ):
         user = interaction.user
         user_id = str(user.id)
 
@@ -486,7 +493,6 @@ class Drop(commands.Cog):
         embed.title = "`⋆｡ﾟ☁︎｡𖦹 Card Count ｡☁︎ﾟ｡⋆`"
         embed.description = f"> You have **{count}** card(s) named **{character}**."
         return await interaction.response.send_message(embed=embed, ephemeral=True)
-
 
     @nextcord.slash_command(
         name="fixcard",
