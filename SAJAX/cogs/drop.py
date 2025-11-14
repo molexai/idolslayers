@@ -535,8 +535,7 @@ class Drop(commands.Cog):
             embed.description = "> You are card muted and cannot fix your cards."
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
-        user_data = self.db.get_user(user_id)
-        characters = user_data.get("characters", [])
+        characters = self.db.get_characters(user_id)
         matching = [c for c in characters if c.get("name", "").strip().lower() == name.strip().lower()]
 
         if not matching:
@@ -622,8 +621,7 @@ class Drop(commands.Cog):
             await ctx.send(embed=embed, ephemeral=True)
             return
         self.mycards_cooldowns[user.id] = now
-        user_data = self.db.get_user(str(user.id))
-        cards = user_data.get("characters", [])
+        cards = self.db.get_characters(str(user.id))
         if not cards:
             embed = Templates.drop_error()
             embed.description = "> You have no cards yet! Try using `/drop` to summon some."
@@ -849,8 +847,7 @@ class Drop(commands.Cog):
             if not limited_cards_enabled:
                 return
             # check if user has both the Rumi (Limited) card and the Jinu (Limited) card
-            user_data = self.db.get_user(user_id_str)
-            characters = user_data.get("characters", [])
+            characters = self.db.get_characters(user_id_str)
             has_rumi = any(char.get("name") == "Rumi (Limited)" for char in characters)
             has_jinu = any(char.get("name") == "Jinu (Limited)" for char in characters)
             if has_rumi and has_jinu:

@@ -61,8 +61,7 @@ class SellCog(commands.Cog):
 
         self.cooldowns[user.id] = now
 
-        user_data = self.db.get_user(user_id) or {}
-        chars = user_data.get("characters", [])
+        chars = self.db.get_characters(user_id)
 
         character_name = character.strip().lower()
         matching = [c for c in chars if c.get("name", "").strip().lower() == character_name]
@@ -163,8 +162,7 @@ class SellCog(commands.Cog):
                     return
 
                 idx = int(select.values[0])
-                user_data = self.db.get_user(self.user_id) or {}
-                current_chars = user_data.get("characters", [])
+                current_chars = self.db.get_characters(self.user_id)
 
                 char = None
                 if idx < len(self.matching_chars):
@@ -188,8 +186,7 @@ class SellCog(commands.Cog):
 
                     @button(label="✅ Yes", style=nextcord.ButtonStyle.success)
                     async def yes(self, button, i2: Interaction):
-                        user_data_check = self.db.get_user(self.user_id) or {}
-                        chars_check = user_data_check.get("characters", [])
+                        chars_check = self.db.get_characters(self.user_id)
                         found = False
                         for c in chars_check:
                             if c.get("name") == char.get("name") and c.get("rarity", c.get("top_rarity", None)) == char.get("rarity", char.get("top_rarity", None)):
@@ -257,8 +254,7 @@ class SellCog(commands.Cog):
 
         self.cooldowns[user.id] = now
 
-        user_data = self.db.get_user(user_id) or {}
-        characters = user_data.get("characters", [])
+        characters = self.db.get_characters(user_id)
 
         if not characters:
             embed = Templates.sell_no_character("any")

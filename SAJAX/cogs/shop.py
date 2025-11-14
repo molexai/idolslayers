@@ -26,8 +26,7 @@ class BuyConfirmView(View):
         self.db = db
 
     async def check_shards(self):
-        user_data = self.db.get_user(self.user_id) or {}
-        shards = user_data.get("shards", 0)
+        shards = self.db.get_shards(self.user_id)
         return shards >= self.item_price
 
     @button(label="✅ Yes", style=nextcord.ButtonStyle.success)
@@ -147,8 +146,7 @@ class BuyButton(Button):
         self.db = db
 
     async def callback(self, interaction: Interaction):
-        user_data = self.db.get_user(self.user_id) or {}
-        shards = user_data.get("shards", 0)
+        shards = self.db.get_shards(self.user_id)
 
         if shards < self.item_price:
             embed = Templates.drop_error()
