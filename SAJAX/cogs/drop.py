@@ -23,13 +23,14 @@ def is_url_valid(url: str) -> bool:
         "https://raw.githubusercontent.com/MichaelTheChef/sajax-images/main/images/"))
 
 class CardPageView(View):
-    def __init__(self, user_cards, templates, owner_id, db: Database, timeout=180):
+    def __init__(self, user_cards, templates, owner_id, db: Database, drop_cog=None, timeout=180):
         super().__init__(timeout=timeout)
         self.cards = user_cards
         self.index = 0
         self.templates = templates
         self.owner_id = owner_id
         self.db = db
+        self.drop_cog = drop_cog
         self.displayed_cards = set()
         self.update_buttons()
 
@@ -200,6 +201,11 @@ class CardPageView(View):
         return character_with_rarity, rarity
 
     def assign_thumbnail(self, character_name: str, rarity: str) -> str:
+        # Use the Drop cog's cached data if available
+        if self.drop_cog:
+            return self.drop_cog.assign_thumbnail(character_name, rarity)
+        
+        # Fallback to direct file access if no drop_cog available
         with open(os.path.join(os.path.dirname(__file__), "characters_card_images.json"), "r", encoding="utf-8") as file:
             data = json.load(file)
         for character in data["characters"]:
@@ -445,10 +451,27 @@ class Drop(commands.Cog):
         self.db = Database()
         self.json_path = os.path.join(os.path.dirname(__file__), "characters_card_images.json")
         self.characters_json_path = os.path.join(os.path.dirname(__file__), "characters.json")
+        
+        # Cache JSON data to avoid repeated file I/O
+        self._card_images_cache = None
+        self._characters_cache = None
+
+    def _load_card_images(self):
+        """Load card images data with caching."""
+        if self._card_images_cache is None:
+            with open(self.json_path, "r", encoding="utf-8") as file:
+                self._card_images_cache = json.load(file)
+        return self._card_images_cache
+
+    def _load_characters(self):
+        """Load characters data with caching."""
+        if self._characters_cache is None:
+            with open(self.characters_json_path, "r", encoding="utf-8") as f:
+                self._characters_cache = json.load(f)
+        return self._characters_cache
 
     def assign_thumbnail(self, character_name: str, rarity: str) -> str:
-        with open(self.json_path, "r", encoding="utf-8") as file:
-            data = json.load(file)
+        data = self._load_card_images()
         for character in data["characters"]:
             if character["name"].lower() == character_name.lower():
                 for rarity_block in character["rarities"]:
@@ -619,7 +642,7 @@ class Drop(commands.Cog):
             )
             view.message = message
         else:
-            view = CardPageView(cards, Templates, user.id, self.db)
+            view = CardPageView(cards, Templates, user.id, self.db, drop_cog=self)
             await ctx.send(embed=view.generate_embed(), view=view, ephemeral=True)
 
 
@@ -919,8 +942,7 @@ class Drop(commands.Cog):
         user_id_str = str(user.id)
 
         try:
-            with open(self.characters_json_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            data = self._load_characters()
         except Exception as e:
             print(f"Error loading characters data file: {e}")
             embed = Templates.drop_error()

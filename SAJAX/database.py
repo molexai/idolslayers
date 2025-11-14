@@ -54,17 +54,28 @@ class Database:
 
     def get_shards(self, user_id: str):
         user_id = str(user_id)
-        user = self.get_user(user_id)
+        # Use projection to only fetch the shards field for efficiency
+        user = self.users.find_one({"user_id": user_id}, {"shards": 1})
+        if not user:
+            # User doesn't exist, create and return 0
+            self.insert_user(user_id)
+            return 0
         return user.get("shards", 0)
 
     def get_enabled_items(self, user_id: str):
         user_id = str(user_id)
-        user = self.get_user(user_id)
+        # Use projection to only fetch the enabled_items field for efficiency
+        user = self.users.find_one({"user_id": user_id}, {"enabled_items": 1})
+        if not user:
+            return []
         return user.get("enabled_items", [])
 
     def is_enabled(self, user_id: str, item_key: str):
         user_id = str(user_id)
-        user = self.get_user(user_id)
+        # Use projection to only fetch the enabled_items field for efficiency
+        user = self.users.find_one({"user_id": user_id}, {"enabled_items": 1})
+        if not user:
+            return False
         enabled_items = user.get("enabled_items", [])
         return item_key in enabled_items
 
@@ -119,12 +130,18 @@ class Database:
 
     def card_mute_status(self, user_id: str):
         user_id = str(user_id)
-        user = self.get_user(user_id)
+        # Use projection to only fetch the card_mute field for efficiency
+        user = self.users.find_one({"user_id": user_id}, {"card_mute": 1})
+        if not user:
+            return False
         return user.get("card_mute", False)
 
     def is_card_muted(self, user_id: str):
         user_id = str(user_id)
-        user = self.get_user(user_id)
+        # Use projection to only fetch the card_mute field for efficiency
+        user = self.users.find_one({"user_id": user_id}, {"card_mute": 1})
+        if not user:
+            return False
         return user.get("card_mute", False)
 
     def update_user(self, user_id: str, update_data):
@@ -136,11 +153,19 @@ class Database:
         )
 
     def get_cards(self, user_id: str):
-        user = self.get_user(user_id)
+        user_id = str(user_id)
+        # Use projection to only fetch the cards field for efficiency
+        user = self.users.find_one({"user_id": user_id}, {"cards": 1})
+        if not user:
+            return []
         return user.get("cards", [])
 
     def get_characters(self, user_id: str):
-        user = self.get_user(user_id)
+        user_id = str(user_id)
+        # Use projection to only fetch the characters field for efficiency
+        user = self.users.find_one({"user_id": user_id}, {"characters": 1})
+        if not user:
+            return []
         return user.get("characters", [])
 
     def add_card(self, user_id: str, card):
@@ -256,6 +281,7 @@ class Database:
     def global_card_count(self, card_name: str, top_n: int = 3) -> list:
         """
         Returns a list of the top N users with the highest count of the specified card.
+        Uses MongoDB aggregation for better performance.
 
         Args:
             card_name (str): The name of the card to count.
@@ -264,26 +290,47 @@ class Database:
         Returns:
             list: A list of tuples where each tuple contains (user_id, count) for the top N users.
         """
-        card_name = card_name.strip().lower()
-        result = {}
-
-        # Fetch all users from the database
-        all_users = self.get_all_users()
-
-        # Iterate through each user
-        for user in all_users:
-            user_id = user.get("user_id")
-            characters = user.get("characters", [])
-
-            # Count occurrences of the card
-            count = len([c for c in characters if c.get("name", "").strip().lower() == card_name])
-
-            # Add to the result dictionary if the count is greater than 0
-            if count > 0:
-                result[user_id] = count
-
-        # Sort the result by count in descending order
-        sorted_result = sorted(result.items(), key=lambda item: item[1], reverse=True)
-
-        # Return the top N users
-        return sorted_result[:top_n]
+        card_name_lower = card_name.strip().lower()
+        
+        # Use MongoDB aggregation pipeline for efficient counting
+        pipeline = [
+            # Unwind the characters array to process each character individually
+            {"$unwind": "$characters"},
+            # Filter for matching card names (case-insensitive)
+            {"$match": {
+                "$expr": {
+                    "$eq": [
+                        {"$toLower": {"$trim": {"input": "$characters.name"}}},
+                        card_name_lower
+                    ]
+                }
+            }},
+            # Group by user_id and count occurrences
+            {"$group": {
+                "_id": "$user_id",
+                "count": {"$sum": 1}
+            }},
+            # Sort by count in descending order
+            {"$sort": {"count": -1}},
+            # Limit to top N results
+            {"$limit": top_n}
+        ]
+        
+        try:
+            results = list(self.users.aggregate(pipeline))
+            return [(result["_id"], result["count"]) for result in results]
+        except Exception as e:
+            print(f"Error in global_card_count aggregation: {e}")
+            # Fallback to original implementation if aggregation fails
+            result = {}
+            all_users = self.get_all_users()
+            
+            for user in all_users:
+                user_id = user.get("user_id")
+                characters = user.get("characters", [])
+                count = len([c for c in characters if c.get("name", "").strip().lower() == card_name_lower])
+                if count > 0:
+                    result[user_id] = count
+            
+            sorted_result = sorted(result.items(), key=lambda item: item[1], reverse=True)
+            return sorted_result[:top_n]
