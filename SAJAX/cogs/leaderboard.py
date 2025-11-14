@@ -54,16 +54,17 @@ class LeaderboardCog(commands.Cog):
 
         self.leaderboard_cooldowns[user.id] = now
 
-        async with self.db_lock:
-            all_users = list(self.db.users.find({}))
         guild = interaction.guild
 
         if type == 'shards':
-            sorted_by_shards = sorted(
-                all_users,
-                key=lambda doc: doc.get('shards', 0),
-                reverse=True
-            )[:5]
+            # Use MongoDB aggregation for efficient sorting and limiting
+            async with self.db_lock:
+                pipeline = [
+                    {"$project": {"user_id": 1, "shards": 1}},
+                    {"$sort": {"shards": -1}},
+                    {"$limit": 5}
+                ]
+                sorted_by_shards = list(self.db.users.aggregate(pipeline))
 
             fire_emoji = Templates.rarity_fire_emojis[2]
 
@@ -83,22 +84,31 @@ class LeaderboardCog(commands.Cog):
                     inline=False
                 )
         else:
+            # Use MongoDB aggregation for efficient character counting and net worth calculation
+            async with self.db_lock:
+                pipeline = [
+                    {"$project": {
+                        "user_id": 1,
+                        "characters": 1,
+                        "char_count": {"$size": {"$ifNull": ["$characters", []]}}
+                    }},
+                    {"$sort": {"char_count": -1}},
+                    {"$limit": 5}
+                ]
+                top_users = list(self.db.users.aggregate(pipeline))
+            
+            # Calculate net worth for top users only (much more efficient)
             user_stats = []
-            for doc in all_users:
+            for doc in top_users:
                 uid = doc.get('user_id')
                 chars = doc.get('characters', [])
-                count = len(chars)
+                count = doc.get('char_count', 0)
                 net_worth = sum(
                     self.rarity_worth.get(
                         c.get('rarity', c.get('top_rarity', '')), 0
                     ) for c in chars
                 )
                 user_stats.append({'uid': uid, 'count': count, 'net': net_worth})
-            top_chars = sorted(
-                user_stats,
-                key=lambda d: d['count'],
-                reverse=True
-            )[:5]
 
             fire_emoji = Templates.rarity_fire_emojis[3]
 
@@ -107,7 +117,7 @@ class LeaderboardCog(commands.Cog):
                 description=f"{fire_emoji} **Top 5 players by character count (net worth in shards)**",
                 color=Color.purple()
             )
-            for idx, stat in enumerate(top_chars, 1):
+            for idx, stat in enumerate(user_stats, 1):
                 uid = int(stat['uid'])
                 member = guild.get_member(uid)
                 username = member.display_name if member else f"User {uid}"
