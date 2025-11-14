@@ -17,7 +17,20 @@ class Database:
         #self.cache = {}
         self.cooldowns = {}
 
+        # Create indexes for frequently queried fields to improve performance
         self.users.create_index([("user_id", ASCENDING)], unique=True)
+        
+        # Index for shards field to speed up leaderboard queries
+        try:
+            self.users.create_index([("shards", ASCENDING)])
+        except Exception:
+            pass  # Index might already exist
+        
+        # Index for characters array size to speed up character count leaderboards
+        try:
+            self.users.create_index([("characters", ASCENDING)])
+        except Exception:
+            pass  # Index might already exist
 
     def is_on_cooldown(self, user_id: str, cooldown=5):
         user_id = str(user_id)
@@ -256,6 +269,7 @@ class Database:
     def card_count(self, user_id: str, card_name: str) -> str:
         """
         Returns the number of cards with the specified name for the given user.
+        Uses MongoDB aggregation for efficient counting.
 
         Args:
             user_id (str): The ID of the user.
@@ -265,10 +279,34 @@ class Database:
             int: The number of cards with the specified name.
         """
         user_id = str(user_id)
-        user = self.get_user(user_id)
-        characters = user.get("characters", [])
-        count = len([c for c in characters if c.get("name", "").strip().lower() == card_name.strip().lower()])
-        return str(count)
+        card_name_lower = card_name.strip().lower()
+        
+        # Use aggregation pipeline for efficient counting
+        pipeline = [
+            {"$match": {"user_id": user_id}},
+            {"$unwind": "$characters"},
+            {"$match": {
+                "$expr": {
+                    "$eq": [
+                        {"$toLower": {"$trim": {"input": "$characters.name"}}},
+                        card_name_lower
+                    ]
+                }
+            }},
+            {"$count": "total"}
+        ]
+        
+        try:
+            result = list(self.users.aggregate(pipeline))
+            count = result[0]["total"] if result else 0
+            return str(count)
+        except Exception as e:
+            print(f"Error in card_count aggregation: {e}")
+            # Fallback to original implementation
+            user = self.get_user(user_id)
+            characters = user.get("characters", [])
+            count = len([c for c in characters if c.get("name", "").strip().lower() == card_name_lower])
+            return str(count)
 
     def add_shards(self, user_id: str, shards):
         user_id = str(user_id)

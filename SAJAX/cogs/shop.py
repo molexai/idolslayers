@@ -80,9 +80,10 @@ class BuyConfirmView(View):
 
 
 class ShopDropdown(Select):
-    def __init__(self, user_id: str, db: Database):
+    def __init__(self, user_id: str, db: Database, shop_cog=None):
         self.db = db
         self.user_id = str(user_id)
+        self.shop_cog = shop_cog
 
         options = [
             nextcord.SelectOption(label="Drop Booster", value="Drop Booster"),
@@ -105,10 +106,14 @@ class ShopDropdown(Select):
     async def callback(self, interaction: Interaction):
         choice = self.values[0]
 
-        file_path = os.path.join(os.path.dirname(__file__), "shop_items.json")
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                shop_data = json.load(f)
+            if self.shop_cog:
+                shop_data = self.shop_cog._load_shop_items()
+            else:
+                # Fallback to loading from file
+                file_path = os.path.join(os.path.dirname(__file__), "shop_items.json")
+                with open(file_path, "r", encoding="utf-8") as f:
+                    shop_data = json.load(f)
         except Exception:
             await interaction.response.send_message(
                 "❌ Failed to load shop data. Please try again later.", ephemeral=True
@@ -162,9 +167,9 @@ class BuyButton(Button):
 
 
 class ShopView(View):
-    def __init__(self, user_id: str, db: Database):
+    def __init__(self, user_id: str, db: Database, shop_cog=None):
         super().__init__(timeout=None)
-        self.add_item(ShopDropdown(user_id, db))
+        self.add_item(ShopDropdown(user_id, db, shop_cog))
 
 class Shop(commands.Cog):
     def __init__(self, bot):
@@ -172,6 +177,17 @@ class Shop(commands.Cog):
         self.db = Database()
         self.cooldowns = {}
         self.COOLDOWN_SECONDS = 5
+        
+        # Cache shop items data to avoid repeated file I/O
+        self._shop_items_cache = None
+    
+    def _load_shop_items(self):
+        """Load shop items data with caching."""
+        if self._shop_items_cache is None:
+            file_path = os.path.join(os.path.dirname(__file__), "shop_items.json")
+            with open(file_path, "r", encoding="utf-8") as f:
+                self._shop_items_cache = json.load(f)
+        return self._shop_items_cache
 
     @nextcord.slash_command(name="shop", description="Open the SajaX item shop.", guild_ids=GUILD_ID)
     async def shop(self, interaction: Interaction):
@@ -198,7 +214,7 @@ class Shop(commands.Cog):
 
         embed = Templates.shop_display()
         embed.set_footer(text="Select an item to view details!")
-        view = ShopView(str(user_id), self.db)
+        view = ShopView(str(user_id), self.db, self)
         await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 

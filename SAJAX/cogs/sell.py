@@ -18,6 +18,21 @@ class SellCog(commands.Cog):
         self.db = Database()
         self.cooldowns = {}
         self.COOLDOWN_SECONDS = 5
+        
+        # Cache rarities data to avoid repeated file I/O
+        self._rarities_cache = None
+    
+    def _load_rarities(self):
+        """Load rarities data with caching."""
+        if self._rarities_cache is None:
+            rarities_path = os.path.join(os.path.dirname(__file__), "rarities.json")
+            with open(rarities_path, "r", encoding="utf-8") as f:
+                rarities_data = json.load(f)
+            self._rarities_cache = {
+                rarity_data["tier"]: rarity_data["worth"]
+                for rarity_data in rarities_data.get("rarities", [])
+            }
+        return self._rarities_cache
 
     @nextcord.slash_command(
         name="sell",
@@ -57,11 +72,12 @@ class SellCog(commands.Cog):
                                                            ephemeral=True)
 
         class PaginatedSelect(View):
-            def __init__(self, db, user_id, matching_chars):
+            def __init__(self, db, user_id, matching_chars, sell_cog):
                 super().__init__(timeout=60)
                 self.db = db
                 self.user_id = user_id
                 self.matching_chars = matching_chars
+                self.sell_cog = sell_cog
                 self.page = 0
                 self.options_per_page = 25
                 self.max_page = (len(matching_chars) - 1) // self.options_per_page if matching_chars else 0
@@ -195,14 +211,8 @@ class SellCog(commands.Cog):
 
                         self.db.remove_character_and_card(self.user_id, char)
 
-                        rarities_path = os.path.join(os.path.dirname(__file__), "rarities.json")
-                        with open(rarities_path, "r", encoding="utf-8") as f:
-                            rarities_data = json.load(f)
-
-                        self.rarity_worth = {
-                            rarity_data["tier"]: rarity_data["worth"]
-                            for rarity_data in rarities_data.get("rarities", [])
-                        }
+                        # Use cached rarities data
+                        self.rarity_worth = self.sell_cog._load_rarities()
 
                         shards = self.rarity_worth.get(rarity, 10)
                         self.db.add_shards(self.user_id, int(shards))
@@ -215,7 +225,7 @@ class SellCog(commands.Cog):
                 await interaction.response.edit_message(embed=Templates.sell_confirm(char),
                                                         view=ConfirmView(self.db, self.user_id))
 
-        view = PaginatedSelect(self.db, user_id, matching)
+        view = PaginatedSelect(self.db, user_id, matching, self)
         embed = Templates.sell_prompt(matching)
         if embed.description and len(embed.description) > 4096:
             embed.description = embed.description[:4000] + "..."
@@ -256,20 +266,15 @@ class SellCog(commands.Cog):
             return await interaction.response.send_message(embed=embed, ephemeral=True)
 
         class ConfirmSellAll(View):
-            def __init__(self, db):
+            def __init__(self, db, sell_cog):
                 super().__init__()
                 self.db = db
+                self.sell_cog = sell_cog
 
             @button(label="✅ Yes", style=nextcord.ButtonStyle.success)
             async def confirm(self, button, i2: Interaction):
-                rarities_path = os.path.join(os.path.dirname(__file__), "rarities.json")
-                with open(rarities_path, "r", encoding="utf-8") as f:
-                    rarities_data = json.load(f)
-
-                rarity_worth = {
-                    r["tier"]: r["worth"]
-                    for r in rarities_data.get("rarities", [])
-                }
+                # Use cached rarities data
+                rarity_worth = self.sell_cog._load_rarities()
 
                 total = 0
                 for char in characters:
@@ -287,7 +292,7 @@ class SellCog(commands.Cog):
 
         confirm_embed = Templates.sell_all_confirm()
 
-        await interaction.response.send_message(embed=confirm_embed, view=ConfirmSellAll(self.db), ephemeral=True)
+        await interaction.response.send_message(embed=confirm_embed, view=ConfirmSellAll(self.db, self), ephemeral=True)
 
 def setup(bot):
     bot.add_cog(SellCog(bot))
