@@ -4,15 +4,21 @@ import os
 import nextcord
 from nextcord import Embed, Color
 
+# Cache for emoji data to avoid repeated file I/O
+_emoji_cache = None
 
 def get_emoji(emoji_name: str):
     """
     Fetches an emoji from the emojis.json file.
+    Uses caching to avoid repeated file I/O operations.
     """
-    with open(Templates.emojis_path, 'r') as f:
-        data = json.load(f)
+    global _emoji_cache
+    
+    if _emoji_cache is None:
+        with open(Templates.emojis_path, 'r') as f:
+            _emoji_cache = json.load(f)
 
-    for emoji in data.get("emojis", []):
+    for emoji in _emoji_cache.get("emojis", []):
         if emoji.get("name") == emoji_name:
             return emoji.get("emoji_id")
 

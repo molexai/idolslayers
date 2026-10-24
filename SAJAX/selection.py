@@ -9,11 +9,28 @@ db = Database()
 rarities_path = os.path.join(os.path.dirname(__file__), "data/rarities.json")
 characters_path = os.path.join(os.path.dirname(__file__), "data/characters.json")
 
-with open(rarities_path) as f:
-    rarities_data = json.load(f)["rarities"]
+# Cache JSON data at module level to avoid repeated file I/O
+_rarities_data = None
+_characters_data = None
 
-with open(characters_path) as f:
-    characters_data = json.load(f)
+def _load_rarities():
+    """Load rarities data with caching."""
+    global _rarities_data
+    if _rarities_data is None:
+        with open(rarities_path) as f:
+            _rarities_data = json.load(f)["rarities"]
+    return _rarities_data
+
+def _load_characters():
+    """Load characters data with caching."""
+    global _characters_data
+    if _characters_data is None:
+        with open(characters_path) as f:
+            _characters_data = json.load(f)
+    return _characters_data
+
+rarities_data = _load_rarities()
+characters_data = _load_characters()
 
 RARITY_ORDER = ["B", "A", "R", "UR", "S"]
 

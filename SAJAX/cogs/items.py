@@ -111,6 +111,16 @@ class Items(commands.Cog):
         self.json_path = os.path.join(os.path.dirname(__file__), "shop_items.json")
         self.myitems_cooldowns = {}
         self.MYITEMS_COOLDOWN = 5
+        
+        # Cache shop items data to avoid repeated file I/O
+        self._shop_items_cache = None
+    
+    def _load_shop_items(self):
+        """Load shop items data with caching."""
+        if self._shop_items_cache is None:
+            with open(self.json_path, "r", encoding="utf-8") as f:
+                self._shop_items_cache = json.load(f)
+        return self._shop_items_cache
 
     @nextcord.slash_command(name="myitems", description="View your owned items.", guild_ids=GUILD_ID)
     async def myitems(self, interaction: Interaction):
@@ -142,8 +152,7 @@ class Items(commands.Cog):
             return
 
         try:
-            with open(self.json_path, "r", encoding="utf-8") as f:
-                shop_data = json.load(f)
+            shop_data = self._load_shop_items()
         except Exception:
             embed = Templates.drop_error()
             embed.description = "> Failed to load item details. Try again later."

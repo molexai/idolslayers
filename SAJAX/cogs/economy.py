@@ -57,8 +57,7 @@ class EconomyCog(commands.Cog):
 
         self.cooldowns[payer.id] = now
 
-        payer_data = self.db.get_user(payer_id)
-        payer_shards = payer_data.get("shards", 0)
+        payer_shards = self.db.get_shards(payer_id)
 
         if payer_shards < amount:
             embed = Templates.drop_error()
@@ -76,8 +75,8 @@ class EconomyCog(commands.Cog):
 
             @button(label="✅ Confirm", style=ButtonStyle.success)
             async def confirm(self, button: Button, i: Interaction):
-                payer_latest = self.db.get_user(self.payer_id)
-                if payer_latest.get("shards", 0) < self.amount:
+                payer_shards = self.db.get_shards(self.payer_id)
+                if payer_shards < self.amount:
                     embed = Templates.drop_error()
                     embed.description = "> You no longer have enough shards to complete this payment."
                     await i.response.edit_message(embed=embed, view=None)
@@ -153,8 +152,7 @@ class EconomyCog(commands.Cog):
 
         self.cooldowns[sender.id] = now
 
-        sender_data = self.db.get_user(sender_id)
-        characters = sender_data.get("characters", [])
+        characters = self.db.get_characters(sender_id)
 
         character_name = character.strip().lower()
         matching = [c for c in characters if c.get("name", "").strip().lower() == character_name]
