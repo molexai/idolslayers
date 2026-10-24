@@ -8,7 +8,7 @@ class Database:
 
     def __init__(self):
         if Database._client is None:
-            uri = "mongodb+srv://sajax:sajax@sajax.t2kzc70.mongodb.net/"
+            uri = ""
             Database._client = MongoClient(uri, tls=True)
 
         self.db = Database._client["sajax"]

@@ -16,7 +16,7 @@ COLLAB_ROLE_COLOR = nextcord.Color.from_rgb(255, 105, 180)
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
-    await bot.sync_all_application_commands()
+    #await bot.sync_all_application_commands()
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -41,4 +41,4 @@ if cogs_dir.exists():
 else:
     print(f"❌ Cogs directory not found at {cogs_dir}")
 
-bot.run("MTM4NzUwOTI1MTg5MDYxNDQyMg.GRCvtO.FzrhOIog7Ds9QHNDFLlX2TWdreRnYzK5Gqn5-c")
+bot.run("")
